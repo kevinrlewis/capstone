@@ -12,7 +12,7 @@ Caesar Cipher
 - Able to select distance of character shift (0-25)
 - option to keep spaces between words or not
 
-Causer Shift Wheel
+Caesar Shift Wheel
 - A way to implement the caesar cipher
 - Animated in the cd-rom
 
