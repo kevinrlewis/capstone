@@ -1,0 +1,20 @@
+- railfence cipher
+- latin square?
+- scytale?
+- caesar cipher - DONE
+- pigpen cipher
+- atbash cipher - DONE
+- monoalphabetic cipher - DONE
+- kama-sutra cipher
+- affine cipher
+- digraph substitution?
+- playfair cipher
+- homphonic cipher
+- morse code
+- dancing men cipher
+- enigma emulator
+- swapping cipher alphabets
+- vignere tool
+- computer cryptography plaintext to ascii binary
+- computer cryptography plaintext transposition of ascii binary
+- RSA encryption tool
