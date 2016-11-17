@@ -5,7 +5,7 @@
 - pigpen cipher
 - atbash cipher - DONE
 - monoalphabetic cipher - DONE
-- kama-sutra cipher
+- kama-sutra cipher - DONE
 - affine cipher
 - digraph substitution?
 - playfair cipher
