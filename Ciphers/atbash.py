@@ -1,6 +1,6 @@
 def main():
-    print "enciphered: ", atbashen("hello my name is kevin", 1)
-    print "deciphered: ", atbashde("svool nb mznv rh pverm", 1)
+    #print "enciphered: ", atbashen("jnyxxvgrnatre", 1)
+    print "deciphered: ", atbashde("DLIGSTZRMKRKVXVIGZRMGB", 1)
 
 def atbashen(text, spaces):
     alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
@@ -9,7 +9,7 @@ def atbashen(text, spaces):
 
     newalpha = alpha[::-1]
     enciphered = ""
-
+    text = text.lower()
 
     for letter in text:
         for i in range(len(alpha)):
@@ -30,7 +30,7 @@ def atbashde(text, spaces):
 
     newalpha = alpha[::-1]
     deciphered = ""
-
+    text = text.lower()
 
     for letter in text:
         for i in range(len(newalpha)):

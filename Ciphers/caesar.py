@@ -2,8 +2,9 @@ from collections import deque
 
 #runs the two functions with test parameters
 def main():
-    print caesarEncrypt(2, "hello my name is kevin", 1)
-    print caesarDecrypt(2, "jgnnq oa pcog ku mgxkp", 1)
+    for i in range(26):
+        #print caesarEncrypt(i, "jnyxxvgrnatre", 1)
+        print caesarDecrypt(i, "prixdcugtt", 1)
 
 #decrypts a given caesar shift encrypted text by the shift
 #amount provided

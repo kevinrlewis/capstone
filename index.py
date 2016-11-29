@@ -62,6 +62,10 @@ class App:
         f.pack()
         win.mainloop()
 
+class TopBar:
+    def __init__(self):
+
+
 top = Tk()
 app = App(top)
 top.mainloop()
