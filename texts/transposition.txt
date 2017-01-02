@@ -1,0 +1,14 @@
+In transposition ciphers, the letters of the message are simply, 
+rearranged, effectively genereating an anagram.
+
+In order for transposition to be effective, the rearrangement of letters 
+needs to follow a straightforward system, one that has been previously 
+agreed by the sender and receiver, but kept secret from the enemy. In 
+this section we explore two types of transposition: the railfence cipher 
+and the scytale cipher.
+
+The 'rail fence' transposition involves writing the message such that 
+alternate letters are written on separate upper and lower lines. The 
+sequence of letters on the upper line is then followed by the sequence 
+on the lower line, to create the final encrypted message. To see how the 
+railfence cipher works click the top button on the right of this screen.

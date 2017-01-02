@@ -1,0 +1,15 @@
+According to Suetonius, Caesar simply replaced each letter in a message with
+ the letter that is three places further down the alphabet. Cryptographers often 
+think in terms of the plain alphabet, the alphabet used to write the original 
+message, and the cipher alphabet, the letters that are substituted in place of 
+the plain letters.
+
+When the plain alphabet is placed above the cipher alphabet, as shown below, 
+it is clear to see that the cipher alphabet has been shifted by three places, 
+and hence this form of substitution is often called the Caesar shift cipher. 
+A cipher is the name given to any form of cryptographic substitution in which 
+each letter is replaced by another letter or symbol.
+
+Type your message into the Plaintext box. You can encrypt by clicking 
+'Encipher Plaintext'. Please note, you can change the cipher by changing 
+the shift, so the message can be encrypted in different ways.

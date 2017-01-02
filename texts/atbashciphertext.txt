@@ -1,0 +1,24 @@
+Medieval monks were intrigued by the fact that the Old Testament 
+contained deliberate and obvious examples of cryptography. For example, 
+the Old Testament includes pieces of text encrypted with atbash, a 
+traditional form of Hebrew substitution cipher. Atbash involves taking 
+each letter, noting its position in the alphabet, and replacing it with 
+a letter that is an equal number of places from the end of the alphabet. 
+In English this would mean that ``a'', one place from the beginning of 
+the alphabet, is replaced by ``z'', one place from the end of the 
+alphabet, ``b'' is replaced by ``Y'', and so on. The term atbash itself 
+hints at the substitution it describes, because it consists of the first 
+letter of the Hebrew alphabet, aleph, followed by the last letter taw, 
+and then there is the second letter of the Hebrew alphabet, beth, followed 
+by the second to last letter shin.
+
+An example of atbash appears in Jeremiah 25:26 and 51:41, were Babel is replaced 
+by the word Sheshach; the first letter of Babel is beth, the second letter of the 
+Hebrew alphabet, and this is replaced by shin, the second to last letter of the 
+Hebrew alphabet; the second letter of Babel is also beth, as Hebrew traditionally 
+did not include symbols for vowels, and so it too is replaced by shin; and the last 
+letter of Babel is lamed, the twelfth letter of the Hebrew alphabet, and this is 
+replaced by kaph, the twelfth letter from the end of the Hebrew alphabet.
+
+Type your message into the box labeled Plaintext, then click the Encipher  
+button to encrypt the message.

@@ -2,9 +2,9 @@ from collections import deque
 
 #runs the two functions with test parameters
 def main():
-    for i in range(26):
-        #print caesarEncrypt(i, "jnyxxvgrnatre", 1)
-        print caesarDecrypt(i, "prixdcugtt", 1)
+
+    print caesarEncrypt(2, "kevin", 1)
+    #print caesarDecrypt(i, "prixdcugtt", 1)
 
 #decrypts a given caesar shift encrypted text by the shift
 #amount provided
@@ -50,6 +50,9 @@ def caesarEncrypt(shift, text, spaces):
     text = text.lower()
     #shift the alphabet by the given amount
     newalpha.rotate(-(shift))
+
+    print newalpha
+
     enciphered = ""
 
     #iterate through the string of text
