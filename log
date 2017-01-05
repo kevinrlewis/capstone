@@ -1,16 +1,11 @@
 -----------------------------------------------------
-02/01/2017 01:25:14
+04/01/2017 06:50:25
 starting app...
 main page entered
 junior code breakers button pressed
 Junior Code Breakers entered
-back pressed
-[<__main__.MainPage object at 0x7f10aca215d0>]
-main page entered
-main contents button pressed
-the code book description page entered
-birth of Cryptography pressed
-the birth of Cryptography page entered
-Substitution pressed
-Substitution page entered
+digraph pressed
+digraph page entered
+alpha1: pqrstuvwxyzabcdefghijklmno
+alpha2: stuvwxyzabcdefghijklmnopqr
 -----------------------------------------------------

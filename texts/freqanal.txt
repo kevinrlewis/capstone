@@ -1,0 +1,20 @@
+Al-Kindi's technique for cracking a substitution cipher relied on the fact that letters have 
+'personalities', and part of a letter's personality is its frequency - some letters are more common 
+than others. In English, the frequency of each letter is shown in the table above - "e" is the most 
+common letter, followed by "t", then "a", and so on.
+
+So if we have a ciphertext that we are trying to 
+crack, we start by working out the frequency of 
+each letter. If the most common letter in the 
+ciphertext is, for example, "J" then it would seem 
+likely that this is a substitute for "e". And if the 
+second most common letter in the ciphertext is 
+"P", then this is probably a substitute for "t", 
+and so on. Al-Kindi's technique, know as 
+frequency analysis, shows that it is unnecessary 
+to check each of the billions of potential keys. 
+Instead, it is possible to reveal the contents of an 
+encrypted message simply by analysing the 
+frequency of the characters in the ciphertext. To 
+find out more about the frequency of letters click 
+the Play Button.

@@ -1,0 +1,18 @@
+A digraph cipher encrypts by 
+substituting each digraph (i.e., pair 
+of letters) in the message with a 
+different digraph or symbol. In the 
+digraph cipher shown here, each 
+plaintext digraph is substituted 
+with a digraph from the square. For 
+example, 'as' is encrypted by 
+finding the intersection of the 
+column headed by 'a' with the row 
+headed by 's', which gives us NO. 
+So, the plaintext digraph 'as' is 
+substituted with the ciphertext 
+digraph NO.
+To encipher a message, type it into 
+the plaintext box, click the button 
+labeled 'Form Digraphs', and then 
+click 'Encipher'.

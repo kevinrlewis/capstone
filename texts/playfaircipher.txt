@@ -1,0 +1,12 @@
+The Playfair cipher was popularised by Lyon Playfair, but it was invented by Charles Wheatstone, one of the 
+pioneers of the telegraph. The cipher replaces each pair of letters in the plaintext with another pair of letters, so it is 
+a type of digraph cipher. Let's encrypt the message "Meet me at Hammersmith Bridge tonight".
+
+First, the sender and receiver must agree on a keyword. In this example, the keyword is Wheatstone's name, 
+charles. The letters of the alphabet are written in a square, as show, beginning with the keyword and with I-J 
+combined into one element. Now, click on 'Form Digraphs' to break the message into pairs of letters. The two letters 
+in a digraph must be different, so an X has been added to split the double M in 'hammersmith'. An X has also been 
+added to pair up with the last odd letter of the message.
+
+Encryption depends on the type of digraph. The digraphs fall into on eof three categories - both letters are in the 
+same row, or both letters are in the same column, or the letters share neither a row nor a column.

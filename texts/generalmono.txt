@@ -1,0 +1,10 @@
+Ciphers which employ a cipher alphabet which is simply a rearrangement of the plaintext alphabet, so that each 
+letter of the plaintext is always replaced by the same letter are called monoalphabetic substitution ciphers.
+
+If we permit the cipher alphabet to be any rearrangement of the plain alphabet, then we can generate an enormous 
+number of distinct mode of encryption. There are over 400,000,000,000,000,000,000,000,000 such 
+rearrangements, which gives rise to an equivalent number of distinct cipher alphabets. Each cipher alphabet is 
+known as a key. If our message is intercepted by the enemy and the enemy correctly assumes that we have used a 
+monoalphabetic substitution cipher, then there is still the horrendous challenge of checking all possible keys. if an 
+enemy agent could check one of the possible keys every second, it would take roughly a billion times the lifetime 
+of the universe to check all of them and find the correct one. This simple brute force approach clearly will not work.
