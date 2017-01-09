@@ -1,0 +1,13 @@
+The public's growing fascination in cryptographic techniques 
+meant that codes and ciphers soon found their way into 19th 
+century literature. In Jules Verne's 'Voyage to the Centre of the 
+Earth', the decipherment of a parchment filled with runic 
+characters provides the first step on the epic journey. In Britain,
+one of the finest writers of cryptographic fiction was Sir Arthur 
+Conan Doyle. Not surprisingly, Sherlock Holmes was an expert 
+in cryptography and, as he explained to Dr. Watson, was "the 
+author of a trifling monograph upon the subject in which I analyse 
+one hundred and sixty separate ciphers." The most famous of 
+Holmes's decipherments is told in 'The Adventure of the Dancing 
+Men', which involves a cipher consisting of stickmen, each pose 
+representing a distinct letter.

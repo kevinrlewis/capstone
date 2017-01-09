@@ -1,0 +1,11 @@
+The homophonic substitution cipher involves replacing each letter with a variety of substitutes, the number of 
+potential substitutes being proportional to the frequency of the letter. For example, the letter 'a' account for roughly 
+8% of all letters in English, so we assign 8 symbols to represent it. Each time 'a' appears in the plaintext it is 
+roughly 1% of the ciphertext. The letter 'b' accounts for 2% of all letters and so we assign 2 symbols to represent it. 
+Each time 'b' appears in the plaintext either of the two symbols can be chosen, so each symbol will also constitute 
+it has only one substitute. In the example below, the substitutes happen to be 2-digit numbers and there are between 
+1 and 12 substitutes for each letter depending on the letter's relative abundance.
+
+The point of offering several substitution options for popular letters is to balance out the frequencies of symbols in 
+the ciphertext. Every symbol will constitute roughly 1% of the ciphertext. If no symbol appears more frequently than 
+any other, then this would appear to defy any potential attack via straightforward frequency analysis.

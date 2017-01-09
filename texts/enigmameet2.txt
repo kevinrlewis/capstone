@@ -1,0 +1,12 @@
+- Typing the same letter twice does NOT 
+  illuminate the same letters on the lampboard.
+  Each keystroke changes the internal setting of 
+  the machine, so typing the same letter again 
+  usually results in a different output.
+
+- There are billions of possible machine settings 
+  (i.e., keys), so the same message can be 
+  encrypted in billions of different ways. Even if 
+  an eavesdropper has an Enigma machine, they 
+  still need to discover the correct key in order to 
+  decipher a message.

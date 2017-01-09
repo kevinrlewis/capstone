@@ -187,19 +187,24 @@ class JCBPage(ButtonBehavior):
                             on_release = self.playfairpressed)
         self.homo = Button(text = 'Homophonic Cipher',
                             pos_hint = {'center_y':.625},
-                            size_hint = (.9,.06))
+                            size_hint = (.9,.06),
+                            on_release = self.homophonicpressed)
         self.morse = Button(text = 'Morse Code',
                             pos_hint = {'center_y':.5},
-                            size_hint = (.9,.06))
+                            size_hint = (.9,.06),
+                            on_release = self.morsepressed)
         self.dancing = Button(text = 'Dancing Men Cipher',
                             pos_hint = {'center_y':.375},
-                            size_hint = (.9,.06))
+                            size_hint = (.9,.06),
+                            on_release = self.dancingpressed)
         self.meetenigma = Button(text = 'Meet the Enigma Machine',
                             pos_hint = {'center_y':.25},
-                            size_hint = (.9,.06))
+                            size_hint = (.9,.06),
+                            on_release = self.meetpressed)
         self.codetalkers = Button(text = 'Codetalkers',
                             pos_hint = {'center_y':.125},
-                            size_hint = (.9,.06))
+                            size_hint = (.9,.06),
+                            on_release = self.codetalkerspressed)
         self.rightc.add_widget(self.howfreq)
         self.rightc.add_widget(self.digraph)
         self.rightc.add_widget(self.playfair)
@@ -275,6 +280,36 @@ class JCBPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(DigraphPage().create())
+
+    def homophonicpressed(self, *args):
+        f.write('homophonic pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(HomophonicPage().create())
+
+    def morsepressed(self, *args):
+        f.write('morse pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(MorsePage().create())
+
+    def dancingpressed(self, *args):
+        f.write('dancing men pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(DancingMenPage().create())
+
+    def meetpressed(self, *args):
+        f.write('meet enigma pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(MeetEnigmaPage().create())
+
+    def codetalkerspressed(self, *args):
+        f.write('codetalkers pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CodetalkersPage().create())
 
 ################################################################################
 #Begin Railfence Cipher Page
@@ -1196,6 +1231,9 @@ class DigraphPage(ButtonBehavior):
     def create(self):
         f.write('digraph page entered\n')
         MyApp.current = self
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
         self.alpha1 = deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z'])
@@ -1215,6 +1253,23 @@ class DigraphPage(ButtonBehavior):
         f.write('alpha1: ' + self.stralpha1 + '\n')
         f.write('alpha2: ' + self.stralpha2 + '\n')
 
+        self.listalpha1 = list(self.alpha1)
+        self.listalpha2 = list(self.alpha2)
+        self.dub = []
+
+        for letter in self.listalpha1:
+            templist = []
+            for letter2 in self.listalpha2:
+                templist.append((letter2, letter))
+            self.dub.append(templist)
+
+        self.table = '  ' + ' |'.join(self.alpha) + '\n'
+
+        for col in range(len(self.dub)):
+            self.table = self.table + self.alpha[col] + '|'
+            for tup in self.dub[col]:
+                self.table = self.table + ''.join(tup) + '|'
+            self.table = self.table + '\n'
 
         #setup layouts
         self.r = RelativeLayout()
@@ -1225,6 +1280,11 @@ class DigraphPage(ButtonBehavior):
         self.tb = self.topbar.create("Digraph Substitution")
 
         #elements of the page
+        self.tablelabel = Label(text = self.table,
+                                    pos_hint = {'x':.4, 'top':.6},
+                                    size_hint = (.5,.5),
+                                    font_name = 'font/RobotoMono-Regular',
+                                    font_size = 11)
         self.plaintextinput = TextInput(pos_hint = {'x':.025, 'top':.335},
                                     size_hint = (.25, .1))
         self.plaintextlabel = Label(text = 'Plaintext',
@@ -1244,20 +1304,27 @@ class DigraphPage(ButtonBehavior):
         self.encipherbutton = Button(text = "Encipher Text",
                                         pos_hint = {'x':.075, 'top':.09},
                                         size_hint = (.15,.04),
-                                        on_release = self.encipherPressed)
+                                        on_release = self.encipherPressed,
+                                        disabled = True)
 
         self.digraphbutton = Button(text = "Form Digraphs",
                                         pos_hint = {'x':.075, 'top':.04},
                                         size_hint = (.15,.04),
                                         on_release = self.formPressed)
+        self.randdigraph = Button(text = "Randomize Digraph",
+                                        pos_hint = {'x':.575, 'top':.75},
+                                        size_hint = (.2,.04),
+                                        on_release = self.randomDigraph)
 
         with open('texts/digraph.txt', 'r') as myfile:
             data = myfile.read()
         self.text = Label(text = data,
-                            pos_hint = {'x':-.325, 'top':1.15},
+                            pos_hint = {'x':-.343, 'top':1.15},
                             font_size = 14)
-        self.r.add_widget(self.text)
 
+        self.r.add_widget(self.randdigraph)
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.tablelabel)
         self.r.add_widget(self.plaintextinput)
         self.r.add_widget(self.plaintextlabel)
         self.r.add_widget(self.ciphertextdisplay)
@@ -1270,12 +1337,79 @@ class DigraphPage(ButtonBehavior):
 
     def encipherPressed(self, *args):
         f.write('encipher button pressed\n')
-        self.r2.clear_widgets()
-        self.r.remove_widget(self.r2)
-        self.pigpenEncode(self.plaintextinput.text)
+        self.digraphbutton.disabled = False
+        self.randdigraph.disabled = False
+        self.encipherbutton.disabled = True
+
+        dig = self.plaintextinput.text
+
+        dig = dig.strip()
+        dig = dig.split(' ')
+        f.write('plaintext digraph: ' + str(dig) + '\n')
+        tempstr = ''
+        for di in dig:
+            index1 = self.alpha.index(di[0])
+            index2 = self.alpha.index(di[1])
+            tempstr = str(tempstr) + ''.join(self.dub[index2][index1]) + ' '
+
+        self.ciphertextdisplay.text = str(tempstr)
 
     def formPressed(self, *args):
         f.write('form digraphs pressed\n')
+        self.randdigraph.disabled = True
+        self.digraphbutton.disabled = True
+        self.encipherbutton.disabled = False
+        text = self.plaintextinput.text
+        text = text.replace(" ", "")
+        text = text.strip()
+        tempstr = ''
+
+        count = 0
+        for letter in text:
+            if count == 1:
+                tempstr = tempstr + letter + ' '
+                count = 0
+            else:
+                tempstr = tempstr + letter
+                count = count + 1
+
+        f.write('length: ' + str(len(tempstr)) + '\n')
+        if (len(text) % 2) != 0:
+            tempstr = tempstr + 'x'
+        self.plaintextinput.text = tempstr
+
+    def randomDigraph(self, *args):
+
+        self.random1 = randint(0, 26)
+        self.random2 = randint(0, 26)
+
+        self.alpha1.rotate(self.random1)
+        self.alpha2.rotate(self.random2)
+
+        self.stralpha1 = "".join(list(self.alpha1))
+        self.stralpha2 = "".join(list(self.alpha2))
+        f.write('alpha1: ' + self.stralpha1 + '\n')
+        f.write('alpha2: ' + self.stralpha2 + '\n')
+
+        self.listalpha1 = list(self.alpha1)
+        self.listalpha2 = list(self.alpha2)
+        self.dub = []
+
+        for letter in self.listalpha1:
+            templist = []
+            for letter2 in self.listalpha2:
+                templist.append((letter2, letter))
+            self.dub.append(templist)
+
+        self.table = '  ' + ' |'.join(self.alpha) + '\n'
+
+        for col in range(len(self.dub)):
+            self.table = self.table + self.alpha[col] + '|'
+            for tup in self.dub[col]:
+                self.table = self.table + ''.join(tup) + '|'
+            self.table = self.table + '\n'
+
+        self.tablelabel.text = self.table
 
 ################################################################################
 #End Digraph Cipher Page
@@ -1398,6 +1532,425 @@ class PlayfairPage(ButtonBehavior):
 
 ################################################################################
 #End Playfair Cipher Page
+################################################################################
+
+################################################################################
+#Begin Homophonic Page
+################################################################################
+class HomophonicPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('homophonic page entered\n')
+        MyApp.current = self
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+
+        self.stralpha = '|'.join(self.alpha)
+        #setup layouts
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Homophonic Cipher")
+
+        #elements of the page
+        self.randomize = Button(text = 'Randomize Cipher\nAlphabet',
+                            pos_hint = {'x':.015, 'top':.1},
+                            size_hint = (.175,.075),
+                            on_release = self.genrandomPressed)
+
+        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.2},
+                                    size_hint = (.35, .15))
+        self.plaintextlabel = Label(text = 'Plaintext',
+                                    pos_hint = {'x':.25, 'top':.275},
+                                    size_hint = (.27,.1))
+
+        self.ciphertextdisplay = TextInput(text = '',
+                                            pos_hint = {'x':.6, 'top':.2},
+                                            size_hint = (.35, .15),
+                                            disabled = True)
+        self.ciphertextlabel = Label(text = 'Ciphertext',
+                                    pos_hint = {'x':.65, 'top':.275},
+                                    size_hint = (.27,.1))
+
+        self.encipherbutton = Button(text = "Encipher Text",
+                                        pos_hint = {'x':.015, 'top':.2},
+                                        size_hint = (.175,.075),
+                                        on_release = self.encipherPressed)
+
+        with open('texts/homophonic.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.25, 'top':.95},
+                            size_hint = (.5,.5))
+
+
+        self.r.add_widget(self.randomize)
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.ciphertextlabel)
+        self.r.add_widget(self.encipherbutton)
+
+        self.r.add_widget(self.text)
+
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def encipherPressed(self, *args):
+        f.write('encipher button pressed\n')
+        enciphered = self.monoencrypt(self.plaintextinput.text, self.spacebox.active)
+        self.ciphertextdisplay.text = enciphered
+
+    def genrandomPressed(self, *args):
+        f.write('generate random cipher pressed\n')
+        shuffle(self.newalpha)
+        self.cipheralphabet.text = "  ".join(self.newalpha)
+
+    def monoencrypt(self, word, spaces, *args):
+        enciphered = ""
+
+        #iterate through the string of text
+        for letter in word:
+            #iterate through the alphabet list
+            for i in range(len(self.alpha)):
+                if self.alpha[i] == letter:
+                    enciphered += self.newalpha[i]
+            if (letter == " ") and spaces:
+                enciphered += " "
+
+        return enciphered
+
+################################################################################
+#End Homophonic Page
+################################################################################
+
+################################################################################
+#Begin Morse Code Page
+################################################################################
+class MorsePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('homophonic page entered\n')
+        MyApp.current = self
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+
+        self.morsealpha = ['.-', '-...', '-.-.', '-..', '.',
+                            '..-.', '--.', '....', '..', '.---',
+                            '-.-', '.-..', '--', '-.', '---', '.--.',
+                            '--.-', '.-.', '...', '-', '..-', '...-',
+                            '.--', '-..-', '-.--', '--..']
+
+        self.stralpha = '|'.join(self.alpha)
+        #setup layouts
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Morse Code")
+
+        #elements of the page
+        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.175},
+                                    size_hint = (.35, .15))
+        self.plaintextlabel = Label(text = 'Plaintext',
+                                    pos_hint = {'x':.25, 'top':.25},
+                                    size_hint = (.27,.1))
+
+        self.ciphertextdisplay = TextInput(text = '',
+                                            pos_hint = {'x':.6, 'top':.175},
+                                            size_hint = (.35, .15),
+                                            disabled = True,
+                                            font_size = 24)
+        self.ciphertextlabel = Label(text = 'Ciphertext',
+                                    pos_hint = {'x':.65, 'top':.25},
+                                    size_hint = (.27,.1))
+
+        self.encipherbutton = Button(text = "Encipher Text",
+                                        pos_hint = {'x':.015, 'top':.175},
+                                        size_hint = (.175,.075),
+                                        on_release = self.encipherPressed)
+
+        self.morseimage = Image(source = 'pics/morse.jpg',
+                                pos_hint = {'x':.665, 'top':.85},
+                                size_hint = (.5,.5))
+
+        with open('texts/morse.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.95},
+                            size_hint = (.5,.5))
+
+        with open('texts/morse2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.15, 'top':.6},
+                            size_hint = (.5,.5))
+
+        self.vid = VideoPlayer(source = 'video/morseky1.avi',
+                            pos_hint = {'x':.015, 'top':.95},
+                            size_hint = (.45,.45),
+                            state = 'play',
+                            options = {'eos': 'loop'})
+
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.ciphertextlabel)
+        self.r.add_widget(self.encipherbutton)
+
+        self.r.add_widget(self.vid)
+        self.r.add_widget(self.morseimage)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def encipherPressed(self, *args):
+        f.write('encipher button pressed\n')
+        encrypted = self.morseEncrypt(self.plaintextinput.text)
+        self.ciphertextdisplay.text = encrypted
+
+    def morseEncrypt(self, word, *args):
+        encrypted = ''
+        for letter in word:
+            for i in range(len(self.alpha)):
+                if letter == self.alpha[i]:
+                    encrypted = encrypted + self.morsealpha[i] + ' '
+
+        return encrypted
+
+################################################################################
+#End Morse Code Page
+################################################################################
+
+################################################################################
+#Begin Dancing Men Cipher Page
+################################################################################
+class DancingMenPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('dancing men page entered\n')
+        MyApp.current = self
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        self.images = []
+
+        for i in self.alpha:
+            self.images.append('pics/dancingmen/' + i + '.bmp')
+
+        #setup layouts
+        self.r = RelativeLayout()
+        self.r2 = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Dancing Men Cipher")
+
+        #elements of the page
+        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.185},
+                                    size_hint = (.35, .175))
+        self.plaintextlabel = Label(text = 'Plaintext',
+                                    pos_hint = {'x':.25, 'top':.275},
+                                    size_hint = (.27,.1))
+
+        self.ciphertextdisplay = TextInput(text = '',
+                                            pos_hint = {'x':.6, 'top':.185},
+                                            size_hint = (.35, .175),
+                                            disabled = True)
+        self.ciphertextlabel = Label(text = 'Ciphertext',
+                                    pos_hint = {'x':.65, 'top':.275},
+                                    size_hint = (.27,.1))
+
+        self.encipherbutton = Button(text = "Encipher Text",
+                                        pos_hint = {'x':.025, 'top':.125},
+                                        size_hint = (.15,.05),
+                                        on_release = self.encipherPressed)
+
+        self.imagedisplay = RelativeLayout()
+        tempx = 0
+        for image in self.images:
+            temp = Image(source = image)
+            temp.pos_hint = {'x':tempx, 'top':.45}
+            temp.size_hint = (.075,.075)
+            self.imagedisplay.add_widget(temp)
+            tempx = tempx + .0375
+
+        self.alphalabel = Label(text = '  '.join(self.alpha),
+                            pos_hint = {'x':.25, 'top':.6},
+                            size_hint = (.5,.5),
+                            font_name = 'font/RobotoMono-Regular',
+                            font_size = 16)
+
+        with open('texts/dancingmen.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.05, 'top':.95},
+                            size_hint = (.5,.5))
+
+        self.image = Image(source = 'pics/dancingmen/danc-01.bmp',
+                            pos_hint = {'x':.55, 'top':.95},
+                            size_hint = (.5,.5))
+
+        self.r.add_widget(self.alphalabel)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.imagedisplay)
+
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.ciphertextlabel)
+        self.r.add_widget(self.encipherbutton)
+
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def encipherPressed(self, *args):
+        f.write('encipher button pressed\n')
+        self.r2.clear_widgets()
+        self.r.remove_widget(self.r2)
+        self.encodeDancing(self.plaintextinput.text)
+
+    def encodeDancing(self, word, *args):
+        templist = []
+        x = .5325
+        top = .184
+        for letter in word:
+            if letter == ' ':
+                x = x + .04
+            else:
+                for i in range(len(self.alpha)):
+                    if(self.alpha[i] == letter):
+                        tempimage = Image(source = self.images[i])
+                        x = x + .04
+
+                        f.write('| ' + str(tempimage.source) + ' ' + str(x) + '\n')
+                        if x >= .89:
+                            top = top - .08
+                            x = .572
+                            tempimage.pos_hint = {'x':x, 'top':top}
+                            tempimage.size_hint = (.1,.1)
+                        else:
+                            tempimage.pos_hint = {'x':x, 'top':top}
+                            tempimage.size_hint = (.1,.1)
+                        self.r2.add_widget(tempimage)
+
+        self.r.add_widget(self.r2)
+
+################################################################################
+#End Dancing Men Cipher Page
+################################################################################
+
+
+################################################################################
+#Begin Meet Enigma Page
+################################################################################
+class MeetEnigmaPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('meet enigma entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Meet Enigma")
+
+        with open('texts/enigmameet.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.25, 'top':.95},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        with open('texts/enigmameet2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':0, 'top':.6},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        self.vid = VideoPlayer(source = 'video/En1_1.avi',
+                            pos_hint = {'x':.5, 'top':.55},
+                            size_hint = (.45,.45))
+
+        self.r.add_widget(self.vid)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End Meet Enigma Page
+################################################################################
+
+################################################################################
+#Begin Codetalkers Page
+################################################################################
+class CodetalkersPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Codetalkers entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Codetalkers")
+
+        with open('texts/codetalkers.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.25, 'top':.95},
+                            size_hint = (.5,.5),
+                            font_size = 14)
+
+        with open('texts/codetalkers2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.5, 'top':.375},
+                            size_hint = (.5,.5),
+                            font_size = 14)
+
+        with open('texts/codetalkers3.txt', 'r') as myfile:
+            data3 = myfile.read()
+        self.text3 = Label(text = data3,
+                            pos_hint = {'x':.5, 'top':.625},
+                            size_hint = (.5,.5),
+                            font_size = 12,
+                            font_name = 'font/RobotoMono-Regular')
+
+        self.image = Image(source = 'pics/talkers.bmp',
+                            pos_hint = {'x':-.025, 'top':.5},
+                            size_hint = (.55,.55))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.text3)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End Codetalkers Page
 ################################################################################
 
 ################################################################################
@@ -1889,6 +2442,14 @@ class TopBar(ButtonBehavior):
 
     def back_press(self, *args):
         f.write('back pressed\n')
+        for child in MyApp.current.r.children:
+            try:
+                if child.source[0] == 'v':
+                    child.state = 'stop'
+                else:
+                    pass
+            except AttributeError:
+                pass
         f.write(str(MyApp.trail))
         f.write('\n')
         root.clear_widgets()

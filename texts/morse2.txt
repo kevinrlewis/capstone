@@ -1,0 +1,8 @@
+In Europe, Morse's approach gradually overtook the Wheatstone-Cooke system in 
+popularity, and in 1851 a European form of Morse Code, which included accented 
+letters, was adopted throughout the Continent. As each year passed, Morse code and 
+the telegraph had an increasing influence on the world, enabling the police to capture 
+more criminals, helping newspapers to bring the very latest news, providing valuable 
+information for businesses, and allowing distant companies to make instantaneous 
+deals. Type your message into the box labeled 'Plaintext', then click the 'Encipher' 
+button to convert the message into Morse Code.
