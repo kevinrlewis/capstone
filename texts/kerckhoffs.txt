@@ -1,0 +1,5 @@
+If the enemy intercepts a scrambled message, then they may have a strong suspicion of the 
+algorithm, but hopefully they do not know which key has been used. The significance of the 
+key, as opposed to the algorithm, is an enduring principle of cryptography, and it was 
+definitively stated in 1883 by the Dutch linguist Auguste Kerckhoffs von Nieuwenhof in his 
+book La Cryptographie Militaire:

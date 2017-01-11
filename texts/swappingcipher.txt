@@ -1,0 +1,14 @@
+Sometime in the 1460s, Alberti was wandering through the gardens of the Vatican, when he bumped 
+into his friend Leonardo Dato, the pontifical secretary, who began chatting to him about some of 
+the finer points of cryptography. This casual conversation prompted ALberti to write an essay on the 
+subject, outlining what he believed to be a new form of cipher. Up until this point, a substitution 
+cipher involved establishing a single cipher alphabet for encrypting each message. However, Alberti 
+proposed using two or more cipher alphabets, switching between them during encipherment, thereby 
+confusing potential cryptanalysts.
+
+Here we have two possible cipher alphabets, and we can encrypt a message by alternating between 
+them. The first letter of the plaintext message is encrypted using Ciphertext Alphabet 1, the second 
+letter of the message is encrypted using Ciphertext Alphabet 2. We encrypt the third letter of the 
+message by returning to Ciphertext Alphabet 1, the fourth letter is encrypted using Ciphertext 
+Alphabet 2, and so on. To try out this cipher, type your message into the box labeled Plaintext, 
+then click the 'Encipher Text' button.

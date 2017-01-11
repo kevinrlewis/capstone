@@ -1,0 +1,22 @@
+So far, cryptography does not look very 
+mathematical. It seems to be about 
+letters rather than numbers. In fact, 
+cryptography is riddled with 
+mathematics.
+
+For example, the Caesar cipher is about 
+addition. When every letter is shifted by 
+one place, this is effectively adding 1. 
+You can think of converting every letter 
+(A-Z) to a number (0-25), then you add 1,
+and then convert the number back into a 
+letter. If A is 0, then (0+1=1), and 1 is 
+equivalent to B - so A has been 
+encrypted as B. Decipherment is a matter 
+of subtraction.
+
+This might seem unnecessarily 
+complicated, but mathematics is the best 
+way to think of cryptography, especially 
+as the encryption algorithms get more 
+complex.

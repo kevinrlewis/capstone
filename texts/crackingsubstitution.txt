@@ -1,0 +1,12 @@
+The monoalphabetic substitution cipher seemed uncrackable, because of the huge 
+number of possible keys. There was, however, a shortcut that would undermine 
+its security. This section tells the story of how this codebreaking technique was 
+invented, explains how it works and provides you with a tool that will help you 
+to crack ciphers.
+
+The cracking of the substitution cipher marks the birth of cryptanalysis 
+(codebreaking). This occurred during the Golden Age of the Islamic civilisation, 
+when many ancient foreign manuscripts were being brought to Baghdad to be 
+added to the great Arab libraries. Some of these manuscipts were encrypted, 
+which motivated the codebreakers to crack the ciphers and reveal the secrets 
+within.

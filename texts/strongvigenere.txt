@@ -1,0 +1,3 @@
+If we encrypt the same piece of text using the monoalphabetic substitution cipher and the Vigenere 
+cipher, we can see why the latter cipher is so much stronger than the former. Let us use a short text 
+about Vigenere to see the difference. Start by encrypting it with the monoalphabetic cipher.

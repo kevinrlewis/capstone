@@ -1,0 +1,11 @@
+The invention of cryptanalysis partly depended on the growth of religious scholarship. Theologians 
+studied the Hadith, which consists of the Prophet's daily utterances. They tried to demonstrate that 
+each statement was indeed attributable to Muhammad. This was done by studying the etymology of 
+words and structure of sentences, in order to test whether particular texts were consistent with the 
+linguistic patterns of the Prophet.
+
+The religious scholars did not stop their scrutiny at the level of words. They also analysed individual 
+letters, and in particular they discovered that some letters are more common than others. The letters 
+"a" and "l" are the most common in Arabic, partly because of the definite article "al-", whereas the 
+letter "j" appears ten times less frequently. This apparently innocuous observation would lead to the 
+first great breakthrough in cryptanalysis.

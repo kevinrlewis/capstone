@@ -18,11 +18,13 @@ from kivy.uix.widget import Widget
 from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image
 from kivy.uix.videoplayer import VideoPlayer
+from kivy.uix.scrollview import ScrollView
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.graphics import Color, Rectangle
 from kivy.graphics.instructions import Canvas, InstructionGroup
 from kivy.vector import Vector
+from kivy.utils import escape_markup
 
 
 from collections import deque
@@ -57,11 +59,14 @@ class MyApp(App):
         #mainpage to start the app
         mainpage = MainPage()
 
-        #jcb
-        #jcb = JCBPage()
+        #testing
+        test = StrongVigenerePage()
 
-        #root.add_widget(jcb.create())
-        root.add_widget(mainpage.create())
+        #production
+        #root.add_widget(mainpage.create())
+
+        #testing
+        root.add_widget(test.create())
 
 
         return root
@@ -2150,12 +2155,21 @@ class BOFC(ButtonBehavior):
 
     def threePressed(self, *args):
         f.write('cracking the Substitution cipher pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CrackingSubstitutionPage().create())
 
     def fourPressed(self, *args):
         f.write('key secrets pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(KeySecretsPage().create())
 
     def fivePressed(self, *args):
         f.write('tragedy of mary queen of scots pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(TragedyPage().create())
 
 ################################################################################
 #End Birth of Cryptography Page
@@ -2212,12 +2226,21 @@ class Transposition(ButtonBehavior):
 
     def onePressed(self, *args):
         f.write("railfence pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(RailfencePage().create())
 
     def twoPressed(self, *args):
         f.write('latin square pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(LatinSquarePage().create())
 
     def threePressed(self, *args):
         f.write('scytale pressed\n')
+        #MyApp.trail.append(self)
+        #root.clear_widgets()
+        #root.add_widget(RailfencePage().create())
 
 ################################################################################
 #End Transposition Page
@@ -2302,9 +2325,15 @@ class Substitution(ButtonBehavior):
 
     def twoPressed(self, *args):
         f.write('kamasutra pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(KamasutraPage().create())
 
     def threePressed(self, *args):
         f.write('pigpen pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(PigpenPage().create())
 
     def fourPressed(self, *args):
         f.write('atbash pressed\n')
@@ -2314,12 +2343,820 @@ class Substitution(ButtonBehavior):
 
     def fivePressed(self, *args):
         f.write('affine pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(AffinePage().create())
 
     def sixPressed(self, *args):
         f.write('general Monoalphabetic pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(GenMonoPage().create())
 
 ################################################################################
-#End Birth of Cryptography Page
+#End Substitution Page
+################################################################################
+
+################################################################################
+#Begin Kamasutra Shift Page
+################################################################################
+class KamasutraPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('kamasutra page entered\n')
+        MyApp.current = self
+        self.newalpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        self.cipheralpha = []
+
+        #setup layouts
+        self.r = RelativeLayout()
+        self.r2 = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Kama-Sutra Cipher")
+
+        #elements of the page
+        self.spacebox = CheckBox(pos_hint = {'x':.15, 'y':.25},
+                                size_hint = (.05,.05))
+        self.cboxlabel = Label(text = 'Keep Spaces\nBetween Words',
+                                pos_hint = {'x':.065, 'y':.25},
+                                size_hint = (.05,.05))
+
+        self.randomize = Button(text = 'Randomize Cipher\nAlphabet',
+                            pos_hint = {'x':.015, 'top':.2},
+                            size_hint = (.175,.075),
+                            on_release = self.genrandomPressed)
+
+        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.175},
+                                    size_hint = (.35, .15))
+        self.plaintextlabel = Label(text = 'Plaintext',
+                                    pos_hint = {'x':.25, 'top':.25},
+                                    size_hint = (.27,.1))
+
+        self.ciphertextdisplay = TextInput(text = '',
+                                            pos_hint = {'x':.6, 'top':.175},
+                                            size_hint = (.35, .15),
+                                            disabled = True)
+        self.ciphertextlabel = Label(text = 'Ciphertext',
+                                    pos_hint = {'x':.65, 'top':.25},
+                                    size_hint = (.27,.1))
+
+        self.encipherbutton = Button(text = "Encipher Text",
+                                        pos_hint = {'x':.015, 'top':.1},
+                                        size_hint = (.175,.075),
+                                        on_release = self.encipherPressed)
+
+        with open('texts/kamasutra.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.15, 'top':.975},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        self.instructions = Label(text = 'Type your message into the box labeled Plaintext, then click the\n' +
+                                        'button labeled Encipher Text to encrypt your message.',
+                                    pos_hint = {'x':.25, 'top':.525},
+                                    size_hint = (.5,.5))
+
+        self.image = Image(source = 'pics/KAMAbk.bmp',
+                            pos_hint = {'x':.6, 'top':1.05},
+                            size_hint = (.6,.6))
+
+
+
+        shuffle(self.newalpha)
+        j = 0
+        temp = []
+        count = 0
+        for i in self.newalpha:
+            if j < 1:
+                temp.append(i)
+                j += 1
+            else:
+                temp.append(i)
+                self.cipheralpha.append(temp)
+                j = 0
+                temp = []
+            count += 1
+
+        f.write('cipheralpha: ' + str(self.cipheralpha) + '\n')
+        x = .1
+        top = .5
+        for pair in self.cipheralpha:
+            templabel = Label(text = pair[0] + '\n\n' + pair[1],
+                                font_size = 16)
+            spacelabel = Label(text = '|\n\n|',
+                                font_size = 16)
+            templabel.pos_hint = {'x':x, 'top':top}
+            templabel.size_hint = (.05,.05)
+            x = x + .03
+            spacelabel.pos_hint = {'x':x, 'top':top}
+            spacelabel.size_hint = (.05,.05)
+            x = x + .03
+            self.r2.add_widget(templabel)
+            self.r2.add_widget(spacelabel)
+
+        self.r.add_widget(self.randomize)
+        self.r.add_widget(self.cboxlabel)
+        self.r.add_widget(self.spacebox)
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.ciphertextlabel)
+        self.r.add_widget(self.encipherbutton)
+
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.instructions)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.r2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def encipherPressed(self, *args):
+        f.write('encipher button pressed\n')
+        enciphered = self.kamaencrypt(self.plaintextinput.text, self.spacebox.active)
+        self.ciphertextdisplay.text = enciphered
+
+    def genrandomPressed(self, *args):
+        f.write('generate random cipher pressed\n')
+        self.cipheralpha = []
+        self.r2.clear_widgets()
+        self.r.remove_widget(self.r2)
+        shuffle(self.newalpha)
+        j = 0
+        temp = []
+        count = 0
+        for i in self.newalpha:
+            if j < 1:
+                temp.append(i)
+                j += 1
+            else:
+                temp.append(i)
+                self.cipheralpha.append(temp)
+                j = 0
+                temp = []
+            count += 1
+        f.write('cipheralpha: ' + str(self.cipheralpha) + '\n')
+
+        tempx = .1
+        temptop = .5
+        for pair in self.cipheralpha:
+            templabel = Label(text = pair[0] + '\n\n' + pair[1],
+                                font_size = 16)
+            spacelabel = Label(text = '|\n\n|',
+                                font_size = 16)
+            templabel.pos_hint = {'x':tempx, 'top':temptop}
+            templabel.size_hint = (.05,.05)
+            tempx = tempx + .03
+            spacelabel.pos_hint = {'x':tempx, 'top':temptop}
+            spacelabel.size_hint = (.05,.05)
+            tempx = tempx + .03
+            self.r2.add_widget(templabel)
+            self.r2.add_widget(spacelabel)
+
+        self.r.add_widget(self.r2)
+
+    def kamaencrypt(self, word, spaces, *args):
+        enciphered = ""
+        for i in word:
+            for k in self.cipheralpha:
+                if i in k:
+                    if k[0] == i:
+                        enciphered += k[1]
+                    else:
+                        enciphered += k[0]
+
+            if (i == " ") and spaces:
+                enciphered += " "
+
+        return enciphered
+
+################################################################################
+#End Kamasutra Page
+################################################################################
+
+################################################################################
+#Begin Affine Page
+################################################################################
+class AffinePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('affine cipher entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Affine Cipher")
+
+        with open('texts/affine.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':0, 'top':.8},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        with open('texts/affine2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.5, 'top':.8},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        self.button = Button(text = 'Affine Cipher Tool',
+                            pos_hint = {'x':.4, 'top':.1},
+                            size_hint = (.2,.05),
+                            on_release = self.buttonpressed)
+
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('affine cipher tool pressed\n')
+
+################################################################################
+#End Affine Page
+################################################################################
+
+################################################################################
+#Begin Cracking Substitution Page
+################################################################################
+class CrackingSubstitutionPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('cracking Substitution page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Cracking the Substitution Cipher")
+
+        with open('texts/crackingsubstitution.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.1, 'top':.9},
+                            size_hint = (.5,.5),
+                            font_size = 14)
+
+        self.button1 = Button(text = "Invention in\nBaghdad",
+                                        pos_hint = {'x':.8, 'top':.875},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "How it Works",
+                                        pos_hint = {'x':.8, 'top':.7},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "Finer Points",
+                                        pos_hint = {'x':.8, 'top':.525},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.button4 = Button(text = "Statistics",
+                                        pos_hint = {'x':.8, 'top':.35},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fourPressed,
+                                        font_size = 14)
+
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def onePressed(self, *args):
+        f.write("invention in baghdad pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(InventionInBaghdadPage().create())
+
+    def twoPressed(self, *args):
+        f.write('how it works pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(HowFreqPage().create())
+
+    def threePressed(self, *args):
+        f.write('finer points pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(PigpenPage().create())
+
+    def fourPressed(self, *args):
+        f.write('statistics pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(StatisticsPage().create())
+
+################################################################################
+#End Cracking Substitution Page
+################################################################################
+
+################################################################################
+#Begin InventionInBaghdad Page
+################################################################################
+class InventionInBaghdadPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('invention in baghdad entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Invention in Baghdad")
+
+        with open('texts/inventioninbagh.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.25, 'top':.95},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        with open('texts/inventioninbagh2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.03, 'top':.5},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        self.vid = VideoPlayer(source = 'video/mray2.avi',
+                                pos_hint = {'x':.5, 'top':.525},
+                                size_hint = (.5,.5),
+                                state = 'stop')
+
+        self.r.add_widget(self.vid)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End InventionInBaghdad Page
+################################################################################
+
+################################################################################
+#Begin Finer Points Page
+################################################################################
+class FinerPointsPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('finer points entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Finer Points")
+
+        with open('texts/finerpoints.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.25, 'top':.7},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End Finer Points Page
+################################################################################
+
+################################################################################
+#Begin Statistics Page
+################################################################################
+class StatisticsPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('statistics page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Statistics")
+
+        with open('texts/statistics.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.25, 'top':.935},
+                            size_hint = (.5,.5),
+                            font_size = 14)
+
+        self.image = Image(source = 'pics/stats-edt.png',
+                            pos_hint = {'x':0.025, 'top':.69},
+                            size_hint = (.9,.9))
+
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End Statistics Page
+################################################################################
+
+
+################################################################################
+#Begin Key Secrets Page
+################################################################################
+class KeySecretsPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('key secrets page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Key Secrets")
+
+        with open('texts/keysecrets.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.25, 'top':1.05},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        with open('texts/keysecrets2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.15, 'top':.425},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        self.button1 = Button(text = "Number of\nKeys for\nVarious\nCiphers",
+                                        pos_hint = {'x':.8, 'top':.375},
+                                        size_hint = (.15,.15),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "Kerckhoffs'\nPrinciple",
+                                        pos_hint = {'x':.8, 'top':.175},
+                                        size_hint = (.15,.15),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.image = Image(source = 'pics/keysecrets.png',
+                            pos_hint = {'x':.05, 'top':1.005},
+                            size_hint = (.9,.9))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def onePressed(self, *args):
+        f.write("number of keys for various ciphers pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(VariousCiphersPage().create())
+
+    def twoPressed(self, *args):
+        f.write('kerckhoffs principle pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(KerckhoffsPage().create())
+
+################################################################################
+#End Key Secrets Page
+################################################################################
+
+################################################################################
+#Begin Various Ciphers Page
+################################################################################
+class VariousCiphersPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('various ciphers entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Number of Keys for Various Ciphers")
+
+        with open('texts/variousciphers.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.425, 'top':.9},
+                            size_hint = (.15,.15))
+
+        self.table = Image(source = 'pics/keystable.png',
+                            pos_hint = {'x':.1, 'top':.8},
+                            size_hint = (.8,.8))
+
+        self.r.add_widget(self.table)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End Various Ciphers Page
+################################################################################
+
+################################################################################
+#Begin Kerckhoffs Page
+################################################################################
+class KerckhoffsPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Kerckhoffs principle entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Kerckhoffs Principle")
+
+        with open('texts/kerckhoffs.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.425, 'top':.85},
+                            size_hint = (.15,.15),
+                            font_size = 16)
+
+        with open('texts/kerckhoffs2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.425, 'top':.525},
+                            size_hint = (.15,.15),
+                            font_size = 16)
+
+        with open('texts/kerckhoffs3.txt', 'r') as myfile:
+            data3 = myfile.read()
+        self.text3 = Label(text = data3,
+                            pos_hint = {'x':.45, 'top':.2},
+                            size_hint = (.15,.15),
+                            font_size = 16)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.text3)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End Kerckhoffs Page
+################################################################################
+
+################################################################################
+#Begin Tragedy of Mary Queen Scots Page
+################################################################################
+class TragedyPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('tragedy of mary queen scots page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("The Tragedy of Mary Queen of Scots")
+
+        with open('texts/mary.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.9},
+                            size_hint = (.5,.5),
+                            font_size = 16)
+
+        self.button1 = Button(text = "The Babington\nPlot",
+                                        pos_hint = {'x':.8, 'top':.775},
+                                        size_hint = (.15,.15),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "Cracking the\nBabington\nCipher",
+                                        pos_hint = {'x':.8, 'top':.575},
+                                        size_hint = (.15,.15),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "The Execution\nof Mary",
+                                        pos_hint = {'x':.8, 'top':.375},
+                                        size_hint = (.15,.15),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.image = Image(source = 'pics/maryciph.bmp',
+                            pos_hint = {'x':.15, 'top':.5},
+                            size_hint = (.5,.5))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def onePressed(self, *args):
+        f.write("the babington plot pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(BabingtonPlotPage().create())
+
+    def twoPressed(self, *args):
+        f.write('cracking the babington cipher pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CrackingBabingtonPage().create())
+
+    def threePressed(self, *args):
+        f.write('execution of mary pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(MaryExPage().create())
+
+################################################################################
+#End Tragedy of Mary Queen of Scots Page
+################################################################################
+
+################################################################################
+#Begin Babington Plot Page
+################################################################################
+class BabingtonPlotPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('babington plot page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("The Babington Plot")
+
+        with open('texts/babingtonplot.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.425, 'top':.7},
+                            size_hint = (.15,.15),
+                            font_size = 16)
+
+        self.video = VideoPlayer(source = 'video/mqsexp3.avi',
+                            pos_hint = {'x':.5, 'top':.4},
+                            size_hint = (.4,.4),
+                            state = 'stop')
+
+        self.instructions = Label(text = "The video clip shows Babington's list of cipher\n" +
+                                        "substitutions and how they would have been used\n" +
+                                        "to encrypt a message.",
+                                    pos_hint = {'x':.2, 'top':.3},
+                                    size_hint = (.15,.15))
+
+        self.r.add_widget(self.instructions)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End Babington Plot Page
+################################################################################
+
+################################################################################
+#Begin Cracking Babington Plot Page
+################################################################################
+class CrackingBabingtonPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('cracking babington plot page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Cracking the Babington Cipher")
+
+        with open('texts/crackingbabington.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.7},
+                            size_hint = (.15,.15),
+                            font_size = 16)
+
+        with open('texts/crackingbabington2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.1925, 'top':.325},
+                            size_hint = (.15,.15),
+                            font_size = 16)
+
+        self.video = VideoPlayer(source = 'video/marcrac2.avi',
+                            pos_hint = {'x':.5, 'top':.5},
+                            size_hint = (.5,.5),
+                            state = 'stop')
+
+        self.image = Image(source = 'pics/babing4.png',
+                            pos_hint = {'x':0, 'top':1.35},
+                            size_hint = (1,1))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End Cracking Babington Plot Page
+################################################################################
+
+################################################################################
+#Begin Cracking Babington Plot Page
+################################################################################
+class MaryExPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('mary execution page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("The Execution of Mary Queen of Scots")
+
+        with open('texts/exmary.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.75},
+                            size_hint = (.15,.15),
+                            font_size = 16)
+
+        with open('texts/exmary2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = '[i]' + escape_markup(data2) + '[/i]',
+                            markup = True,
+                            pos_hint = {'x':.1925, 'top':.325},
+                            size_hint = (.15,.15),
+                            font_size = 14)
+
+        self.video = VideoPlayer(source = 'video/maryex11.avi',
+                            pos_hint = {'x':.5, 'top':.5},
+                            size_hint = (.5,.5),
+                            state = 'stop')
+
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End Mary Execution Page
 ################################################################################
 
 ################################################################################
@@ -2338,71 +3175,699 @@ class UncrackableCode(ButtonBehavior):
         #create the topbar navigation
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
-        self.tb = self.topbar.create("The Birth of Cryptography")
+        self.tb = self.topbar.create("The Uncrackable Code")
 
-        with open('texts/birthofc.txt', 'r') as myfile:
+        with open('texts/uncrackablecode.txt', 'r') as myfile:
             data = myfile.read()
         self.text = Label(text = data,
-                            pos_hint = {'x':.1, 'top':.9},
+                            pos_hint = {'x':.15, 'top':.9},
                             size_hint = (.5,.5))
 
-        self.button1 = Button(text = "Transposition",
-                                        pos_hint = {'x':.68, 'top':.9},
+        self.button1 = Button(text = "Vigenere\nCipher",
+                                        pos_hint = {'x':.8, 'top':.9},
                                         size_hint = (.15,.1),
                                         on_release = self.onePressed,
                                         font_size = 14)
 
-        self.button2 = Button(text = "Substitution",
-                                        pos_hint = {'x':.68, 'top':.725},
+        self.button2 = Button(text = "Alternative\nCiphers",
+                                        pos_hint = {'x':.8, 'top':.725},
                                         size_hint = (.15,.1),
                                         on_release = self.twoPressed,
                                         font_size = 14)
 
-        self.button3 = Button(text = "Cracking the\nSubstitution\nCipher",
-                                        pos_hint = {'x':.68, 'top':.55},
+        self.button3 = Button(text = "Encryption for\nthe Masses",
+                                        pos_hint = {'x':.8, 'top':.55},
                                         size_hint = (.15,.1),
                                         on_release = self.threePressed,
                                         font_size = 14)
 
-        self.button4 = Button(text = "Key Secrets",
-                                        pos_hint = {'x':.68, 'top':.375},
+        self.button4 = Button(text = "Cracking the\nVigenere\nCipher",
+                                        pos_hint = {'x':.8, 'top':.375},
                                         size_hint = (.15,.1),
                                         on_release = self.fourPressed,
-                                        font_size = 14)
-
-        self.button5 = Button(text = "The\nTragedy of\nMary Queen\nof Scots",
-                                        pos_hint = {'x':.68, 'top':.2},
-                                        size_hint = (.15,.1),
-                                        on_release = self.fivePressed,
                                         font_size = 14)
 
         self.r.add_widget(self.button1)
         self.r.add_widget(self.button2)
         self.r.add_widget(self.button3)
         self.r.add_widget(self.button4)
-        self.r.add_widget(self.button5)
         self.r.add_widget(self.text)
         self.r.add_widget(self.tb)
         return self.r
 
     def onePressed(self, *args):
-        f.write("Transposition pressed\n")
+        f.write("vigenere cipher pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(VigenerePage().create())
 
     def twoPressed(self, *args):
-        f.write('Substitution pressed\n')
+        f.write('alternative cipheres pressed\n')
 
     def threePressed(self, *args):
-        f.write('cracking the Substitution cipher pressed\n')
+        f.write('encryption for the masses pressed\n')
 
     def fourPressed(self, *args):
-        f.write('key secrets pressed\n')
-
-    def fivePressed(self, *args):
-        f.write('tragedy of mary queen of scots pressed\n')
+        f.write('cracking the vigenere pressed\n')
 
 ################################################################################
 #End Uncrackable Code Page
 ################################################################################
+
+################################################################################
+#Begin Vigenere Page
+################################################################################
+class VigenerePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('vigenere page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Vigenere Cipher")
+
+        with open('texts/vigenere.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.15, 'top':.7},
+                            size_hint = (.5,.5))
+
+        self.button1 = Button(text = "Swapping\nCipher\nAlphabets",
+                                        pos_hint = {'x':.8, 'top':.9},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "The Vigenere\nSquare",
+                                        pos_hint = {'x':.8, 'top':.725},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "How Vigenere\nWorks",
+                                        pos_hint = {'x':.8, 'top':.55},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.button4 = Button(text = "Why is\nVigenere so\nStrong?",
+                                        pos_hint = {'x':.8, 'top':.375},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fourPressed,
+                                        font_size = 14)
+
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def onePressed(self, *args):
+        f.write("swapping cipher alphabets pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(SwappingPage().create())
+
+    def twoPressed(self, *args):
+        f.write('vigenere square pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(VigenereSquarePage().create())
+
+    def threePressed(self, *args):
+        f.write('how vigenere works pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(HowVigenerePage().create())
+
+    def fourPressed(self, *args):
+        f.write('why vigenere strong pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(StrongVigenerePage().create())
+
+################################################################################
+#End Vigenere Page
+################################################################################
+
+################################################################################
+#Begin Swapping Cipher Page
+################################################################################
+class SwappingPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('swapping ciphers page entered\n')
+        MyApp.current = self
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+
+        self.newalpha1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+
+        self.newalpha2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+
+        shuffle(self.newalpha1)
+        shuffle(self.newalpha2)
+
+        #setup layouts
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Swapping Cipher Alphabets")
+
+        #elements of the page
+        self.stralpha = ' '.join(self.alpha)
+        self.alabel = Label(text = 'Plaintext Alphabet',
+                            pos_hint = {'x':.73, 'top':.45},
+                            size_hint = (.27,.1),
+                            font_size = 11)
+        self.alphabet = Label(text = self.stralpha,
+                                    pos_hint = {'x':.15, 'top':.425},
+                                    size_hint = (.65,.05),
+                                    font_name = 'font/RobotoMono-Regular')
+
+        self.clabel1 = Label(text = 'Ciphertext Alphabet 1',
+                            pos_hint = {'x':.735, 'top':.35},
+                            size_hint = (.27,.1),
+                            font_size = 11)
+
+        self.strnewalpha1 = " ".join(self.newalpha1)
+        self.cipheralphabet1 = Label(text = '[color=#ff0000]' + escape_markup(self.strnewalpha1) + '[/color]',
+                                    markup = True,
+                                    pos_hint = {'x':.15, 'top':.325},
+                                    size_hint = (.65,.05),
+                                    font_name = 'font/RobotoMono-Regular')
+
+        self.clabel2 = Label(text = 'Ciphertext Alphabet 2',
+                            pos_hint = {'x':.735, 'top':.29},
+                            size_hint = (.27,.1),
+                            font_size = 11)
+
+        self.strnewalpha2 = " ".join(self.newalpha2)
+        self.cipheralphabet2 = Label(text = '[color=#0000cc]' + escape_markup(self.strnewalpha2) + '[/color]',
+                                    markup = True,
+                                    pos_hint = {'x':.15, 'top':.265},
+                                    size_hint = (.65,.05),
+                                    font_name = 'font/RobotoMono-Regular')
+
+
+        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.1},
+                                    size_hint = (.375, .1))
+        self.plaintextlabel = Label(text = 'Plaintext',
+                                    pos_hint = {'x':.25, 'top':.175},
+                                    size_hint = (.27,.1))
+
+        self.ciphertextdisplay = Label(text = '',
+                                            pos_hint = {'x':.6, 'top':.13},
+                                            size_hint = (.375, .1),
+                                            markup = True,
+                                            font_size = 20)
+
+        self.ciphertextdisplay2 = Label(text = '',
+                                            pos_hint = {'x':.6, 'top':.1},
+                                            size_hint = (.375, .1),
+                                            font_size = 20)
+        self.ciphertextlabel = Label(text = 'Ciphertext',
+                                    pos_hint = {'x':.65, 'top':.175},
+                                    size_hint = (.27,.1))
+
+        self.encipherbutton = Button(text = "Encipher Text",
+                                        pos_hint = {'x':.025, 'top':.05},
+                                        size_hint = (.15,.05),
+                                        on_release = self.encipherPressed)
+
+        self.randomizebutton = Button(text = "Randomize",
+                                        pos_hint = {'x':.025, 'top':.1},
+                                        size_hint = (.15,.05),
+                                        on_release = self.randomize)
+
+        with open('texts/swappingcipher.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.25, 'top':.9},
+                            size_hint = (.5,.5))
+
+        self.r.add_widget(self.alabel)
+        self.r.add_widget(self.alphabet)
+        self.r.add_widget(self.clabel1)
+        self.r.add_widget(self.cipheralphabet1)
+        self.r.add_widget(self.clabel2)
+        self.r.add_widget(self.cipheralphabet2)
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.ciphertextdisplay2)
+        self.r.add_widget(self.ciphertextlabel)
+        self.r.add_widget(self.encipherbutton)
+        self.r.add_widget(self.randomizebutton)
+
+        self.r.add_widget(self.text)
+
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def encipherPressed(self, *args):
+        f.write('encipher button pressed\n')
+        enciphered = self.swapencrypt(self.plaintextinput.text)
+        self.ciphertextdisplay.text = enciphered[0]
+        self.ciphertextdisplay2.text = enciphered[1]
+
+    def randomize(self, *args):
+        f.write('randomize button pressed\n')
+        shuffle(self.newalpha1)
+        shuffle(self.newalpha2)
+        self.cipheralphabet1.text = '[color=#ff0000]' + escape_markup(" ".join(self.newalpha1)) + '[/color]'
+        self.cipheralphabet2.text = '[color=#0000cc]' + escape_markup(" ".join(self.newalpha2)) + '[/color]'
+
+
+    def swapencrypt(self, word, *args):
+
+        enciphered = ""
+        enciphered2 = ""
+
+        count = 0
+        for letter in word:
+            for i in range(len(self.alpha)):
+                if self.alpha[i] == letter:
+                    if count == 0:
+                        enciphered += '[color=#ff3333]' + escape_markup(self.newalpha1[i]) + '[/color]'
+                        enciphered2 += self.newalpha1[i]
+                        count = 1
+                    else:
+                        enciphered += '[color=#3333ff]' + escape_markup(self.newalpha2[i]) + '[/color]'
+                        enciphered2 += self.newalpha2[i]
+                        count = 0
+            if (letter == " "):
+                enciphered += " "
+
+        return [enciphered, enciphered2]
+
+################################################################################
+#End Swapping Cipher Page
+################################################################################
+
+################################################################################
+#Begin Vigenere Square Page
+################################################################################
+class VigenereSquarePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('vigenere square page entered\n')
+        MyApp.current = self
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+
+        self.templist = []
+        for i in range(len(self.alpha)):
+            tempalpha = deque(self.alpha)
+            tempalpha.rotate(len(self.alpha) - (i+1))
+            self.templist.append(list(tempalpha))
+
+        self.table = '     ' + '|'.join(self.alpha) + '\n'
+        self.table += '   -----------------------------------------------------\n'
+        count = 1
+        for alph in self.templist:
+            if count < 10:
+                self.table += str(count) + '  | ' + "|".join(alph) + '\n'
+            else:
+                self.table += str(count) + ' | ' + "|".join(alph) + '\n'
+            count += 1
+        #setup layouts
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("The Vigenere Square")
+
+        #elements of the page
+        self.tablelabel = Label(text = self.table,
+                                    pos_hint = {'x':.5, 'top':.8},
+                                    size_hint = (.5,.5),
+                                    font_name = 'font/RobotoMono-Regular',
+                                    font_size = 11)
+
+        self.nextbutton = Button(text = "Next Page",
+                                        pos_hint = {'x':.45, 'top':.09},
+                                        size_hint = (.15,.04),
+                                        on_release = self.nextPressed)
+
+
+        with open('texts/vigeneresquare.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.15, 'top':.6},
+                            font_size = 14,
+                            size_hint = (.15,.15))
+
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.tablelabel)
+        self.r.add_widget(self.nextbutton)
+
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def nextPressed(self, *args):
+        f.write('next button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(VigenereSquarePage2().create())
+
+
+################################################################################
+#End Vigenere Square Page
+################################################################################
+
+################################################################################
+#Begin Vigenere Square 2 Page
+################################################################################
+class VigenereSquarePage2(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('vigenere square page entered\n')
+        MyApp.current = self
+        self.firstkeyword = ''
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+
+        self.templist = []
+        for i in range(len(self.alpha)):
+            tempalpha = deque(self.alpha)
+            tempalpha.rotate(len(self.alpha) - (i+1))
+            self.templist.append(list(tempalpha))
+
+        self.table = '     ' + '|'.join(self.alpha) + '\n'
+        self.table += '   -----------------------------------------------------\n'
+        count = 1
+        for alph in self.templist:
+            if count < 10:
+                self.table += str(count) + '  | ' + "|".join(alph) + '\n'
+            else:
+                self.table += str(count) + ' | ' + "|".join(alph) + '\n'
+            count += 1
+        #setup layouts
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("The Vigenere Square")
+
+        #elements of the page
+        self.tablelabel = Label(text = self.table,
+                                    pos_hint = {'x':.5, 'top':.8},
+                                    size_hint = (.5,.5),
+                                    font_name = 'font/RobotoMono-Regular',
+                                    font_size = 11,
+                                    markup = True)
+
+        self.keywordinput = TextInput(pos_hint = {'x':.55, 'top':.185},
+                                    size_hint = (.4, .05),
+                                    text = 'white',
+                                    font_name = 'font/RobotoMono-Regular')
+        self.keywordlabel = Label(text = 'Keyword',
+                                    pos_hint = {'x':.375, 'top':.205},
+                                    size_hint = (.27,.1),
+                                    font_size = 13)
+
+        self.plaintextinput = TextInput(pos_hint = {'x':.55, 'top':.12},
+                                    size_hint = (.4, .05),
+                                    text = 'divert troops to east ridge',
+                                    font_name = 'font/RobotoMono-Regular')
+        self.plaintextlabel = Label(text = 'Plaintext',
+                                    pos_hint = {'x':.375, 'top':.14},
+                                    size_hint = (.27,.1),
+                                    font_size = 13)
+
+        self.ciphertextdisplay = TextInput(text = '',
+                                            pos_hint = {'x':.55, 'top':.055},
+                                            size_hint = (.4, .05),
+                                            disabled = True,
+                                            font_name = 'font/RobotoMono-Regular')
+        self.ciphertextlabel = Label(text = 'Ciphertext',
+                                    pos_hint = {'x':.375, 'top':.075},
+                                    size_hint = (.27,.1),
+                                    font_size = 13)
+
+        self.encipherbutton = Button(text = "Encipher Text",
+                                        pos_hint = {'x':.075, 'top':.125},
+                                        size_hint = (.15,.04),
+                                        on_release = self.encipherPressed,
+                                        disabled = True)
+
+        self.repeatbutton = Button(text = "Repeat Keyword",
+                                        pos_hint = {'x':.075, 'top':.05},
+                                        size_hint = (.15,.04),
+                                        on_release = self.repeatPressed)
+
+
+        with open('texts/vigeneresquare2.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.15, 'top':.6},
+                            font_size = 14,
+                            size_hint = (.15,.15))
+
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.tablelabel)
+        self.r.add_widget(self.keywordinput)
+        self.r.add_widget(self.keywordlabel)
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.ciphertextlabel)
+        self.r.add_widget(self.encipherbutton)
+        self.r.add_widget(self.repeatbutton)
+
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def encipherPressed(self, *args):
+        f.write('encipher button pressed\n')
+        self.repeatbutton.disabled = False
+        self.encipherbutton.disabled = True
+        enciphered = self.encrypt()
+        self.ciphertextdisplay.text = enciphered
+
+    def repeatPressed(self, *args):
+        f.write('repeat button pressed\n')
+        self.repeatbutton.disabled = True
+        self.encipherbutton.disabled = False
+        self.firstkeyword = self.keywordinput.text
+        self.plaintextinput.text = self.plaintextinput.text.replace(' ','')
+        keyword = self.keywordinput.text
+        text = self.plaintextinput.text
+        tempkeyword = ''
+        times = len(text) / len(keyword)
+
+        for i in range(times):
+            tempkeyword += keyword
+
+        leftover = len(text) - len(tempkeyword)
+        tempkeyword += keyword[:leftover]
+
+        self.keywordinput.text = tempkeyword
+
+    def encrypt(self, *args):
+        enciphered = ''
+        keyword = self.firstkeyword
+        fullkeyword = self.keywordinput.text
+        text = self.plaintextinput.text
+        indexes = []
+        for letter in keyword:
+            for i in range(len(self.templist)):
+                alph = self.templist[i]
+                if alph[0] == letter:
+                    f.write('index: ' + str(i) + '\n')
+                    f.write(alph[0] + ' | ' + letter + '\n')
+                    if i not in indexes:
+                        indexes.append(i)
+        indexes = sorted(indexes, key=int)
+        f.write(str(indexes) + '\n')
+
+        #"[color=#e9ff00][/color]"
+        self.table = '     ' + '|'.join(self.alpha) + '\n'
+        self.table += '   -----------------------------------------------------\n'
+        count = 0
+        yes = False
+        for alph in range(len(self.templist)):
+            try:
+                if indexes[count] == alph:
+                    yes = True
+                    count += 1
+                else:
+                    yes = False
+            except IndexError:
+                yes = False
+
+            if yes:
+                f.write(str(self.templist[alph]) + '\n')
+                if alph < 9:
+                    self.table += '[color=#e9ff00]' + str(alph+1) + '  | ' + "|".join(self.templist[alph]) + '[/color]\n'
+                else:
+                    self.table += '[color=#e9ff00]' + str(alph+1) + ' | ' + "|".join(self.templist[alph]) + '[/color]\n'
+            else:
+                if alph < 9:
+                    self.table += str(alph+1) + '  | ' + "|".join(self.templist[alph]) + '\n'
+                else:
+                    self.table += str(alph+1) + ' | ' + "|".join(self.templist[alph]) + '\n'
+
+        f.write(self.table)
+
+        self.tablelabel.text = self.table
+
+        for j in range(len(text)):
+            for index in indexes:
+                if self.templist[index][0] == fullkeyword[j]:
+                    enciphered += self.templist[index][self.alpha.index(text[j])]
+
+        return enciphered
+
+################################################################################
+#End Vigenere Square 2 Page
+################################################################################
+
+################################################################################
+#Begin How Vigenere Works Page
+################################################################################
+class HowVigenerePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('how vigenere works page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("How Vigenere Works")
+
+        with open('texts/howvigenereworks.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.45, 'top':.8},
+                            size_hint = (.15,.15),
+                            font_size = 16)
+
+        self.video = VideoPlayer(source = 'video/chf3-1-7.avi',
+                            pos_hint = {'x':.215, 'top':.7},
+                            size_hint = (.6,.6),
+                            state = 'stop')
+
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End How Vigenere Works Page
+################################################################################
+
+################################################################################
+#Begin Why so strong Vigenere Page
+################################################################################
+class StrongVigenerePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('why vigenere strong page entered\n')
+        MyApp.current = self
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        self.monoalpha = ['o','e','h','z','m','v','g','b','k','w','i','y','a',
+        'p','s','r','q','c','x','n','d','f','t','u','j','l']
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Why is Vigenere so Strong")
+
+        with open('texts/strongvigenere.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.425, 'top':.9},
+                            size_hint = (.15,.15),
+                            font_size = 16)
+
+        self.plaintext = TextInput(text = 'Aged twenty six, Vigenere was sent to Rome on a diplomatic' +
+        'mission. It was here that he became acquainted with the writings of Alberti, Trithemius and Porta, ' +
+        'and his interest in cryptography was ignited. For many years, cryptography was nothing more than a ' +
+        'tool that helped him in his diplomatic work, but, at the age of thirty nine, Vigenere decided ' +
+        'that he had amassed enough money to be able to abandon his career and concentrate on a life of study' +
+        ' It was only then that he began research into a new cipher.',
+                            pos_hint = {'x':.05, 'top':.75},
+                            size_hint = (.4,.2))
+
+        self.plainscrollview = ScrollView(size_hint=(1, None), size=(self.plaintext.width, self.plaintext.height))
+
+        self.enciphermono = Button(text = 'Encipher Mono',
+                            pos_hint = {'x':.425, 'top':.7},
+                            size_hint = (.15,.15),
+                            on_release = self.monoen)
+
+        self.monocipher = TextInput(text = '',
+                                    pos_hint = {'x':.425, 'top':.5},
+                                    size_hint = (.15,.15))
+
+        self.vigcipher = TextInput(text = '',
+                                    pos_hint = {'x':.425, 'top':.3},
+                                    size_hint = (.15,.15))
+
+        self.r.add_widget(self.plainscrollview)
+        self.r.add_widget(self.plaintext)
+        self.r.add_widget(self.enciphermono)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def monoen(self, *args):
+        enciphered = self.monoencrypt(self.plaintext.text, False)
+        self.monocipher.text = enciphered
+
+    def monoencrypt(self, word, spaces, *args):
+        enciphered = ""
+
+        #iterate through the string of text
+        for letter in word:
+            #iterate through the alphabet list
+            for i in range(len(self.alpha)):
+                if self.alpha[i] == letter:
+                    enciphered += self.monoalpha[i]
+            if (letter == " ") and spaces:
+                enciphered += " "
+
+        return enciphered
+
+
+################################################################################
+#End Why so strong Vigenere Page
+################################################################################
+
+
 
 class TopBar(ButtonBehavior):
     def __init__(self):

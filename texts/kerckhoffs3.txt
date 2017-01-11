@@ -1,0 +1,5 @@
+Typically, an army might use the same algorithm for all its communications, but it might 
+change the key every day. If the enemy learns of the algorithm by capturing a soldier, then 
+they still do not know which key is being used. If, somehow, a key is captured, then this will allow 
+the enemy to read messages for one day, but the next day the key will be changed and 
+security will be established again.

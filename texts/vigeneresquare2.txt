@@ -1,0 +1,25 @@
+To illustrate how a keyword is used in conjunction 
+with the Vigenere square, let us encipher 'Divert 
+troops to east ridge', using the keyword WHITE. 
+First, the keyword is spelt out above the message, 
+and repeated until each letter in the message is 
+associated with a letter from the keyword. This 
+can be done by clicking on 'Repeat Keyword'.
+
+Above the first letter of the message, 'd', is the key 
+letter, W. To encrypt this first letter, we go to the 
+column headed by 'd' and then see where it 
+intersects the row starting with W, which is at the 
+letter Z. Consequently, the letter 'd' in the 
+plaintext is represented by Z in the ciphertext. You 
+can check this by clicking on 'Letter Encipher'.
+
+This process is repeated to encrypt other letters in 
+the message. The second letter is 'i', and above it 
+is the key letter H. To encrypt 'i', we identify the 
+column headed by 'i' and see where it intersects 
+the row starting with H, which is at the letter P. 
+Consequently, the letter 'i' in the plaintext is 
+represented by P in the ciphertext. You can check 
+the encryption of this letter and subsequent 
+letters by clicking on 'Letter Encipher'.

@@ -1,0 +1,27 @@
+In addition to analysing the frequency of individual letters, here are some other tips for cracking a 
+message encrypted with the monoalphabetic substitution cipher.
+
+  -  If you are having trouble cracking a message, then focus on repeated letters. In 
+     English, the most common repeated letters are 'ss', 'ee', 'tt', 'ff', 'll', 'mm' and 'oo', 
+     in that order. If the ciphertext contains any repeated characters, then they probably 
+     represent one of these.
+
+  -  If the ciphertext contains spaces between words, then try to identify words 
+     containing just one, two or three letters, The only one-letter words in English are: 'a' 
+     and 'i'. The most common two-letter words are: 'of', 'to', 'in', 'it', 'is', 'be', 'as', 'at', 
+     'so', 'we', 'he', 'by', 'or', 'on' and 'do'. The most common three-letter words are: 
+     'the' and 'and'.
+
+  -  The following trick works even when the ciphertext does not contain spaces between 
+     words. The trick allows us to spot the letter 'h', having already identified the letter 
+     'e'. In English, 'h' frequently goes before 'e' (as in 'the', 'then', 'they'), but rarely 
+     after 'e'. No other pair of letters has such an asymmetric relationship. Find a 
+     ciphertext letter that has a highly asymmetric relationship with the letter that you 
+     think represents 'e', and this is probably 'h'.
+
+  -  A useful skill is the ability to guess words or entire phrases in a ciphertext based on 
+     experience. Al Khalil, an early Arabian cryptanalyst, demonstrated this talent when 
+     he cracked a Greek ciphertext. He guessed that the ciphertext began with the 
+     greeting 'In the name of God'. Having established that this phrase corresponded to 
+     specific letters in the ciphertext, he could prise open the rest of the ciphertext. A 
+     section of ciphertext that can be guessed is known as a 'crib'.

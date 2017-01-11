@@ -1,0 +1,15 @@
+The invention of frequency analysis meant that the substitution cipher was no 
+longer secure. A lack of security could lead to disasters such as the execution of 
+Mary Queen of Scots. By the end of the sixteenth century, the codebreakers were 
+clearly on top, so the codemakers had to devise a new form of encryption.
+
+This chapter focuses on the Vigenere cipher, also known as the 'le chiffre 
+indechiffrable', or the 'uncrackable cipher', which was a significant improvement 
+on the previous substitution cipher.
+
+The chapter also describes some of the other ciphers that were developed alongside 
+the Vigenere cipher, and it includes a section on the development of the telegraph, 
+a communication revolution that motivated the need for secure ciphers. 
+
+Finally, the chapter explains how the Vigenere cipher was eventually cracked by 
+Charles Babbage, the Victorian pioneer of computing.

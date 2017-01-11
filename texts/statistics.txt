@@ -1,0 +1,15 @@
+Statistics is an area of mathematics that attempts to say something about a large population by 
+examining a small sample of the entire population. For example, if an alien landed in the middle of 
+London and analysed the first 100 people it encounted, then roughly 50 would be men and 50 
+would be women. The alien could generalise and come to the conclusion that half of the human 
+species is male and half is female.
+
+But such generalising will fail if the sample is too small. If the alien analysed just the first two 
+people it met, then they might both be women and it would wrongly assume that the entire human 
+population is female.
+
+This is relevant to codebreaking by frequency analysis, because a short plaintext will not necessarily 
+match the average set of frequencies for letters, because it contains only a small sample of letters. 
+You can see this by clicking on the 3 buttons below and comparing the frequency distribution of a 
+single word, a single line and a whole verse from a nursery rhyme, which you can compare to the 
+average frequency distribution.

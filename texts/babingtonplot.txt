@@ -1,0 +1,14 @@
+By 1586, after 18 years of imprisonment, Mary's morale was at its lowest and it seemed that all hope 
+was lost. Then, on the 6th of January 1586, she received an astonishing package of letters. It was the 
+first of a series of deliveries, smuggled by Gilbert Gifford into Chartley Hall in Staffordshire, where 
+Mary was held prisoner.
+
+Gifford had previously made contact with Anthony Babington, a young Catholic rebel who wanted 
+Mary's blessing to plan a revolt, which involved assassinating Elizabeth and putting Mary on the 
+throne. Via Gifford, Babington sent letters to Mary, which outlined his plan. In case the letters fell 
+into the wrong hands, Babington encrypted his messages using a relatively straightforward 
+monoalphabetic substitution cipher.
+
+Instead of substituting each letter for a different letter, the cipher substituted each letter for a 
+symbol. The cipher was used within elite Catholic circles, so Mary's cipher secretary, who was 
+imprisoned with her, knew how to decipher Babington's letters.
