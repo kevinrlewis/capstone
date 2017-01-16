@@ -33,5 +33,8 @@ cover png images
 flow of the application
 * log - log file that updates each time the application
 runs
------------------------------------------------------------
 
+##resources
+* http://www.onlineocr.net/
+* http://textmechanic.com/text-tools/basic-text-tools/addremove-line-breaks/
+* http://simonsingh.net/
