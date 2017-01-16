@@ -1,0 +1,25 @@
+Although the telegraph and the ensuing telecommunications revolution occurred in 
+the 19th century, its origins can be traced back to 1753. An anonymous letter in a 
+Scottish magazine described how a message could be sent by connecting the sender 
+and receiver with 26 cables. The sender could spell out the message by sending pulses 
+of electricity along each wire. To spell out "hello", the sender would begin by sending 
+a signal down the "h" wire, then down the "e" wire, and so on. The receiver would 
+somehow sense the electrical current emerging from each wire and read the message.
+
+However, this "expeditious method of conveying intelligence" was never constructed 
+because of several technical obstacles. For example, engineers needed a sufficiently 
+sensitive system for detecting electrical signals. In England, Charles Wheatstone and 
+William Cooke built detectors from magnetised needles, which were deflected by an 
+incoming electric current. By 1839, the Wheatstone-Cooke system was being used to 
+send messages 18 miles between railway stations in West Drayton and Paddington
+
+The reputation of the telegraph and its remarkable speed of communication soon 
+spread. Nothing did more to popularise its power than the birth of Queen Victoria's 
+second son, Prince Alfred, at Windsor on 6 August 1844. News of the birth was 
+telegraphed to London, and The Times was on the streets announcing the news within 
+the hour. It credited the technology that had enabled this feat, mentioning that it was 
+"indebted to the extraordinary power of the Electro-Magnetic Telegraph." The 
+following year, the telegraph gained further fame when it helped capture John Tawell, 
+who had murdered his mistress in Slough, and who had attempted to escape by 
+jumping on a train to London. The local police telegraphed Tawell's description to 
+London, and he was arrested as soon as he arrived at Paddington.

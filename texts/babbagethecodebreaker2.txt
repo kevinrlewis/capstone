@@ -1,0 +1,12 @@
+Cracking a difficult cipher is akin to climbing a 
+sheer cliff face. The cryptanalyst is seeking any 
+nook or cranny, which could provide the slightest 
+purchase. In a monoalphabetic cipher the 
+cryptanalyst will latch on to the frequency of the 
+letters, because the most popular letters will stand 
+out no matter how they have been disguised. In 
+the Vigenere cipher the frequencies are much more 
+balanced, so the rock face seems perfectly smooth, 
+but Babbage was undaunted. In the video clip, 
+Babbage's biographer Doron Swade talks about 
+his dogged determination.

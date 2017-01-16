@@ -1,0 +1,17 @@
+The key in a bok cipher is a piece of text, often from a book. Each letter of the keytext (or perhaps 
+just the inital letter of each word) is sequentially numbered. Then, to encrypt a letter in the 
+message, you need to find the same letter in the keytext and identify its associated number. Each 
+letter is then substituted with a number. Imagine that the previous sentence is the keytext, then the 
+word 'cheers' could be encrypted as 3, 4, 1, 9, 10, 12. Crucially, the two E's in the message have been 
+encrypted in two different ways, as 1 and 9.
+
+The advantage of this system is that each plain letter can be encrypted in many different ways. The 
+letter E may appear thousands of times in the keytext, so there are thousands of numbers that could 
+be used to replace the appearance of E in the message. Usually, the only hope of cracking a book 
+cipher is to identify the keytext.
+
+In the following tool, start by typing in your message. Then choose a keytext from 
+the ten that are available. To ensure that every keytext has every required letter, the 
+entire alphabet is added at the end of each one. Finally click on 'Encipher' to 
+complete the encryption process.
+

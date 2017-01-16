@@ -1,0 +1,14 @@
+Codes are incredibly hard to break and have been used 
+throughout history. However, people have generally 
+avoided using them if at all possible, because it 
+requires so much work to construct a code book, print 
+it and then distribute it. Remember, a code book may 
+contain hundreds of pages, whereas a cipher key might 
+be just 26 letters. When the telegraph was invented, 
+code books were used as a way of saving money. A whole 
+sentence might be substituted by a 5-letter code 
+group, and it would be much cheaper to transmit 5 
+letters than a whole sentence. During World War One 
+codes became central to the secure communication by 
+all combatants. To find out more about constructing code 
+books and their security, watch the video clip. 

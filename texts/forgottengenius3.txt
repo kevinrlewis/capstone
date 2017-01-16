@@ -1,0 +1,5 @@
+Thanks to the breakthroughs of Charles Babbage and Friedrich Kasisld, the Vigenere cipher was no 
+longer secure. Henceforth, cryptographers could no longer guarantee secrery, because cryptanalysts 
+had fought back to regain control in the communications w.. Although cryptographers attempted to 
+design new ciphers, nothing of great significance emerged during the latter half of the 19th 
+century, and professional cryptography was in disarray.

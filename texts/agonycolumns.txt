@@ -1,0 +1,16 @@
+In Victorian England, the open expression of affection between young couples was frowned upon. 
+They could not even communicate by letter, fearing that their parents might intercept and read their 
+correspondence. Therefore, sweethearts sent each other encrypted messages via the personal 
+columns of newspapers.
+
+These so-called "agony columns" provokes the curiosity of amateur codebreakers, who would scan 
+the notes and try to decipher their titillating contents. The scientist Charles Wheatstone deciphered 
+a note in The Times from an Oxford student, suggesting to his true love that they elope. Wheatstone 
+inserted his own message, encrypted in the same cipher, advising the couple against the rash action. 
+Then there appeared a third message, this time unencrypted: "Dear Charlie, Write no more. Our 
+cipher is discovered."
+
+The newspaper also contained other types of encrypted notes. In one case, The Times unwittingly 
+carried the following encrypted notice: "The Times is the Jefferies of the press." The notice likened 
+the newspaper to the notorious 17th century Judge Jeffreys, implyiing that the Times was a ruthless, 
+bullying publication, which acted as a mouthpiece for the government.

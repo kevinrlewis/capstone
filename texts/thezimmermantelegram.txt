@@ -1,0 +1,15 @@
+The most famous illustration of a broken code is the cracking of the Zimmermann Telegram.
+
+In January 1917, the German Foreign Minister Arthur Zimmermann seent a telegram to the President of 
+Mexico, proposing an alliance. Germany's worst fear was that America would enter the First World 
+War, tipping the balance in favour of Britain, so the telegram said that if America entered the 
+European conflict, then Germany would support a Mexican attack on America's southern border to 
+reclaim disputed states such as Texas and New Mexico. Zimmermann assumed that this would be enough 
+to force America to withdraw its troops back to home soil in order to defend itself against 
+Mexico.
+
+The telegram was encoded to protect it from prying eyes, but the British intercepted it and sent it 
+to its secret codebreaking department known as Room 40, where Nigel de Grey was responsible for 
+cracking it. De Grey revealed Zimmermann's scheme by using the techniques described in the next two 
+sections (`Cracking Zimmermann' and `The Weaknesses of Codes'). 
+

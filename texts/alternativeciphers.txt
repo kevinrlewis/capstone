@@ -1,0 +1,26 @@
+The traditional forms of substitution ciphers, those that existed prior to the 
+Vigenere cipher, were called monoalphabetic, because they used only one cipher 
+alphabet per message. In contrast, the Vigenere cipher is known as 
+polyalphabetic, because it employs several cipher alphabets per message. The 
+polyalphabetic nature of the Vigenere cipher is what imbues it with its strength, 
+but it also makes it more complicated to use. The effort required to implement 
+the Vigenere cipher discouraged people from employing it. 
+
+For many 17th century purposes, the monoalphabetic substitution cipher was 
+perfectly adequate. If you wanted to ensure that your servant was unable to read 
+your private correspondence, then the old-fashioned type of cipher was ideal. 
+Monoalphabetic substitution was quick, easy and secure against people 
+unschooled in cryptanalysis. In fact, the simple monoalphabetic substitution 
+cipher endured in various forms for many centuries. 
+
+However, the simple monoalphabetic cipher was clearly inadequate for serious 
+military and government communications where security was paramount, yet 
+serious cryptographers were still reluctant to adopt the polyalphabetic cipher 
+because of its complexity. Military communications, in particular, required speed 
+and simplicity, and a diplomatic office might be sending and receiving hundreds 
+of messages each day, so time was of the essence.
+
+Consequently, cryptographers searched for an intermediate cipher, one that was 
+harder to crack than a simple monoalphabetic cipher, but one that was simpler to 
+implement than a polyalphabetic cipher. There were various candidates that 
+could act as the intermediate cipher, which are explored in this section.

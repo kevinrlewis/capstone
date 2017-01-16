@@ -1,0 +1,13 @@
+So far, all the encryption systems that have been discussed have been ciphers. Ina cipher, 
+encryption occurs on a letter by letter basis. In contrast, codes we applied to complete words or 
+phrases. For example, the Caesar cipher with a key or 1 shift space toms SIMON into TJNPO, bumping 
+each letter forward one place. In contrast, a code would act on the whole word, perhaps turning 
+SIMON into MR PURPLE.
+
+Because each word has its own substitution, a code requires a code book, a 
+list of all of the words that might be used and a substitution for each one. The code book may 
+contain thousands of words, looking rather like a dictionary. The substitution might be another 
+word, a random sequence or letters, or a number. A code has no flexibility — there is one code book 
+and the sender and receiver have no option in how they use this one and only key. A cipher, however, has 
+many keys and an inherent flexibility, e.g., the Caesar cipher has 25 keys, 25 potential shifts. 
+

@@ -1,0 +1,17 @@
+Some codes we constructed in alphabetical and 
+numerical order, so that words beginning with A 
+are represented by low numbers, and words beginning 
+with Z are represented by high numbers. So if the 
+enemy uses intelligence information that suggests 
+that 7856 is SUN and that 7858 is SUNSET, then 
+they can deduce that 7857 is SUNRISE. 
+
+And, if the same edition of the code book is 
+being used year after year, then sooner or later a 
+copy will be captured by the enemy, thereby 
+undermining the security of the code and every 
+subsequent message that is encoded. With ciphers, 
+a different key can be used each day. If one key 
+is captured, then security is compromised for 
+just one day. 
+

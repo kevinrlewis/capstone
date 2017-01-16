@@ -1,0 +1,20 @@
+The Vigenere cipher was 
+believed to be unbreakable, 
+hence its nickname 'the 
+uncrackable cipher' or 'le 
+chiffre undechiffrable'.
+
+However, the Vigenere cipher 
+was not a perfect cipher. It was 
+cracked in the 19th century, 
+notably by the eccentric British 
+genius Charles Babbage.
+
+This section explains who 
+Babbage was, how he cracked 
+the Vigenere cipher, and why he 
+kept his breakthrough secret.
+
+The section also includes a tool 
+that you can use to crack the 
+Vigenere cipher.

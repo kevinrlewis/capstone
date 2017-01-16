@@ -1,0 +1,14 @@
+Babbage was interested in ciphers from a very young age. He once recalled how his hobby 
+occasionally got him into trouble: "The bigger boys made ciphers, but if I got hold of a few words, I 
+usually found out the key. The consequence of this ingenuity was occasionally painful: the owners of 
+the detected ciphers sometimes thrashed me, though the fault lay in their own stupidity." These 
+beatings did not discourage him, and he wrote in his autobiography: "Deciphering is, in my opinion, 
+one of the most fascinating of arts."
+
+Babbage was inspired to crack the Vigenere cipher thanks to Jogn Thwaites, a Bristol dentist with a 
+naive view of ciphers. In 1854, Thwaites wrote to the "Jounal of the Society of Arts" in order to 
+patent his version of the Vigenere cipher, unaware that he was 250 years too late. Babbage wrote to 
+the Society, pointing out that "the cipher ... is a very old one, and to be found in most books." 
+Thwaites was unapologetic and challenged Babbage to break his cipher. Whether or not it was 
+breakable was irrelevant to whether or not it was new, but Babbage was curious and searched for a 
+weakness in the Vigenere cipher.

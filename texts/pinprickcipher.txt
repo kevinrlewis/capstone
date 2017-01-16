@@ -1,0 +1,15 @@
+An example of the public familiarity with cryptography was the widespread use of pinprick 
+encryption. The ancient Greek historian Aeneas the Tactician suggested conveying a secret message 
+by procking tiny holes under particular letters in an apparently innocuous page of text, just as there 
+are dots under some letters in this paragraph. The punctured letters would spell out a secret 
+message, easily read by the intended receiver. However, if an intermediary stared at the page, they 
+would probably be oblivious to the barely perceptible pinpricks, and would be unaware of the secret 
+message.
+
+Two thousand years later, British letter writers used exactly the same method, not to achieve 
+secrecy, but to avoid paying excessive postage costs. Before the overhaul of the postage system in 
+the mid-1800s, sending a letter cost about a shilling for every hundred miles, beyond the means of 
+most people, but newspapers were allowed to travel free, and this provided a loophole for the thrifty 
+Victorian. Instead of writing and sending letters, people began to use pinpricks to spell out a 
+message on the front page of a newspaper. They could then send the newspaper through the post, 
+without having to pay a penny.

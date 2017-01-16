@@ -1,0 +1,7 @@
+Babbage's successful cryptanalysis of the Vigenere cipher was probably achieved in 1854, but his 
+discovery went completely unrecognised, because he never published it. The discovery only came to 
+light this century. In the meantime, his teclunique was independently discovered by Friedrich 
+WiThehn Kasisld, a retired officer in the Prussian army. Ever since 1863, when he published his 
+cryptanalftic breakthrough in "Die Gehehnschriften and die Dechiffrir Isunst" (Secret Writing and 
+the Art of Deciphering), the teclunique has been Imam as the Kasisld Test, and Babbage's 
+contribution has been largely ignored.
