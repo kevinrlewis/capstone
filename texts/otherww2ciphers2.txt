@@ -1,0 +1,12 @@
+While British codebreakers were breaking the German ciphers and influencing the course of the war in Europe,
+American codebreakers were having an equally important influence on events in the Pacific arena by cracking
+Japanese ciphers such as Purple. For example, in June 1942, the Americans deciphered a message which enabled
+them to foil Japan's attempt to capture Midway Island in one of the most important battles of World War Two.
+
+The true strength and potential of machine ciphers was demonstrated by the Typex cipher machine, used by the
+British Army and Air Force, and the SIGABA cipher machine, used by the American military. Both of these cipher
+machines were more complex than the Enigma machine and both were used properly, and therefore they remained
+unbroken throughout the war. Allied cryptographers were confident that complicated electromechanical machine
+ciphers could guarantee secure communication. However complicated machine ciphers were not the only way of
+sending secure messages during the Second World War. Indeed, one of the most secure methods of encryption was
+also one of the simplest - the use of Native American speakers of the Navajo language as radio operators.

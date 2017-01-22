@@ -1,0 +1,9 @@
+The initial breakthrough was made in 1969 by
+James Ellis, who worked in a section of
+GCHQ known as the Communications
+Electronics Security Group (CESG). He made
+the same leap that Whit Diffie would make,
+i.e., he conceived of the asymmetric cipher.
+His formulation was different and he called it
+non-secret encryption, but nevertheless Ellis
+had discovered public-key cryptography.

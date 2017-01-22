@@ -1,0 +1,7 @@
+Imagine that we want to encrypt the message, HELLO, and we want to employ a
+simple computer version of a transposition cipher. We begin by converting the
+message into ASCII prior to encryption, as shown below. One of the simplest forms
+of transposition cipher is the railfence cipher. Click here to remind yourself how the
+railfence works. I have removed the spaces between the ASCII blocks in the
+original plaintext to generate a single string, and you can perform the railfence by
+clicking the buttons below:

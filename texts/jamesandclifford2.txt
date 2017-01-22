@@ -1,0 +1,9 @@
+Like Diffie, Ellis could not think of a
+mathematical implementation, so the idea lay
+dormant for three years. Eventually, in 1973,
+Clifford Cocks joined CESG. Having just
+completed his PhD in maths, but knowing very
+little about cryptography, he tackled the
+problem and came up with the equivalent
+solution that Rivest, Shamir and Adleman
+would later develop in 1977.

@@ -1,0 +1,16 @@
+Turbulence causes another headache too.
+Changes in refractive index cause the beam to
+wander so that it misses the satellite's antenna.
+To keep the photon beam on course, Alice
+monitors the feeble reflections from the timing
+pulses, and uses the information to steer the
+photon beam.
+
+Earlier this year, Hughes set a new record for
+quantum cryptography through air when he
+exchanged a key across 500 metres. Bob, the
+receiver, was equipped with a 3.5-inch-diameter
+telescope. Each incoming photon encountered a
+beam splitter, which randomly reflected or
+transmitted the photon, steering it towards one
+type of filter or the other.

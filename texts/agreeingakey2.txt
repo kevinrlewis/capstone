@@ -1,0 +1,17 @@
+This section of a monthly key sheet has 
+a row showing the key setting for each 
+particular day. Each mrning, operators 
+would change their machines to the 
+appropriate setting for that day. In 
+theory, it would have been possible to 
+communicate all messages using this one 
+setting for the rest of the day, but in 
+general it is more secure to change the 
+setting as often as possible. Hence, 
+prior to sending a message, the sender 
+would transmit (in code) a new random 
+rotor setting for the rotors. The 
+sender would then move the rotors to 
+this new setting and encode the message 
+using this revised key. 
+

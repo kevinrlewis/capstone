@@ -1,0 +1,8 @@
+Communications between Hitler and his generals were encrypted using the Lorenz SZ40 machine,
+which operated in a similar way to the Enigma machine, but was far more complicated, presenting
+the Bletchley codebreakers with an even greater challenge. Eventually, a GPO engineer Tommy
+Flowers constructed a machine, Colossus, for breaking the Lorenz cipher. The machine was based
+on a design by a Bletchley mathematician Max Newman, which drew heavily on the ideas of Alan
+Turing. Its 1,500 electronic valves were considerably faster than the sluggish electromechanical
+relay switches used in the bombes. But more important than Colossus’ speed was the fact that it
+was programmable. It is this that makes Colossus the precursor to the modern digital computer.

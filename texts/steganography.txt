@@ -1,0 +1,22 @@
+What would happen if cryptography
+was banned? One option would be to
+switch to steganography.
+Cryptography hides the meaning of a
+message, but steganography hides the
+existence of a message. If the message
+is hidden, then it is hard to block its
+transmission.
+
+Steganography is an ancient science. Invisible inks,
+such as lemon juice, render the message invisible, but
+gently heating lemon juice will develop the ink.
+Microdots shrink the message to such a tiny size that
+it can be pasted onto an innocuous letter and looks
+like nothing more than a fullstop.
+
+There has been a great deal of research into
+developing steganographic techniques appropriate for
+the Information Age. These are described in the next
+section. As well as implementing secrecy,
+steganography can be used as a digital watermark.
+You can find more details at:

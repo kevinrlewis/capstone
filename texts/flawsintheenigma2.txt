@@ -1,0 +1,3 @@
+Perhaps the greatest flaw was overconfidence, which is a common fault among cryptographers and
+security experts. Senior German officials refused to accept the possibility that the Enigma cipher
+could be broken.

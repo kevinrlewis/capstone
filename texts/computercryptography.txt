@@ -1,0 +1,17 @@
+The main difference when it comes to computer ciphers is that computers scramble
+numbers rather than letters of the alphabet. Computers deal only in binary
+numbers, sequences of ones and zeros known as binary digits, or bits for short.
+Hence, prior to encryption, any message must be converted into binary digits
+
+This conversion can be performed according to various protocols, such as the
+American Standard Code for Information Interchange, otherwise known by the
+acronym ASCII, pronounced "ask-key". ASCII assigns a particular binary number
+to each letter of the alphabet.
+
+A binary number is merely another representation for conventional numbers. So
+the letter A is converted to 65, which is 1000001 in binary. For the time being, it is
+sufficient to think of a binary number as merely a pattern of ones and zeros that
+uniquely identifies each letter, just as Morse code identifies each letter with a
+unique series of dots and dashes. Once a message has been converted into binary
+digits, it is encrypted according to the age old principles of substitution and
+transposition or both.

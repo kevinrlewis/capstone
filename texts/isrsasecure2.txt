@@ -1,0 +1,4 @@
+To put this into perspective, the world record for factoring is 512 bits (or 155
+decimal digits). In other words, there is a huge gap between what is currently
+possible for codebreakers and what is recommended for security. You can find
+out more about fast factoring techniques and the factoring record by visiting:

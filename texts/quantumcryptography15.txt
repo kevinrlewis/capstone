@@ -1,0 +1,13 @@
+But this causes another problem - and again it's
+turbulence that is at the root of it. Even if it
+doesn't change the polarisation of the photons,
+turbulence does affect how fast they travel. This
+leads to 'jitter' -a continual variation in the
+journey time. To compensate for jitter, a pulse
+of light is sent 100 nanoseconds ahead of each
+photon. This timing pulse is affected by the
+atmosphere in exactly the same way as the
+photon that follows. So whenever a pulse
+arrives, the satellite knows that the photon will
+be coming 100 nanoseconds later and times the
+opening of the window accordingly.

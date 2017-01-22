@@ -1,0 +1,22 @@
+Functions performed in modular arithmetic can be erratic, which makes them good l-way functions. This becomes
+clear by comparing the same function in normal arithmetic and in modular arithmetic. Let us take the function: 3^x.
+This means, take a number x, then multiply 3 by itself x times in order to get the new number, e.g., if x = 2, and we
+perform the function, then 3^2 = 3x3 = 9. The function turns 2 into 9. In normal arithmetic, as the value of x increases,
+then so does the result of the function. This means it is easy to take the result of the function and reverse it to deduce
+the original x.
+
+For example, if the result is 81, we could guess that x is 5. When we work out that 3^5: 243, we see that our guess for
+x is too big. We then reduce x to 4 and get the right answer, because 3^4 = 81. In short, even when we are wrong, we
+can home in on the correct value of x, and reverse the function. It is a 2-way function.
+
+However, in modular arithmetic this same function behaves unpredictably. Imagine that we are told that 3^x in (mod 7)
+is 1, and we are asked to find x. No value springs to mind, because we are unfamiliar with modular arithmetic. We
+could guess that x = 3, and we could work out the result of 3^3 (mod 7). The answer turns out to be 6, which is too big,
+because we are looking for an answer of 1. Hence, we might be tempted to reduce the value of x and try again. In
+fact, we would be heading in the wrong direction, because the actual answer is x = 6.
+
+In normal arithmetic we can test numbers and we can sense whether we are getting warmer or colder. In comparison,
+the modular environment gives no helpful clues, so reversing functions is much harder. Often, the only way to reverse
+a function in modular arithmetic is to compile a table by calculating the function for many values of x, until the right
+answer is found. The table below shows several values of the function in normal and modular arithmetic. It clearly
+demonstrates the erratic behaviour of the function when calculated in modular arithmetic.

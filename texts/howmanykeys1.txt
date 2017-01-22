@@ -1,0 +1,6 @@
+There were several different types of Enigma machine, with varying numbers of rotors and plugs, so 
+with varying numbers of possible keys.
+
+Here is a calculation on the number of keys based on an Enigma in which 3 rotors are chosen from 
+a selection of 5, and there are 10 cables with 20 plugs in total.
+

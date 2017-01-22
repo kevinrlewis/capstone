@@ -1,0 +1,23 @@
+Turbulence typically occurs on a scale of tens of
+centimetres, so 770 nanometres is short enough
+to avoid this.
+
+That still leaves plenty of other problems. For
+instance, as the satellite tries to detect Alice's
+photons, there is the risk of being swamped by
+background photons, either coming directly
+from the Sun or reflected from the Earth or
+Moon. To prevent this, the Los Alamos group
+has designed a highly directional receiver that
+only picks up photons arriving from Alice's
+direction. It also includes a filter to ensure that
+only photons of the correct frequency are
+accepted.
+
+To exclude any remaining extraneous photons
+that happen to come from the right direction
+with the right frequency, the detector only
+accepts photons that arrive during a time
+window of 5 nanoseconds each microsecond.
+The window has to be open when Alice's photon
+arrives.

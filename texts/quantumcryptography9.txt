@@ -1,0 +1,25 @@
+So when Alice sends polarised photons to Bob,
+he will be able to establish with certainty the bit
+value of a fraction of them. Alice could send a
+series of a hundred photons, each one polarised
+at random, while Bob randomly switched
+between his filters. Typically, three-quarters of
+them would be blocked, but Bob would know
+the bit value for the lucky minority that got
+through. Bob could then call Alice on the
+telephone and tell her exactly which 25 photons
+he received. These would form the key for
+encrypting a subsequent message. The key could
+be used as the basis for a one time pad.
+
+Although Bob tells Alice which photons he
+correctly measured, he does not say which filter
+he used to measure them. So even if Eve
+overhears the telephone conversation, she gains
+no information about the composition of the
+key.
+
+And, crucially, if Eve tries to intervene at an
+earlier stage by intercepting the photons on their
+way to Bob, then her presence becomes
+apparent.

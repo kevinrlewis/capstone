@@ -1,0 +1,17 @@
+You can think of codebreaking in terms or solving the equation above. In general, this equation is 
+tough to solve because it has two unknowns. All you know is the ciphertext that you have 
+intercepted, and you have no idea of the key and the plaintext, the latter being your ultimate goal.
+
+However, if you can guess a bit of the plaintext, then you have an equation with only one unknown. 
+Solving an equation with only one unknown is much easier. Once you have deduced the key, you 
+can decipher the complete message, and any other messages encrypted using the same key.
+
+Finding cribs is difficult, but the task was made easier for codebreakers at Bletchley Park because of 
+the way that the Enigma machine works. Let's use an example in English to illustrate how a crib was 
+found for Enigma messages.
+
+Codebreakers might suspect that a message sent at 6.15 in the morning contains a reference to the 
+time, so the challenge is to match the phrase `zerosixonefive' with the correct bit of ciphertext. 
+Crucially, the Enigma cipher can never encrypt a letter as itself. So the plaintext can be slid along 
+and compared to the ciphertext until no letters match. Any comparison that satisfies this 
+requirement might be a crib.

@@ -1,0 +1,14 @@
+A quick reminder of what cryptographers needed to build an asymmetric cipher:
+
+1) Alice creates a public-key, which she publishes so 
+that Bob (and everybody else) can use it to encrypt 
+messages to her. Because the public-key is a 1-way 
+function, it is impossible for anybody to reverse it 
+and decrypt the messages. 
+
+At the heart of the RSA asymmetric cipher is a 1-way function based on the modulo functions
+described on the previous page. The l-way function can be used to encrypt a message - the message,
+which is effectively a number, is put into the function, and the result is the ciphertext, another
+number. The 1-way function is described in detail in the next section, but first here is an explanation
+of one aspect of it, N, because it is N that makes this 1-way function reversible under certain
+circumstances, and therefore ideal for use as an asymmetric cipher.

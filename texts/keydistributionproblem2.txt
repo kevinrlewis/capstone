@@ -1,0 +1,7 @@
+This is not a trivial problem, because the key has to be distributed via a secure
+route, otherwise it will fall into the hands of the enemy. In general, there is no such route for
+getting the key to the receiver. If there were a secure route, then the message would be sent this
+way and would not need to be encrypted. For example, you cannot telephone the receiver and
+read out the key, because the enemy might be tapping your phone. And you cannot encrypt the
+key and send it, because this assumes that you have already sent a previous key to the receiver.
+Getting the key between the sender and the receiver is known as the key distribution problem.

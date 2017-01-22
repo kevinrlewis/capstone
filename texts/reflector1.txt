@@ -1,0 +1,11 @@
+The Enigma also has a reflector, so the signal
+passes through the rotors, hits the reflector and
+then returns through the rotors before it reaches
+the lampboard. Because the reflector sends the
+signal back down a different path, it is
+impossible for a letter to be encrypted as itself.
+The advantage of the reflector is that encryption
+and decryption become mirror processes. If B is
+encrypted as D, then in the same setting D
+would be decrypted as B. The letters B and D
+are partnered up via the reflector.

@@ -1,0 +1,10 @@
+Each pixel is defined 
+by a number, which 
+indicates its 
+brightness. So a 
+picture can be thought 
+of as a collection of 
+numbers. By 
+tampering with the 
+numbers a message 
+can be hidden.

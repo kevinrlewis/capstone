@@ -1,0 +1,22 @@
+The Enigma machine was flawed, partly
+because it was pioneering technology.
+For example, the Enigma machine
+cannot encrypt a letter as itself, which
+helped codebreakers find and position
+cribs, as explained earlier in this section.
+When other countries later built their
+own versions of mechanical enciphering
+machines, they were careful not to mimic
+the mistakes of the Enigma design.
+There was a flaw in the way the machine
+was used. Operators would send
+stereotypical and predictable messages,
+which would also help codebreakers find
+cribs.
+
+There were instructions that an Enigma
+rotor could not remain in the same place
+two days running and that plug cables
+could not swap neighbouring letters. This
+was supposed to help randomise the key,
+but it merely reduced the key space.

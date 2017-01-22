@@ -1,0 +1,26 @@
+Triple DES
+
+Because DES is no longer secure (too few keys), serious cryptographers have resorted to Triple DES.
+This requires two DES keys, which squares the key space from 56-bits (7.2 x 1018) to 112-bits
+
+(5 x 10 ). The sender encrypts with the first key, then decrypts with the second key (which
+scrambles the message even more), and then re=encrypts again with the first key, which scrambles
+the text again and gets it into the right output format. Triple DES seems to be unbreakable for the
+foreseeable future.
+
+IDEA
+
+IDEA is an encryption system developed by Dr. X. Lai and Prof. J. Massey in Switzerland in the
+early 1990s. It also operates on 64 bit blocks at a time, just like DES, but with a key of 128 bits. This
+key length makes it impossible to break by simply trying every key, and there is no known shortcut.
+It is just one of many alternatives to DES, which also includes RC4, a cipher used in a number of
+commercial systems like Lotus Notes and secure Netscape.
+
+Advanced Encryption Standard (AES)
+
+Because DES is no longer secure, a new Federal Information Processing Standard (FIPS) is about to
+be adopted, which will be known as the Advanced Encryption Standard. The hot candidate for the
+new standard is Rijndael, developed by Belgian cryptographers Dr. Joan Daemen and Dr. Vincent
+Rijmen. When adopted, the AES will offer three key sizes: 128, 192 and 256 bits. In comparison,
+DES keys are 56 bits long. To put this into perspective, if there was a machine that could crack DES
+in 1 second, the same machine would take 150 thousand-billion years to crack a 128-bit AES key.

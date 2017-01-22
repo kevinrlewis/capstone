@@ -1,0 +1,30 @@
+The key-distribution problem was traditionally
+solved by employing trusted couriers to deliver
+the keys by hand, but this solution doesn't have
+much appeal in the age of satellite
+communications and email.
+
+In the 1970s, cryptographers invented public key
+cryptography as a solution, because this avoided
+the necessity for highly secure key distribution.
+But the security of public key cryptography
+could be undermined if mathematicians
+developed some new techniques that attacked
+the core of public key systems.
+
+It is here that quantum physics comes to the
+rescue. In the early 1980s, Charles Bennett, an
+IBM researcher, and Gilles Brassard, a
+computer scientist at the University of Montreal,
+proposed that Alice and Bob should use
+individual photons to exchange their key. By
+operating at the quantum level, they argued,
+Alice and Bob could exploit the laws of
+quantum physics to protect the key.
+
+Bennett and Brassard proposed using photons
+polarised in different directions to represent
+
+1 or 0. If Eve tried to intercept the key, she
+would have to measure the photons, which
+would effectively mean absorbing them.

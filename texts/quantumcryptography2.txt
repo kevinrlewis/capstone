@@ -1,0 +1,27 @@
+What everyone is looking for is a new form of
+code, one that is truly unbreakable. That's
+where the quantum world comes in. Exploiting
+the strange uncertainties of quantum physics
+can give you a code that nobody-no matter how
+clever-will ever be able to crack.
+
+That's the theory. The trouble comes when you
+try putting it into practice. When quantum
+particles interact with the large-scale world they
+tend to lose the delicate information they
+contain. This makes it fiendishly difficult to use
+them to send information over any sensible
+distance. Difficult, but not impossible. In the
+past few years, researchers have succeeded in
+sending quantum-encrypted messages tens of
+kilometres down optical fibres. Now the
+challenge is to find a way to send
+quantum-encrypted information through the air.
+This will open the way to fully secure global
+communications, beamed up to an orbiting
+satellite and forwarded to any place on Earth.
+It's a phenomenal technical problem, but this
+year researchers at the Los Alamos National
+Laboratory in New Mexico achieved a
+breakthrough that looks set to transform the
+way we keep our secrets.

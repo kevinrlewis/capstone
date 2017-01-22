@@ -1,0 +1,20 @@
+Afterwards, Alice and Bob used an insecure
+Ethernet link to check for errors in their key.
+Because there was no Eve attempting to intercept
+the key, there should have been no errors. In
+fact, background photons, detector noise and
+misaligmnent introduced an error rate of 1.6 per
+cent, but this isn't too serious. If Eve had been
+listening in, she would have caused an error rate
+more like 25 per cent, so Alice and Bob can still
+be confident that their key is secure.
+
+So how close is practical free-space quantum
+cryptography? At first sight there's a big
+difference between the 500 metres Hughes sent
+his quantum cryptographic key and the 300
+kilometres needed to reach a communications
+satellite. But Hughes is closer to his goal than
+these figures suggest. His photons traveled
+horizontally, at ground level, where the air is
+dense and fluctuations are greatest.

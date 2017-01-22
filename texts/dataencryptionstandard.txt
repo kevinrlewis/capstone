@@ -1,0 +1,29 @@
+By the early 1970s, governments, the military and business were using computer
+encryption, but there was no standard. People used different forms of' complex
+substitution and transposition. This meant that organisations might not be able
+to talk to each other because they used different encryption systems. Also, the
+lack of' a standard meant that nobody could be sure that their encryption system
+was sufficiently secure.
+
+The Data Encryption Standard (DES) was armounced in 1977. It has a key length
+of' 56 bits. This encryption algorithm was published, so anybody could examine it
+in detail. Remember, the strength of' an encryption system does not rely on
+keeping the algorithm secret, but rather on keeping the key secret.
+
+The sender of' a DES encrypted messabge picks a 56-bit key. This means you could
+choose any number between 1 and 25 (i.e., any number up to 7.2 x 101 ). This
+number will determine how the message is encrypted. The receiver uses the same
+key to decrypt the message. An eavesdropper has to identify the key in order to
+break the cipher.
+
+DES has a billion times fewer keys than the old-fashioned monoalphabetic
+substitution cipher, but it is stronger because it appears to have no short cuts. To
+crack DES, it is necessary to check every key. To crack the monoalphabetic
+substitution cipher, you can get away with the shortcut of' frequency analysis.
+
+However, DES is not unbreakable. When the key length was decided in the 1970s,
+checking 7.2 x 1016 keys was impractical, but since then computers have doubled
+in speed roughly every 18 months. Now, there are specially designed computers
+that can crack DES within a few hours. Other modern ciphers have since been
+developed to keep the codemakers ahead of' the codebreakers. Click on the
+button to find out how DES works

@@ -1,0 +1,12 @@
+In theory, Alice would create her encryption and 
+decryption keys. Alice keeps the decryption key secret,
+so it is called Alice's private-key. However, she
+publishes the encryption key so that everybody has
+access to it, which is why it is called Alice's public-key.
+If Bob wants to send Alice a message, he simply looks
+up her public-key, which would be listed in something
+akin to a telephone directory, and uses it to encrypt
+the message. Perversely, Bob (the sender) is encrypting
+a message using Alice's (the receiver's) public-key.
+When it arrives, Alice can decrypt it using her private
+decryption key.

@@ -1,0 +1,20 @@
+IT COULD happen in a few months or a few
+years. But sooner or later, a mathematician
+could make a discovery that jeopardises
+international security, threatens the future of
+Internet commerce, and imperils the privacy of
+emails. Today's codes and ciphers are good, to
+be sure. But it is probably only a matter of time
+before they become useless.
+
+With the coming of the information age, we rely
+ever more heavily on cryptography to protect us
+from snoopers, cyber-crooks and Big Brother.
+Some of today's most secure codes exploit the
+fact that while it is easy to multiply two prime
+numbers together, it is almost impossible to
+start with the answer and work out which two
+primes were used to create it. But the day a
+mathematical genius discovers a short cut for
+finding the hidden prime numbers, these codes
+will crumble.

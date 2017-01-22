@@ -1,0 +1,6 @@
+A complete circuit might represent the rotor position 
+part of the key that was used to encrypt the message, 
+and the remainder of the key can he deduced relatively 
+easily. There may be several complete circuits, but the 
+number of false consistencies can be greatly reduced 
+by using longer cribs with more complex loops.

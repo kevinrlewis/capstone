@@ -1,0 +1,16 @@
+The problem with a single rotor is that it gets back to 
+where it started after just 6 letters (or 26 letters with a 
+full alphabet), and the pattern of encryption repeats. 
+Repetition leads to a weak cipher, so to avoid this 
+problem the real Enigma has 3 (or sometimes 4) 
+rotors. Each rotor has a kicking tooth so when it 
+completes a revolution it kicks the neat rotor forward 
+one place. So when the first rotor is back where it 
+started, the next one will be fornmd one place, so the 
+pattern of encryption will be different.
+The rotors behave just like a mileometre on a car. You 
+can see how it works by encrypting the message above, 
+or encrypting a message of your own. Notice that the 
+same letter will usually be encrypted differently, 
+because the rotors will be in a different position.
+

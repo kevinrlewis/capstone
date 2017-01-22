@@ -1,0 +1,14 @@
+The RSA cipher requires a 1-way function. That function involves
+modular arithmetic, so here is a brief introduction to this branch of
+mathematics. In modular arithmetic, mathematicians consider a finite
+group of numbers arranged in a loop, rather like the numbers on a
+clock. For example, the clock on this page shows modulo 7 (or mod 7),
+which has only 7 numbers ranging from 0 to 6.
+
+To work out 2 + 3 (mod 7), start on 2 and move round 3 places to get
+to 5, which is the same answer as in normal arithmetic. CLICK to see
+the addition 2 + 3 = 5 (mod 7).
+
+To work out 2 + 6 (mod 7), start on 2 and move round 6 places. This
+time we go round the loop and arrive at 1, which is not the result in
+normal arithmetic. CLICK to see the addition 2 + 6 = 1 (mod 7).

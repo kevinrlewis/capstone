@@ -1,0 +1,5 @@
+Diffie-Hellman-Merkle key exchange is an
+alternative to public-key cryptography,
+invented by Martin Hellman in 1976. But it
+was also invented in secret by Malcolm
+Williamson at GCHQ.

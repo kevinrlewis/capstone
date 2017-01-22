@@ -1,0 +1,20 @@
+- Police forces fight crime by tapping phones and intercepting communication between
+criminals, but this is becoming ineffective because of encryption. The FBI maintains
+that “court ordered wiretapping is the single most effective investigative technique
+used by law enforcement to combat illegal drugs, terrorism, violent crime, espionage
+and organised crime.”
+
+- International crime and terrorism will also grow with the help of encryption.
+Terrorist groups already use encryption to evade surveillance and hide evidence.
+
+- The right to use strong encryption could be maintained and law enforcement could
+still be effective if users were willing to hand over their secret keys to a third party.
+That third party, perhaps the judiciary, would then hand keys to the police if a
+person was suspected of a crime.
+
+- Ultra-strong encryption is unnecessary. Moderate encryption is sufficient for most
+purposes (e.g., privacy, credit card exchange), so this is the only level that should be
+tolerated. If there is a justification for deciphering somebody’s communications,
+then the police could use supercomputers to crack moderate encryption, but they
+would not be able to do this routinely, so we would not be in danger of encouraging
+a Big Brother society.

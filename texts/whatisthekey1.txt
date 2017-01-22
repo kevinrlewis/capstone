@@ -1,0 +1,11 @@
+As explained in an earlier section, an encryption system can be split into the general algorithm, and
+the specific key, the key being a flexible component of the algorithm. Usually the enemy knows the
+algorithm, but do not know which key is being used for a particular message. (CLICK HERE if you
+want to revisit the section about keys.)
+
+The Enigma cipher also operates according to this principle. The Enigma machine is the algorithm,
+but the machine can be set up in many different ways, and the exact way that it is set up is the key.
+Both the sender and the receiver must know the key in order to encrypt and decrypt, but the key is
+kept secret from any potential eavesdropper. So, even if the British had captured an Enigma
+machine, then they still did not know the key used to encrypt a message. In theory, German
+communications were secure, as long as the keys were secure.

@@ -1,0 +1,28 @@
+The ideal solution would be to find a way to
+send quantum keys up through the air to
+waiting satellites. The Quantum Information
+Team at Los Alamos, led by Ricth Hughes, is
+the world leader in such 'free-space quantum
+cryptography'. For the past two years, the group
+has been steadily overcoming the technical
+difficulties and extending the transmission
+distances step by step.
+
+Ultimately, they want to be able to fire
+individual photons to hit a satellite's receiver,
+which is only a few centimetres across and orbits
+at an altitude of 300 kilometres. The photons
+must pass through the atmosphere without
+being absorbed-so that the signal is not simply
+lost-and they must not change their
+polarisation.
+
+It's easy enough to make sure that the photons
+are not absorbed. You just have to choose a
+wavelength that the molecules in the atmosphere
+ignore. Hughes's team has opted for 770
+nanometres. Longer wavelengths also pass
+through the air unscathed, but are more
+susceptible to turbulence, which changes the
+local refractive index of the air and thus twists
+the orientation of the photon's polarisation.

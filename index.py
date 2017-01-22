@@ -63,7 +63,7 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = ADFGVXPage()
+        test = BuildingEnigmaPage()
 
         #production
         #root.add_widget(mainpage.create())
@@ -83,8 +83,9 @@ class MainPage(ButtonBehavior):
         MyApp.trail = []
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
-        self.tb = self.topbar.create("Welcome")
+        self.tb = self.topbar.create("")
         self.r = RelativeLayout()
+        self.title = RelativeLayout()
         self.jcb = Button(text = 'Junior Code Breakers',
                                     size_hint = (.2,.3),
                                     pos_hint = {'center_x': .25, 'center_y': .55},
@@ -98,6 +99,24 @@ class MainPage(ButtonBehavior):
                                     pos_hint = {'center_x': .75, 'center_y': .55},
                                     on_release=self.pressed_ts)
 
+        titlestr = 'THE CODE BOOK'
+
+        x = -.045
+        top = .2
+        for letter in titlestr:
+            tempimage = Image()
+            if letter == ' ':
+                x += .035
+            else:
+                tempimage.source = 'pics/title/TYPE' + letter + '2.png'
+                tempimage.pos_hint = {'x': x, 'top': top}
+                tempimage.size_hint = (.2,.2)
+                x += .08
+                self.title.add_widget(tempimage)
+
+
+
+        self.r.add_widget(self.title)
         self.r.add_widget(self.tb)
         self.r.add_widget(self.jcb)
         self.r.add_widget(self.mc)
@@ -4920,7 +4939,7 @@ class MOFS(ButtonBehavior):
         f.write('building enigma pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(Substitution().create())
+        root.add_widget(BuildingEnigmaPage().create())
 
     def threePressed(self, *args):
         f.write('using the enigma pressed\n')
@@ -5307,44 +5326,109 @@ class ADFGVXPage(ButtonBehavior):
         with open('texts/adfgvxcipher2.txt', 'r') as myfile:
             data2 = myfile.read()
         self.text2 = Label(text = data2,
-                            pos_hint = {'x':.65, 'top':.475},
+                            pos_hint = {'x':.65, 'top':.485},
                             size_hint = (.2,.2),
                             font_size = 14)
 
         self.tablelabel = Label(text = self.table,
-                                    pos_hint = {'x':-.05, 'top':.55},
+                                    pos_hint = {'x':-.01, 'top':.55},
                                     size_hint = (.3,.3),
                                     font_name = 'font/RobotoMono-Regular',
                                     font_size = 16)
 
         self.randomizebutton = Button(text = 'Randomize Grid',
-                                    pos_hint = {'x':.04, 'top':.6},
+                                    pos_hint = {'x':.07, 'top':.6},
                                     size_hint = (.15,.05),
                                     on_release = self.randomizeGrid)
         self.keywordinput = TextInput(text = 'MARK',
-                                    pos_hint = {'x':.25, 'top':.575},
-                                    size_hint = (.2,.05))
+                                    pos_hint = {'x':.275, 'top':.6},
+                                    size_hint = (.2,.05),
+                                    font_name = 'font/RobotoMono-Regular')
+        self.keywordinput.bind(text=self.textchange)
         self.keywordlabel = Label(text = 'Keyword',
-                                    pos_hint = {'x':.3, 'top':.65},
+                                    pos_hint = {'x':.325, 'top':.675},
                                     size_hint = (.1,.1),
                                     font_size = 12)
 
         self.plaintextinput = TextInput(text = 'attack at 10pm',
-                                    pos_hint = {'x':.25, 'top':.475},
-                                    size_hint = (.2,.1))
+                                    pos_hint = {'x':.275, 'top':.5},
+                                    size_hint = (.2,.1),
+                                    font_name = 'font/RobotoMono-Regular')
         self.plaintextlabel = Label(text = 'Plaintext',
-                                    pos_hint = {'x':.3, 'top':.55},
+                                    pos_hint = {'x':.325, 'top':.575},
                                     size_hint = (.1,.1),
                                     font_size = 12)
 
         self.stage1ciphertext = TextInput(text = '',
-                                    pos_hint = {'x':.25, 'top':.325},
-                                    size_hint = (.2,.1))
+                                    pos_hint = {'x':.275, 'top':.35},
+                                    size_hint = (.2,.1),
+                                    disabled = True)
         self.stage1label = Label(text = 'Stage 1 Ciphertext',
-                                    pos_hint = {'x':.3, 'top':.4},
+                                    pos_hint = {'x':.325, 'top':.425},
                                     size_hint = (.1,.1),
                                     font_size = 12)
 
+        self.keyword1 = Label(text = self.keywordinput.text,
+                                    pos_hint = {'x':-0.005, 'top':.275},
+                                    size_hint = (.1,.05),
+                                    font_name = 'font/RobotoMono-Regular')
+        self.keyword1text = TextInput(text = '',
+                                    pos_hint = {'x':.015, 'top':.225},
+                                    size_hint = (.115,.2),
+                                    font_name = 'font/RobotoMono-Regular')
+
+        rand = randint(1, len(self.keywordinput.text))
+        newstrlist = deque(list(self.keywordinput.text))
+        newstrlist.rotate(rand)
+        self.keyword2 = Label(text = ''.join(list(newstrlist)),
+                                    pos_hint = {'x':.13, 'top':.275},
+                                    size_hint = (.1,.05),
+                                    font_name = 'font/RobotoMono-Regular')
+        self.keyword2text = TextInput(text = '',
+                                    pos_hint = {'x':.15, 'top':.225},
+                                    size_hint = (.115,.2),
+                                    font_name = 'font/RobotoMono-Regular')
+
+        self.stage1button = Button(text = 'Stage 1',
+                                    pos_hint = {'x':.32, 'top':.05},
+                                    size_hint = (.145,.045),
+                                    on_release = self.stage1Pressed)
+        self.gridbutton = Button(text = 'Form Grid',
+                                    pos_hint = {'x':.47, 'top':.05},
+                                    size_hint = (.145,.045),
+                                    disabled = True,
+                                    on_release = self.gridPressed)
+        self.transposebutton = Button(text = 'Transpose Grid',
+                                    pos_hint = {'x':.62, 'top':.05},
+                                    size_hint = (.145,.045),
+                                    disabled = True,
+                                    on_release = self.transposePressed)
+        self.finalstagebutton = Button(text = 'Final Stage',
+                                    pos_hint = {'x':.77, 'top':.05},
+                                    size_hint = (.145,.045),
+                                    disabled = True,
+                                    on_release = self.finalstagePressed)
+
+        self.ciphertextdisplay = TextInput(text = '',
+                                    pos_hint = {'x':.35, 'top':.165},
+                                    size_hint = (.5,.1),
+                                    disabled = True,
+                                    font_name = 'font/RobotoMono-Regular')
+        self.clabel = Label(text = 'Ciphertext',
+                                    pos_hint = {'x':.325, 'top':.21},
+                                    size_hint = (.15,.05),
+                                    font_size = 11)
+
+        self.r.add_widget(self.clabel)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.stage1button)
+        self.r.add_widget(self.gridbutton)
+        self.r.add_widget(self.transposebutton)
+        self.r.add_widget(self.finalstagebutton)
+        self.r.add_widget(self.keyword1)
+        self.r.add_widget(self.keyword1text)
+        self.r.add_widget(self.keyword2)
+        self.r.add_widget(self.keyword2text)
         self.r.add_widget(self.stage1ciphertext)
         self.r.add_widget(self.stage1label)
         self.r.add_widget(self.plaintextlabel)
@@ -5357,6 +5441,24 @@ class ADFGVXPage(ButtonBehavior):
         self.r.add_widget(self.text2)
         self.r.add_widget(self.tb)
         return self.r
+
+    def textchange(self, *args):
+        f.write('keyword changed\n')
+        self.keyword1.text = self.keywordinput.text
+        rand = randint(1, len(self.keywordinput.text))
+        newstrlist = deque(list(self.keywordinput.text))
+        newstrlist.rotate(rand)
+        self.keyword2.text = ''.join(list(newstrlist))
+        self.stage1ciphertext.text = ''
+        self.stage1button.disabled = False
+        self.gridbutton.disabled = True
+        self.transposebutton.disabled = True
+        self.finalstagebutton.disabled = True
+        self.keyword1text.text = ''
+        self.keyword2text.text = ''
+        self.ciphertextdisplay.text = ''
+
+
 
     def randomizeGrid(self, *args):
         f.write('randomize grid pressed\n')
@@ -5386,9 +5488,399 @@ class ADFGVXPage(ButtonBehavior):
             self.table += '\n'
         self.tablelabel.text = self.table
 
+    def stage1Pressed(self, *args):
+        f.write('stage 1 button pressed\n')
+        text = self.plaintextinput.text
+        ditext = ''
+        for letter in text:
+            index = []
+            if letter == ' ':
+                pass
+            else:
+                for i in range(len(self.dub)):
+                    if letter in self.dub[i]:
+                        index = [i, self.dub[i].index(letter)]
+                ditext += self.a[index[0]] + self.a[index[1]] + ' '
+
+        self.stage1ciphertext.text = ditext
+        self.stage1button.disabled = True
+        self.gridbutton.disabled = False
+
+    def gridPressed(self, *args):
+        f.write('grid button pressed\n')
+        ditext = self.stage1ciphertext.text
+        keyword = self.keywordinput.text
+        ditext = ditext.replace(' ', '')
+        grid = ''
+        count = len(keyword)
+        for letter in ditext:
+            grid += letter
+            count = count - 1
+            if count == 0:
+                grid += '\n'
+                count = len(keyword)
+
+        templist = grid.split('\n')
+        templist.remove('')
+        length = len(templist[0])
+        for group in templist:
+            if len(group) != length:
+                n = length - len(group)
+                newgroup = group + n*'x'
+                templist.remove(group)
+                templist.append(newgroup)
+
+        grid = '\n'.join(templist)
+
+        self.keyword1text.text = grid
+        self.gridbutton.disabled = True
+        self.transposebutton.disabled = False
+
+    def transposePressed(self, *args):
+        f.write('transpose button pressed\n')
+        keyword = self.keyword1.text
+        keyword2 = self.keyword2.text
+        listgrid = self.keyword1text.text.split('\n')
+        f.write(str(listgrid) + '\nkeyword1 = ' + keyword + '\nkeyword2 = ' + keyword2 + '\n')
+        indexes = []
+        newlistgrid = []
+        for i in range(len(keyword)):
+            for letter in range(len(keyword2)):
+                if keyword2[letter] == keyword[i]:
+                    indexes.append(letter)
+                    break
+        f.write(str(indexes) + '\n')
+        for j in listgrid:
+            if j == '':
+                pass
+            else:
+                tempnew = ''
+                for n in indexes:
+                    tempnew += j[n]
+                newlistgrid.append(tempnew)
+
+        self.keyword2text.text = '\n'.join(newlistgrid)
+        self.transposebutton.disabled = True
+        self.finalstagebutton.disabled = False
+
+    def finalstagePressed(self, *args):
+        f.write('final stage button pressed\n')
+        text = self.keyword2text.text.split('\n')
+        final = ''
+        length = len(self.keywordinput.text) - 1
+        count = len(self.keywordinput.text) - 1
+        f.write('count: ' + str(count) + '\n')
+        for i in range(length):
+            for group in text:
+                final += group[length - count]
+            count = count - 1
+
+        self.ciphertextdisplay.text = final
+        self.finalstagebutton.disabled = True
+        self.stage1button.disabled = False
+
 ################################################################################
 #End ADFGVX Cipher Page
 ################################################################################
+
+################################################################################
+#Begin Building Enigma Page
+################################################################################
+class BuildingEnigmaPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Building Enigma page entered\n')
+        MyApp.current = self
+        buttonx = .8
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Building Enigma")
+
+        with open('texts/buildingenigma1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.275, 'top':.9},
+                            size_hint = (.2,.2))
+        with open('texts/buildingenigma2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.085, 'top':.45},
+                            size_hint = (.2,.2))
+        self.image = Image(source = 'pics/ENIGCU.png',
+                            pos_hint = {'x':.275, 'top':.65},
+                            size_hint = (.5,.5))
+
+        self.button1 = Button(text = "Meet the\nMachine",
+                                        pos_hint = {'x':buttonx, 'top':.9},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "Basic\nPrinciple",
+                                        pos_hint = {'x':buttonx, 'top':.75},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "Three Rotor\nMachine",
+                                        pos_hint = {'x':buttonx, 'top':.6},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.button4 = Button(text = "Reflector",
+                                        pos_hint = {'x':buttonx, 'top':.45},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fourPressed,
+                                        font_size = 14)
+
+        self.button5 = Button(text = "Plugboard",
+                                        pos_hint = {'x':buttonx, 'top':.3},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fivePressed,
+                                        font_size = 14)
+
+        self.button6 = Button(text = "Complete\nOverview",
+                                        pos_hint = {'x':buttonx, 'top':.15},
+                                        size_hint = (.15,.1),
+                                        on_release = self.sixPressed,
+                                        font_size = 14)
+
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.button5)
+        self.r.add_widget(self.button6)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+
+    def onePressed(self, *args):
+        f.write("meet the machine pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(MeetEnigmaPage().create())
+
+    def twoPressed(self, *args):
+        f.write('basic principle pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(BasicPrinciplePage().create())
+
+    def threePressed(self, *args):
+        f.write('three rotor machine pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(ThreeRotorMachinePage().create())
+
+    def fourPressed(self, *args):
+        f.write('reflector pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(ReflectorPage().create())
+
+    def fivePressed(self, *args):
+        f.write('plugboard pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(PlugboardPage().create())
+
+    def sixPressed(self, *args):
+        f.write('complete overview pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CompleteOverviewPage().create())
+################################################################################
+#End Building Enigma Page
+################################################################################
+
+################################################################################
+#Begin Basic Principle Page
+################################################################################
+class BasicPrinciplePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Basic Principle page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Basic Principle")
+
+        with open('texts/basicprinciple.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.1, 'top':.7},
+                            size_hint = (.2,.2))
+
+
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Basic Principle Page
+################################################################################
+
+################################################################################
+#Begin Three Rotor Machine Page
+################################################################################
+class ThreeRotorMachinePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Three Rotor Machine page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Three Rotor Machine")
+
+        with open('texts/threerotormachine.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.35},
+                            size_hint = (.2,.2))
+
+        self.video = VideoPlayer(source = 'video/Rot_1.avi',
+                            pos_hint = {'x':.475, 'top':.5},
+                            size_hint = (.5,.5))
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Three Rotor Machine Page
+################################################################################
+
+################################################################################
+#Begin Reflector Page
+################################################################################
+class ReflectorPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Reflector page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Reflector")
+
+        with open('texts/reflector1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.65, 'top':.325},
+                            size_hint = (.2,.2))
+        with open('texts/reflector2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.15, 'top':.325},
+                            size_hint = (.2,.2))
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Reflector Page
+################################################################################
+
+################################################################################
+#Begin Plugboard Page
+################################################################################
+class PlugboardPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Plugboard page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Plugboard")
+
+        with open('texts/plugboard.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.35},
+                            size_hint = (.2,.2))
+
+        self.video = VideoPlayer(source = 'video/Pb_1.avi',
+                            pos_hint = {'x':.475, 'top':.5},
+                            size_hint = (.5,.5))
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Plugboard Page
+################################################################################
+
+
+################################################################################
+#Begin Complete Overview Page
+################################################################################
+class CompleteOverviewPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Complete Overview page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Complete Overview")
+
+        with open('texts/completeoverview1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.365, 'top':.9},
+                            size_hint = (.2,.2))
+
+        with open('texts/completeoverview2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.15, 'top':.5},
+                            size_hint = (.2,.2))
+
+        self.video = VideoPlayer(source = 'video/En2_1.avi',
+                            pos_hint = {'x':.475, 'top':.7},
+                            size_hint = (.5,.5))
+
+        self.image = Image(source = 'pics/eniglogo.png',
+                            pos_hint = {'x':.4, 'top':.2},
+                            size_hint = (.2,.2))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Plugboard Page
+################################################################################
+
 
 class TopBar(ButtonBehavior):
     def __init__(self):

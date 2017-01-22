@@ -1,0 +1,4 @@
+So far, we have overlooked a fundamental problem in cryptography. The sender
+encrypts a message according to a key, and the receiver decrypts the message
+according to the same key. But we have not yet explained how to get the key
+between the sender and the receiver.

@@ -1,0 +1,24 @@
+Sometimes, codebreakers use more than mathematics and
+logic to crack codes. The pre=war Polish codebreaking
+attempts partly relied on the German traitor Hans-Thilo
+Schmidt, who provided them with valuable information about
+the Enigma cipher. Schmidt felt abandoned by his nation and
+his family, so he sold cipher information via the French as a
+way of getting back at those who had let him down.
+
+Occasionally, Bletchley would make a breakthrough thanks to
+a clever ploy involving the RAF. British planes would lay
+mines in a particular location, provoking the Germans to send
+out a warning to their vessels. This Enigma encrypted warning
+would contain predictable words, so it could be used as a crib.
+
+An alternative strategy for cracking Enigma depended on
+stealing cipher information. Ian Fleming, creator of James
+Bond and a member of wartime Naval Intelligence, suggested
+crashing a captured German bomber in the English Charmel,
+close to a German ship. German sailors would then approach
+to rescue their comrades, whereupon the British pilots
+pretending to be German aircrew would board the ship and
+capture Enigma keys. Operation Ruthless was postponed due
+to lack of German shipping in the Charmel and was eventually
+cancelled.

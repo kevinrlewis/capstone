@@ -1,0 +1,10 @@
+In WWII, Enigma keys would be delivered by
+couriers to Enigma operators across rivers and
+deserts. After the war, countries would send secure
+escorts to accompany keys being delivered to far off
+embassies. For centuries, it was assumed that there
+was no solution to the key distribution problem apart
+from delivering the keys by hand. The rest of this
+chapter reveals how cryptographers realised that key
+distribution was not a problem, because key
+distribution could be avoided!

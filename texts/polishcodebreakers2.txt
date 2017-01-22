@@ -1,0 +1,5 @@
+The foremost Polish cryptographer was Marian Rejewski. He invented a way of breaking Enigma 
+based on the message key setting. Before sending a message, a German operator would encode a 
+new setting twice, and then encode the actual message according to this new message key setting. 
+Encoding and sending the setting twice was supposed to reduce the risk of communication errors.
+

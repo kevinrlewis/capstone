@@ -1,0 +1,4 @@
+Although drawing up such a table is only a little tedious when we are dealing with relatively small numbers, it would be
+excruciatingly painful to build a table to deal with a function such as 453^x (mod 21,997). This is a classic example of a
+1-way function, because I could pick a value for x and calculate the result of the function, but if I gave you the result,
+say 5,787, then you would have great difficulty in reversing the function and deducing my choice of x.

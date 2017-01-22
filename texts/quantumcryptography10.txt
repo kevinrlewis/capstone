@@ -1,0 +1,26 @@
+Suppose that Alice sends a 0° photon,
+representing a 0 bit, and Eve measures it using a
+-45° filter. If the photon is blocked, Eve does
+not know if this is because the photon was +45°,
+and so stood no chance of passing through, or
+because it was at 0° and she was unlucky. Eve
+might take a guess that it was a +45° photon,
+and create and transmit such a photon onto
+Bob. If Bob measured it using his 90° filter, the
+photon might pass through-and if it did he
+would incorrectly interpret Alice's photon as
+representing a 1 bit.
+
+Bob's misinterpretation can be used to expose
+Eve's nefarious interception. To see if Eve has
+been listening, Alice and Bob check for errors.
+After establishing a tentative key, they pick
+some of the bits at random and declare their
+values over the telephone to see whether they
+agree. If there is any discrepancy, they assume
+that Eve has been eavesdropping and they
+abandon the key and start again. If there is no
+discrepancy, they assume that it is safe to use
+the key as the basis for encrypting a message
+having first discarded those bits that they
+disclosed during the error-checking procedure.

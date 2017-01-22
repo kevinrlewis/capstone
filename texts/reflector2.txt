@@ -1,0 +1,11 @@
+In the Enigma machine above, you can encrypt
+the word FACE (or a word of your choice).
+
+Having created the ciphertext, you can reset the
+scramblers (the rotors), and then decipher the
+ciphertext.
+
+In short, choose a setting and type in the
+plaintext to get the ciphertext. Then return to
+the original setting, and when you type in the
+ciphertext you get the plaintext.

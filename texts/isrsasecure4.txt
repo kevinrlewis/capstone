@@ -1,0 +1,4 @@
+Unless there is a major breakthrough in the mathematics of factoring or a
+revolution in technology, RSA seems unbreakable although this was also
+said about the monoalphabetic substitution cipher, the Vigenere cipher and
+the Enigma machine.

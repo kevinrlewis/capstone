@@ -1,0 +1,8 @@
+In fact, we do modular arithmetic whenever we talk about time. If it is 9 o'clock now, and we have
+a meeting 8 hours from now, then we say that the meeting is at 5 o'clock, not 17 o'clock. We have
+mentally calculated that 9 + 8 = 5 in (mod 12).
+
+Rather than visualising clocks, mathematicians take the short cut of performing modular
+calculations in normal arithmetic, then to work out the answer in (mod x) divide the normal answer
+by x and note the remainder. This remainder is the answer in (mod x). To find out 5 x 4 (mod 7), we
+do the following: 5 ‘X 4 _ 20

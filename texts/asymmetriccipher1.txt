@@ -1,0 +1,14 @@
+In 1975, Diffie concocted a new type of cipher, one that incorporated a so-called
+asymmetric key. So far, all the encryption techniques described have been symmetric,
+i.e., the unscrambling process is simply the opposite of scrambling. For example, the
+Enigma machine uses a certain key setting to encipher a message, and the receiver uses
+an identical machine in the same key setting to decipher it.
+
+In contrast, in an asymmetric cipher, as the name suggests, the encryption key and the
+decryption key are not identical. In the case of an asymmetric cipher, if Alice knows
+the encryption key then she can encrypt a message, but she cannot decrypt a message.
+In order to decrypt, Alice must have access to the decryption key.
+
+At this point it is worth stressing that Diffie had invented the general concept of an
+asymmetric cipher, but he did not have an example of one. However, the mere concept
+of an asymmetric cipher was revolutionary.

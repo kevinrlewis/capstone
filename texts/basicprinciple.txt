@@ -1,0 +1,19 @@
+In its most basic form, the Enigma 
+machine consists of a keyboard 
+connected to a lampboard by electric 
+wires. In between is a solid disk 
+containing wiring that confuses the 
+connections between the keyboard and 
+the lampboard, e.g. typing A does not 
+necessarily illuminate the lamp A.
+
+
+
+
+
+So far, this central rotor disk merely 
+provides a simple monoalphabetic 
+substitution cipher and can be cracked 
+by frequency analysis. B is enciphered 
+as C ... and will always be enciphered
+as C.

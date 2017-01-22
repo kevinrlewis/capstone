@@ -1,0 +1,14 @@
+Between the keyboard and the first rotor, the
+Enigma contains a plugboard. Several cables, with a
+plug at either end, can be used to plug pairs of
+letters. If A is plugged with B, then upon typing the
+letter A, the current follows the path usually
+associated with the letter B, and vice versa.
+
+The plugboard settings change the way a message is
+encrypted, and with the real Enigma there are a huge
+number of possible settings, as you will see later. By
+changing the plugboard settings on the Enigma
+above, you can see how the word CAFE is encrypted
+differently, even if the scramblers are reset to the
+same setting.

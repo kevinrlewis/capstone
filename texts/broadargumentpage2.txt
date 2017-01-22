@@ -1,0 +1,26 @@
+Imagine that Alice now has an encryption function (RSA, to be described in the next section), and
+that her choice of N is part of it. Nobody can decrypt a message encrypted with her algorithm,
+because the message has gone through a 1-way function. So how can Alice decrypt the message?
+Alice must have a way of reversing the 1-way function.
+
+Fortunately for Alice, the 1-way function is reversible if somebody knew the values of p and q, the
+two prime numbers that are multiplied together to obtain N. Although Alice has told the world that
+her value for N is 175,828,273, she has not revealed her values for p and q, so only she has the
+special information required to decrypt her own messages. After all, N was created from p and q.
+
+We can think of N as the public-key, the information that is available to everybody, the information
+required to encrypt messages to Alice. Whereas p and q are the private-key, available only to Alice,
+the information required to decrypt these messages. The exact details of how p and q can be used to
+reverse the 1-way function are in the next section. However, there is one question which must be
+addressed immediately. If everybody knows N, the public-key, then why can't people deduce p and
+q, the private-key and read Alice's messages? In fact, it is virtually impossible to deduce p and q
+from N, if N is large, and this is perhaps the most beautiful aspect of the RSA asymmetric cipher.
+
+Alice created N by choosing p and q, and then multiplying them together. The fundamental point is
+that this is in itself a 1-way function. To demonstrate the 1-way nature of multiplying primes, we can
+take two prime numbers, such as 9,419 and 1,933, and multiply them - with a calculator it takes just
+a few seconds to get the answer 18,206,927. However, if, instead, we were given 18,206,927 and
+asked to find the prime factors (the two numbers that multiply together give 18,206,927) it would
+take us quite a while. If you doubt the difficulty of finding prime factors, then you might like to try
+the following; it took me just ten seconds with a calculator to generate the number 1,709,023, but it
+will take you the best part of an afternoon to work out the prime factors.
