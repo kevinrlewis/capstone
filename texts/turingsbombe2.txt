@@ -2,4 +2,4 @@ However, the number of possible keys is still too large to check. Turing was abl
 problem by concentrating on those letters that formed a loop, e.g., the C in the ciphertext can be 
 joined to the C in the plaintext; this is encrypted as A, which can be joined to the next A; this is 
 encrypted as B, which can be joined to the starting B, which is encrypted into the C that we started 
-with, so the loop is complete. Click here to see the loop.
+with, so the loop is complete.

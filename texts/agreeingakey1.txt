@@ -1,2 +1,4 @@
-Each Enigma operator belonged to a communications network, and in order for everyone in the network to be able to communicate it was necessary to agree a key. This was usually achieved via a monthly sheet of keys, which contained a separate key for each day. 
+Each Enigma operator belonged to a communications network, and in order for everyone in the 
+network to be able to communicate it was necessary to agree a key. This was usually achieved 
+via a monthly sheet of keys, which contained a separate key for each day. 
 

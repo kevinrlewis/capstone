@@ -63,7 +63,7 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = BuildingEnigmaPage()
+        test = CrackingTheEnigmaPage()
 
         #production
         #root.add_widget(mainpage.create())
@@ -4945,7 +4945,7 @@ class MOFS(ButtonBehavior):
         f.write('using the enigma pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(CrackingSubstitutionPage().create())
+        root.add_widget(UsingEnigmaPage().create())
 
     def fourPressed(self, *args):
         f.write('cracking the enigma pressed\n')
@@ -5879,6 +5879,558 @@ class CompleteOverviewPage(ButtonBehavior):
         return self.r
 ################################################################################
 #End Plugboard Page
+################################################################################
+
+################################################################################
+#Begin Using Enigma Page
+################################################################################
+class UsingEnigmaPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Using Enigma page entered\n')
+        MyApp.current = self
+        buttonx = .8
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Using the Enigma")
+
+        with open('texts/usingtheenigma1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.275, 'top':.9},
+                            size_hint = (.2,.2))
+        with open('texts/usingtheenigma2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.085, 'top':.45},
+                            size_hint = (.2,.2))
+        self.image = Image(source = 'pics/enigma.png',
+                            pos_hint = {'x':.275, 'top':.65},
+                            size_hint = (.5,.5))
+
+        self.button1 = Button(text = "What is the\nkey?",
+                                        pos_hint = {'x':buttonx, 'top':.9},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "How many\nkeys?",
+                                        pos_hint = {'x':buttonx, 'top':.75},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "Agreeing a\nkey",
+                                        pos_hint = {'x':buttonx, 'top':.6},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+
+    def onePressed(self, *args):
+        f.write("what is the key pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(WhatIsTheKeyPage().create())
+
+    def twoPressed(self, *args):
+        f.write('how many pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(HowManyKeysPage().create())
+
+    def threePressed(self, *args):
+        f.write('agreeing a key pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(AgreeingAKeyPage().create())
+
+    def fourPressed(self, *args):
+        f.write('enigma emulator pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(ReflectorPage().create())
+
+################################################################################
+#End Using Enigma Page
+################################################################################
+
+
+################################################################################
+#Begin What is the key Page
+################################################################################
+class WhatIsTheKeyPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('what is the key page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("What is the key?")
+
+        with open('texts/whatisthekey1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.365, 'top':.825},
+                            size_hint = (.2,.2))
+
+        with open('texts/whatisthekey2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.14, 'top':.4},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/bigenig2.png',
+                            pos_hint = {'x':.5, 'top':.5},
+                            size_hint = (.4,.4))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End What is the key Page
+################################################################################
+
+
+################################################################################
+#Begin How Many Keys Page
+################################################################################
+class HowManyKeysPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('how many keys page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("How many keys?")
+
+        with open('texts/howmanykeys1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.365, 'top':.85},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/howmanykeys.png',
+                            pos_hint = {'x':.075, 'top':.9},
+                            size_hint = (.8,.8))
+
+        self.calc = Label(text = 'Total no. of keys = 60 x 17,576 x 676 x 150,738,274,937,250\n\n' +
+                                '                           = 107,458,687,327,250,619,360,000 keys\n\n' +
+                                '                           = 100,000 billion billion keys',
+                            pos_hint = {'x':.35, 'top':.3},
+                            size_hint = (.2,.2),
+                            font_size = 16)
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.calc)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End How Many Keys Page
+################################################################################
+
+
+################################################################################
+#Begin Agreeing a key Page
+################################################################################
+class AgreeingAKeyPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Agreeing a key page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Agreeing a Key")
+
+        with open('texts/agreeingakey1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.325, 'top':.935},
+                            size_hint = (.2,.2))
+
+        with open('texts/agreeingakey2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.1, 'top':.575},
+                            size_hint = (.2,.2))
+
+        with open('texts/agreeingakey3.txt', 'r') as myfile:
+            data3 = myfile.read()
+        self.text3 = Label(text = data3,
+                            pos_hint = {'x':.26, 'top':.175},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/enigkey6.png',
+                            pos_hint = {'x':.4, 'top':.8},
+                            size_hint = (.6,.6))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.text3)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Agreeing a key Page
+################################################################################
+
+
+################################################################################
+#Begin Cracking the Enigma Page
+################################################################################
+class CrackingTheEnigmaPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Cracking the Enigma page entered\n')
+        MyApp.current = self
+        buttonx = .8
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Cracking the Enigma")
+
+        with open('texts/crackingtheenigma.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.3, 'top':.8},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/rounders.png',
+                            pos_hint = {'x':.15, 'top':.5},
+                            size_hint = (.5,.5))
+
+        self.button1 = Button(text = "Polish\nCodebreakers",
+                                        pos_hint = {'x':buttonx, 'top':.9},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "Bletchley\nPark",
+                                        pos_hint = {'x':buttonx, 'top':.75},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "Cribs",
+                                        pos_hint = {'x':buttonx, 'top':.6},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.button4 = Button(text = "Turing's\nBombe",
+                                        pos_hint = {'x':buttonx, 'top':.45},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fourPressed,
+                                        font_size = 14)
+
+        self.button5 = Button(text = "Flaws in the\nEnigma",
+                                        pos_hint = {'x':buttonx, 'top':.3},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fivePressed,
+                                        font_size = 14)
+
+        self.button6 = Button(text = "By Hook\nor\nby Crook",
+                                        pos_hint = {'x':buttonx, 'top':.15},
+                                        size_hint = (.15,.1),
+                                        on_release = self.sixPressed,
+                                        font_size = 14)
+
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.button5)
+        self.r.add_widget(self.button6)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+
+    def onePressed(self, *args):
+        f.write("polish codebreakers pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(PolishCodebreakersPage().create())
+
+    def twoPressed(self, *args):
+        f.write('bletchley park pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(BletchleyParkPage().create())
+
+    def threePressed(self, *args):
+        f.write('cribs pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CribsPage().create())
+
+    def fourPressed(self, *args):
+        f.write('turings bombe pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(TuringsBombePage().create())
+
+    def fivePressed(self, *args):
+        f.write('flaws in the enigma pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(PlugboardPage().create())
+
+    def sixPressed(self, *args):
+        f.write('by hook or by crook pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CompleteOverviewPage().create())
+################################################################################
+#End Cracking the Enigma Page
+################################################################################
+
+
+################################################################################
+#Begin Polish Codebreakers Page
+################################################################################
+class PolishCodebreakersPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Polish Codebreakers page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Polish Codebreakers")
+
+        with open('texts/polishcodebreakers1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.6, 'top':.85},
+                            size_hint = (.2,.2))
+
+        with open('texts/polishcodebreakers2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.375, 'top':.595},
+                            size_hint = (.2,.2))
+
+        with open('texts/polishcodebreakers3.txt', 'r') as myfile:
+            data3 = myfile.read()
+        self.text3 = Label(text = data3,
+                            pos_hint = {'x':.2, 'top':.31},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/POLISH.png',
+                            pos_hint = {'x':-.05, 'top':1.05},
+                            size_hint = (.6,.6))
+
+        self.image2 = Image(source = 'pics/rejewski.png',
+                            pos_hint = {'x':.5, 'top':.425},
+                            size_hint = (.4,.4))
+
+        self.namelabel = Label(text = '[b]Marian\nRejewski[/b]',
+                            pos_hint = {'x':.8, 'top':.3},
+                            size_hint = (.15,.15),
+                            font_size = 16,
+                            markup = True)
+
+        self.r.add_widget(self.namelabel)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.image2)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.text3)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Polish Codebreakers Page
+################################################################################
+
+
+################################################################################
+#Begin Bletchley Park Page
+################################################################################
+class BletchleyParkPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Bletchley Park page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Bletchley Park")
+
+        with open('texts/bletchleypark.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.8},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/bletch2.png',
+                            pos_hint = {'x':.05, 'top':.55},
+                            size_hint = (.6,.6))
+
+        self.piclabel = Label(text = "[i]In August 1939, Britain's senior\n" +
+                                    "codebreakers visited Bletchley Park to\n" +
+                                    "assess its suitability as the site for the new\n" +
+                                    "Government Code and Cypher School. To\n" +
+                                    "avoid arousing suspicion from locals, they\n" +
+                                    "claimed to be part of Captain Ridley's\n" +
+                                    "shooting party.\n\n(Courtesy of Barbara Eachus)" +
+                                    "[/i]",
+                            pos_hint = {'x':.75, 'top':.35},
+                            size_hint = (.15,.15),
+                            markup = True,
+                            font_size = 13)
+
+        self.website = TextInput(text = 'http://www.bletchleypark.org.uk',
+                            pos_hint = {'x':.65, 'top':.08},
+                            size_hint = (.3,.05),
+                            disabled = True)
+        self.weblabel = Label(text = '[b]Website[/b]',
+                            pos_hint = {'x':.635, 'top':.145},
+                            size_hint = (.1,.1),
+                            font_size = 12,
+                            markup = True)
+
+        self.r.add_widget(self.weblabel)
+        self.r.add_widget(self.website)
+        self.r.add_widget(self.piclabel)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Bletchley Park Page
+################################################################################
+
+
+################################################################################
+#Begin Cribs Page
+################################################################################
+class CribsPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Cribs page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Cribs")
+
+        with open('texts/cribs1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.39, 'top':.925},
+                            size_hint = (.2,.2))
+
+        with open('texts/cribs2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.4, 'top':.475},
+                            size_hint = (.2,.2))
+
+        self.label = Label(text = '[b]Plaintext + Key = Ciphertext[/b]',
+                            pos_hint = {'x':.385, 'top':.825},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            font_size = 20)
+
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Cribs Page
+################################################################################
+
+
+################################################################################
+#Begin Turing's Bombe Page
+################################################################################
+class TuringsBombePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Turings Bombe page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Turing's Bombe")
+
+        with open('texts/turingsbombe1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.2, 'top':.7},
+                            size_hint = (.2,.2))
+
+        with open('texts/turingsbombe2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.335, 'top':.325},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/TURING2.png',
+                            pos_hint = {'x':.5, 'top':.95},
+                            size_hint = (.6,.6))
+
+        self.bombebutton = Button(text = 'Bombe Demo',
+                            pos_hint = {'x':.825, 'top':.075},
+                            size_hint = (.15,.05))
+        self.bombeloop = Image(source = 'pics/bombeloop.png',
+                            pos_hint = {'x':.3, 'top':.3},
+                            size_hint = (.45,.45))
+
+        self.r.add_widget(self.bombeloop)
+        self.r.add_widget(self.bombebutton)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Turing's Bombe Page
 ################################################################################
 
 

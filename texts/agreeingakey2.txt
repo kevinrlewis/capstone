@@ -2,8 +2,9 @@ This section of a monthly key sheet has
 a row showing the key setting for each 
 particular day. Each mrning, operators 
 would change their machines to the 
-appropriate setting for that day. In 
-theory, it would have been possible to 
+appropriate setting for that day.
+
+In theory, it would have been possible to 
 communicate all messages using this one 
 setting for the rest of the day, but in 
 general it is more secure to change the 

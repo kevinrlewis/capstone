@@ -1,10 +1,13 @@
 Prior to the outbreak of the Second World War, Britain moved its codebreaking centre to a large 
 Victorian Tudor-Gothic mansion house called Bletchley Park, situated north of London, halfway 
 between Cambridge and Oxford, where it would recruit most of its cryptanalysts.
-The personnel consisted of mathematicians, scientists, engineers, linguists, classicists, curators, bridge players, chess players and anybody else who had the sort of mind suited to solving puzzles. 
-Cracking codes was very much a team effort — codebreakers worked together in huts, each but 
+
+The personnel consisted of mathematicians, scientists, engineers, linguists, classicists, 
+curators, bridge players, chess players and anybody else who had the sort of mind suited to solving 
+puzzles. Cracking codes was very much a team effort — codebreakers worked together in huts, each but 
 dedicated to breaking into a specific Enigma network. Gordon Welclunan, who was in charge of 
 Hut 6, described his team as 'a pack of hounds trying to pick up the scent.'
+
 In addition to the cryptographers, there developed a huge staff of transcribers, interceptors, 
 translators and machine operators. By the end of the war, Bletchley Park had grown from a few 
 codebreakers working in a couple of offices and huts into an industrial complex.
