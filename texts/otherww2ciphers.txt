@@ -1,4 +1,4 @@
-Communications between Hitler and his generals were encrypted using the Lorenz SZ40 machine,
+Communications between Hitler and his generals were encrypted using the [ref=lorenz][color=ffff66]Lorenz SZ40 machine[/color][/ref],
 which operated in a similar way to the Enigma machine, but was far more complicated, presenting
 the Bletchley codebreakers with an even greater challenge. Eventually, a GPO engineer Tommy
 Flowers constructed a machine, Colossus, for breaking the Lorenz cipher. The machine was based

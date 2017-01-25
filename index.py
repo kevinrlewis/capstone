@@ -7,6 +7,7 @@ import os
 import sys
 sys.path.insert(0, '/home/kevin/Documents/COS397/project-crypto/capstone/Ciphers')
 import caesar
+import webbrowser
 
 from kivy.uix.label import Label
 from kivy.uix.button import Button
@@ -63,7 +64,7 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = CrackingTheEnigmaPage()
+        test = OtherWWIICiphersPage()
 
         #production
         #root.add_widget(mainpage.create())
@@ -73,6 +74,9 @@ class MyApp(App):
 
         return root
 
+################################################################################
+#Begin Home Page
+################################################################################
 class MainPage(ButtonBehavior):
     def __init__(self):
         pass
@@ -99,6 +103,12 @@ class MainPage(ButtonBehavior):
                                     pos_hint = {'center_x': .75, 'center_y': .55},
                                     on_release=self.pressed_ts)
 
+        self.highlightsbutton = Button(text = '[b][color=ff6600]Highlights[/color][/b]',
+                                    size_hint = (.15,.1),
+                                    pos_hint = {'x': .025, 'top': .325},
+                                    on_release=self.pressed_highlights,
+                                    markup = True)
+
         titlestr = 'THE CODE BOOK'
 
         x = -.045
@@ -115,13 +125,19 @@ class MainPage(ButtonBehavior):
                 self.title.add_widget(tempimage)
 
 
-
+        self.r.add_widget(self.highlightsbutton)
         self.r.add_widget(self.title)
         self.r.add_widget(self.tb)
         self.r.add_widget(self.jcb)
         self.r.add_widget(self.mc)
         self.r.add_widget(self.ts)
         return self.r
+
+    def pressed_highlights(self, *args):
+        f.write('highlights button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(HighlightsPage().create())
 
     def pressed_jcb(self, *args):
         f.write('junior code breakers button pressed\n')
@@ -137,8 +153,14 @@ class MainPage(ButtonBehavior):
 
     def pressed_ts(self, *args):
         f.write('teachers section button pressed\n')
+################################################################################
+#End Home Page
+################################################################################
 
-class JCBPage(ButtonBehavior):
+################################################################################
+#Begin Highlights Page
+################################################################################
+class HighlightsPage(ButtonBehavior):
     def __init__(self):
         pass
 
@@ -149,44 +171,201 @@ class JCBPage(ButtonBehavior):
         self.r = RelativeLayout()
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
+        self.tb = self.topbar.create('Highlights')
+
+        self.text1 = Label(text = 'If you want a quick overview of what the CD-ROM contains, then you can dip into\n' +
+                            'the following highlights, which range from encryption tools to video clips to animations.',
+                            pos_hint = {'x':.4, 'top':.95},
+                            size_hint = (.2,.2))
+        self.button1 = Button(text = '[b][color=ff0000]>[/color][/b]',
+                            pos_hint = {'x':.1, 'top':.7},
+                            size_hint = (.05,.05),
+                            markup = True,
+                            on_release = self.onepressed)
+        self.label1 = Label(text = 'Atbash Cipher - an early and' +
+                                    '\nelementary substitution cipher that\n' +
+                                    'you can experiment with.',
+                            pos_hint = {'x':.215, 'top':.765},
+                            size_hint = (.2,.2))
+        self.button2 = Button(text = '[b][color=ff0000]>[/color][/b]',
+                            pos_hint = {'x':.1, 'top':.5},
+                            size_hint = (.05,.05),
+                            markup = True,
+                            on_release = self.twopressed)
+        self.label2 = Label(text = 'First Codebreakers - an interview\n' +
+                                    'with the man who uncovered\n' +
+                                    'ancient Arab manuscripts on\n' +
+                                    'codebreaking.',
+                            pos_hint = {'x':.215, 'top':.565},
+                            size_hint = (.2,.2))
+        self.button3 = Button(text = '[b][color=ff0000]>[/color][/b]',
+                            pos_hint = {'x':.1, 'top':.3},
+                            size_hint = (.05,.05),
+                            markup = True,
+                            on_release = self.threepressed)
+        self.label3 = Label(text = 'Frequency Analysis - an\n' +
+                                    'explanation of the first\n' +
+                                    'codebreaking technique, incl. a\n' +
+                                    'clip from The Science of Secrecy.',
+                            pos_hint = {'x':.215, 'top':.365},
+                            size_hint = (.2,.2))
+        self.button4 = Button(text = '[b][color=ff0000]>[/color][/b]',
+                            pos_hint = {'x':.8, 'top':.7},
+                            size_hint = (.05,.05),
+                            markup = True,
+                            on_release = self.fourpressed)
+        self.label4 = Label(text = 'Vigenere Tool - encrypt messages\n' +
+                                    'with a system that thwarts simple\n' +
+                                    'frequency analysis',
+                            pos_hint = {'x':.535, 'top':.765},
+                            size_hint = (.2,.2))
+        self.button5 = Button(text = '[b][color=ff0000]>[/color][/b]',
+                            pos_hint = {'x':.8, 'top':.5},
+                            size_hint = (.05,.05),
+                            markup = True,
+                            on_release = self.fivepressed)
+        self.label5 = Label(text = 'ADFGVX cipher - a cipher used in\n' +
+                                    'the First World War, which\n' +
+                                    'involves substitution and\n' +
+                                    'transposition.',
+                            pos_hint = {'x':.535, 'top':.565},
+                            size_hint = (.2,.2))
+        self.button6 = Button(text = '[b][color=ff0000]>[/color][/b]',
+                            pos_hint = {'x':.8, 'top':.3},
+                            size_hint = (.05,.05),
+                            markup = True,
+                            on_release = self.sixpressed)
+        self.label6 = Label(text = 'Cliff Cocks interview - the first ever\n' +
+                                    'interview with a GCHQ codebreaker\n' +
+                                    '- a real exclusive.',
+                            pos_hint = {'x':.535, 'top':.365},
+                            size_hint = (.2,.2))
+
+        self.r.add_widget(self.label1)
+        self.r.add_widget(self.label2)
+        self.r.add_widget(self.label3)
+        self.r.add_widget(self.label4)
+        self.r.add_widget(self.label5)
+        self.r.add_widget(self.label6)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.button5)
+        self.r.add_widget(self.button6)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def onepressed(self, *args):
+        f.write('highlights - atbash pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(AtbashPage().create())
+
+    def twopressed(self, *args):
+        f.write('highlights - first codebreakers pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(InventionInBaghdadPage().create())
+
+    def threepressed(self, *args):
+        f.write('highlights - frequency analysis pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(HowFreqPage().create())
+
+    def fourpressed(self, *args):
+        f.write('highlights - vigenere pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(VigenerePage().create())
+
+    def fivepressed(self, *args):
+        f.write('highlights - adfgvx cipher pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(ADFGVXPage().create())
+
+    def sixpressed(self, *args):
+        f.write('highlights - cliff cocks interview pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        #root.add_widget(ByHookOrByCrookPage().create())
+################################################################################
+#End Highlights Page
+################################################################################
+
+################################################################################
+#Begin Junior Codebreakers Page
+################################################################################
+class JCBPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Junior Code Breakers entered\n')
+        MyApp.current = self
+        self.leftx = -0.2
+        self.rightx = .3
+
+        #root layout of the instance
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
         self.tb = self.topbar.create('Junior Codebreakers')
         self.leftc = RelativeLayout(size_hint = (.5,.6),
                                     pos_hint = {'left':1})
         self.rightc = RelativeLayout(size_hint = (.5,.6),
                                     pos_hint = {'right':1})
-        self.buttonlay = RelativeLayout(pos_hint = {'center_x':.5, 'center_y':.65},
+        self.buttonlay = RelativeLayout(pos_hint = {'center_x':.5, 'center_y':.5},
                                         size_hint = (.6,1))
+
+        self.lefttext = Label(text = 'Some of the material in this application is quite\n' +
+                                    'complicated, particularly in later chapters.\n\n' +
+                                    'This section is a collection of pages that are\n' +
+                                    'ideal for junior codebreakers. Just click on the\n' +
+                                    'first page to begin.',
+                            pos_hint = {'x':.2, 'top':.9},
+                            size_hint = (.2,.2))
+        self.righttext = Label(text = 'The pages start with the most ancient techniques\n' +
+                                        'used to protect messages from prying eyes. The\n' +
+                                        'first page introduces a form of transposition\n' +
+                                        'cipher, which means that it moves the letters of\n' +
+                                        'the message, creating an anagram.',
+                            pos_hint = {'x':.65, 'top':.915},
+                            size_hint = (.2,.2))
 
         #column 1
         self.railfence = Button(text = 'Transposition - Railfence',
-                            pos_hint = {'center_y':1},
+                            pos_hint = {'x':self.leftx, 'center_y':1},
                             size_hint = (.9,.06),
                             on_release = self.railfencepressed)
         self.latin = Button(text = 'Transposition - Latin Square',
-                            pos_hint = {'center_y':.875},
+                            pos_hint = {'x':self.leftx, 'center_y':.875},
                             size_hint = (.9,.06),
                             on_release = self.latinsqpressed)
         self.scytale = Button(text = 'Transposition - Scytale',
-                            pos_hint = {'center_y':.75},
+                            pos_hint = {'x':self.leftx, 'center_y':.75},
                             size_hint = (.9,.06))
         self.caesar = Button(text = 'Caesar Cipher',
-                            pos_hint = {'center_y':.625},
+                            pos_hint = {'x':self.leftx, 'center_y':.625},
                             size_hint = (.9,.06),
                             on_release = self.caesarpressed)
         self.pigpen = Button(text = 'Pigpen Cipher',
-                            pos_hint = {'center_y':.5},
+                            pos_hint = {'x':self.leftx, 'center_y':.5},
                             size_hint = (.9,.06),
                             on_release = self.pigpenpressed)
         self.pigpengrave = Button(text = 'Pigpen Gravestone',
-                            pos_hint = {'center_y':.375},
+                            pos_hint = {'x':self.leftx, 'center_y':.375},
                             size_hint = (.9,.06),
                             on_release = self.pigpengravepressed)
         self.atbash = Button(text = 'Atbash Cipher',
-                            pos_hint = {'center_y':.25},
+                            pos_hint = {'x':self.leftx, 'center_y':.25},
                             size_hint = (.9,.06),
                             on_release = self.atbashpressed)
         self.mono = Button(text = 'General Monoalphabetic',
-                            pos_hint = {'center_y':.125},
+                            pos_hint = {'x':self.leftx, 'center_y':.125},
                             size_hint = (.9,.06),
                             on_release = self.genmonopressed)
         self.leftc.add_widget(self.railfence)
@@ -200,35 +379,35 @@ class JCBPage(ButtonBehavior):
 
         #column 2
         self.howfreq = Button(text = 'How Frequency Analysis Works',
-                            pos_hint = {'center_y':1},
+                            pos_hint = {'x':self.rightx, 'center_y':1},
                             size_hint = (.9,.06),
                             on_release = self.freqpressed)
         self.digraph = Button(text = 'Digraph Substitution',
-                            pos_hint = {'center_y':.875},
+                            pos_hint = {'x':self.rightx, 'center_y':.875},
                             size_hint = (.9,.06),
                             on_release = self.digraphpressed)
         self.playfair = Button(text = 'Playfair Cipher',
-                            pos_hint = {'center_y':.75},
+                            pos_hint = {'x':self.rightx, 'center_y':.75},
                             size_hint = (.9,.06),
                             on_release = self.playfairpressed)
         self.homo = Button(text = 'Homophonic Cipher',
-                            pos_hint = {'center_y':.625},
+                            pos_hint = {'x':self.rightx, 'center_y':.625},
                             size_hint = (.9,.06),
                             on_release = self.homophonicpressed)
         self.morse = Button(text = 'Morse Code',
-                            pos_hint = {'center_y':.5},
+                            pos_hint = {'x':self.rightx, 'center_y':.5},
                             size_hint = (.9,.06),
                             on_release = self.morsepressed)
         self.dancing = Button(text = 'Dancing Men Cipher',
-                            pos_hint = {'center_y':.375},
+                            pos_hint = {'x':self.rightx, 'center_y':.375},
                             size_hint = (.9,.06),
                             on_release = self.dancingpressed)
         self.meetenigma = Button(text = 'Meet the Enigma Machine',
-                            pos_hint = {'center_y':.25},
+                            pos_hint = {'x':self.rightx, 'center_y':.25},
                             size_hint = (.9,.06),
                             on_release = self.meetpressed)
         self.codetalkers = Button(text = 'Codetalkers',
-                            pos_hint = {'center_y':.125},
+                            pos_hint = {'x':self.rightx, 'center_y':.125},
                             size_hint = (.9,.06),
                             on_release = self.codetalkerspressed)
         self.rightc.add_widget(self.howfreq)
@@ -243,6 +422,8 @@ class JCBPage(ButtonBehavior):
 
         self.buttonlay.add_widget(self.leftc)
         self.buttonlay.add_widget(self.rightc)
+        self.r.add_widget(self.lefttext)
+        self.r.add_widget(self.righttext)
         self.r.add_widget(self.tb)
         self.r.add_widget(self.buttonlay)
         return self.r
@@ -336,6 +517,9 @@ class JCBPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(CodetalkersPage().create())
+################################################################################
+#End Junior Codebreakers Page
+################################################################################
 
 ################################################################################
 #Begin Railfence Cipher Page
@@ -4951,19 +5135,19 @@ class MOFS(ButtonBehavior):
         f.write('cracking the enigma pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(KeySecretsPage().create())
+        root.add_widget(CrackingTheEnigmaPage().create())
 
     def fivePressed(self, *args):
         f.write('enigmas impact on wwII pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(TragedyPage().create())
+        root.add_widget(EnigmasImpactOnWWIIPage().create())
 
     def sixPressed(self, *args):
         f.write('other world war II ciphers pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(TragedyPage().create())
+        root.add_widget(OtherWWIICiphersPage().create())
 
 ################################################################################
 #End Mechanisation of Secrecy Page
@@ -5521,7 +5705,8 @@ class ADFGVXPage(ButtonBehavior):
                 count = len(keyword)
 
         templist = grid.split('\n')
-        templist.remove('')
+        if '' in templist:
+            templist.remove('')
         length = len(templist[0])
         for group in templist:
             if len(group) != length:
@@ -6205,13 +6390,13 @@ class CrackingTheEnigmaPage(ButtonBehavior):
         f.write('flaws in the enigma pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(PlugboardPage().create())
+        root.add_widget(FlawsInTheEnigmaPage().create())
 
     def sixPressed(self, *args):
         f.write('by hook or by crook pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(CompleteOverviewPage().create())
+        root.add_widget(ByHookOrByCrookPage().create())
 ################################################################################
 #End Cracking the Enigma Page
 ################################################################################
@@ -6417,7 +6602,8 @@ class TuringsBombePage(ButtonBehavior):
 
         self.bombebutton = Button(text = 'Bombe Demo',
                             pos_hint = {'x':.825, 'top':.075},
-                            size_hint = (.15,.05))
+                            size_hint = (.15,.05),
+                            on_release = self.bombepressed)
         self.bombeloop = Image(source = 'pics/bombeloop.png',
                             pos_hint = {'x':.3, 'top':.3},
                             size_hint = (.45,.45))
@@ -6429,10 +6615,398 @@ class TuringsBombePage(ButtonBehavior):
         self.r.add_widget(self.text2)
         self.r.add_widget(self.tb)
         return self.r
+
+    def bombepressed(self, *args):
+        f.write('bombe demo button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(BombeDemoPage().create())
 ################################################################################
 #End Turing's Bombe Page
 ################################################################################
 
+
+################################################################################
+#Begin Bombe Demo Page
+################################################################################
+class BombeDemoPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Bombe Demo page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Bombe Demo")
+
+        with open('texts/bombedemo1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.525},
+                            size_hint = (.2,.2),
+                            font_size = 14)
+
+        with open('texts/bombedemo2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.15, 'top':.2},
+                            size_hint = (.2,.2),
+                            font_size = 14)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Bombe Demo Page
+################################################################################
+
+################################################################################
+#Begin Flaws in the Enigma Page
+################################################################################
+class FlawsInTheEnigmaPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Flaws in the Enigma page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Flaws in the Enigma")
+
+        with open('texts/flawsintheenigma1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.65},
+                            size_hint = (.2,.2))
+
+        with open('texts/flawsintheenigma2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.39, 'top':.2},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/3rotors.png',
+                            pos_hint = {'x':.4, 'top':.85},
+                            size_hint = (.6,.6))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Flaws in the Enigma Page
+################################################################################
+
+################################################################################
+#Begin By Hook or by Crook Page
+################################################################################
+class ByHookOrByCrookPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('By Hook or by Crook page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("By Hook or by Crook")
+
+        with open('texts/byhookorbycrook1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.6, 'top':.625},
+                            size_hint = (.2,.2))
+
+        with open('texts/byhookorbycrook2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.39, 'top':.175},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/HOOK.png',
+                            pos_hint = {'x':-0.1, 'top':.875},
+                            size_hint = (.6,.6))
+
+        self.label = Label(text = '[b][i]Tommy Brown\n(copyright David Brown)[/i][/b]',
+                            markup = True,
+                            pos_hint = {'x':.125, 'top':.335},
+                            size_hint = (.2,.2),
+                            font_size = 12)
+
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End By Hook or by Crook Page
+################################################################################
+
+################################################################################
+#Begin Enigma's Impact on WWII Page
+################################################################################
+class EnigmasImpactOnWWIIPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write("Enigma's Impact on WWII page entered\n")
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Enigma's Impact on WWII")
+
+        with open('texts/enigmasimpactonww21.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.6, 'top':.785},
+                            size_hint = (.2,.2))
+
+        with open('texts/enigmasimpactonww22.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.4, 'top':.355},
+                            size_hint = (.2,.2),
+                            font_size = 13)
+
+        self.image = Image(source = 'pics/blettop.png',
+                            pos_hint = {'x':.01, 'top':1.035},
+                            size_hint = (.6,.6))
+
+        self.button = Button(text = 'Secret\nSuccess',
+                            pos_hint = {'x':.875, 'top':.9},
+                            size_hint = (.1,.1),
+                            on_release = self.buttonpressed)
+
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('secret success button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(SecretSuccessPage().create())
+################################################################################
+#End Enigma's Impact on WWII Page
+################################################################################
+
+
+################################################################################
+#Begin Secret Success Page
+################################################################################
+class SecretSuccessPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Secret Success page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Secret Success")
+
+        with open('texts/secretsuccess1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.8},
+                            size_hint = (.2,.2))
+
+        with open('texts/secretsuccess2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.385, 'top':.35},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/confiden.png',
+                            pos_hint = {'x':0.5, 'top':.925},
+                            size_hint = (.4,.4))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Secret Success Page
+################################################################################
+
+################################################################################
+#Begin Other WWII Ciphers Page
+################################################################################
+class OtherWWIICiphersPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write("Other WWII Ciphers page entered\n")
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Other World War II Ciphers")
+
+        with open('texts/otherww2ciphers.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.325, 'top':.85},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.lorenz)
+
+        with open('texts/otherww2ciphers2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.4, 'top':.515},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.lorenz)
+
+        self.button = Button(text = 'Codetalkers',
+                            pos_hint = {'x':.875, 'top':.9},
+                            size_hint = (.125,.1),
+                            on_release = self.buttonpressed)
+
+        self.label = Label(text = '[i]For pictures, click on the yellow words. Further information about\n' +
+                                    'Second World War cipher can be found on the following web sites:[/i]',
+                            pos_hint = {'x':.4, 'top':.3},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            font_size = 13)
+
+        self.lorenzimage = Image(source = 'pics/lorentz.png',
+                            pos_hint = {'x':.25, 'top':.85},
+                            size_hint = (.5,.5))
+        self.lorenzlabel = Label(text = '[i]Typex cipher machine\n' +
+                                        'Courtesy of The Bletchley Park Trust\n[/i]' +
+                                        '[color=ffff66][b][ref=lorentz]Click here to view the text[/ref][/b][/color]',
+                            pos_hint = {'x':0, 'top':.85},
+                            size_hint = (1,1),
+                            halign = 'center',
+                            markup = True,
+                            on_ref_press = self.imagepressed)
+        self.typeximage = Image(source = 'pics/typex3.png',
+                            pos_hint = {'x':.25, 'top':.85},
+                            size_hint = (.5,.5))
+        self.typexlabel = Label(text = '[i]Lorenz SZ40 machine\n' +
+                                        'Courtesy of The Bletchley Park Trust\n[/i]' +
+                                        '[color=ffff66][b][ref=lorentz]Click here to view the text[/ref][/b][/color]',
+                            pos_hint = {'x':0, 'top':.85},
+                            size_hint = (1,1),
+                            halign = 'center',
+                            markup = True,
+                            on_ref_press = self.imagepressed)
+
+        self.hyperlink1 = Label(text = 'Codes and Ciphers of the Second World War\n' +
+                                        '[color=ffff66][b][ref=hype1]http://www.codesandciphers.org.uk/[/ref][/b][/color]',
+                            pos_hint = {'x':.1, 'top':.225},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.hype1pressed,
+                            font_size = 13)
+
+        self.hyperlink2 = Label(text = 'National Cryptologic Museum\n' +
+                                        'Fort Meade, Maryland, USA\n' +
+                                        '[color=ffff66][b][ref=hype1]https://www.nsa.gov/about/cryptologic-heritage/museum/[/ref][/b][/color]',
+                            pos_hint = {'x':.1725, 'top':.15},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.hype2pressed,
+                            font_size = 13)
+        self.hyperlink3 = Label(text = 'Crypto Machine Menu Page\n' +
+                                        '[color=ffff66][b][ref=hype1]http://jproc.ca/crypto/menu.html[/ref][/b][/color]',
+                            pos_hint = {'x':.65, 'top':.225},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.hype3pressed,
+                            font_size = 13)
+
+        self.hyperlink4 = Label(text = 'Military Communications and Electronics Museum\n' +
+                                        'Kingston, Ontario, Canada\n' +
+                                        '[color=ffff66][b][ref=hype1]http://www.c-and-e-museum.org/[/ref][/b][/color]',
+                            pos_hint = {'x':.6975, 'top':.15},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.hype4pressed,
+                            font_size = 13)
+
+        self.r.add_widget(self.hyperlink1)
+        self.r.add_widget(self.hyperlink2)
+        self.r.add_widget(self.hyperlink3)
+        self.r.add_widget(self.hyperlink4)
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('codetalkers button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CodetalkersPage().create())
+
+    def lorenz(self, *args):
+        f.write('lorenz text pressed\n')
+        self.r.remove_widget(self.text1)
+        self.r.remove_widget(self.text2)
+        self.r.add_widget(self.lorenzimage)
+        self.r.add_widget(self.lorenzlabel)
+
+    def typex(self, *args):
+        f.write('typex text pressed\n')
+        self.r.remove_widget(self.text1)
+        self.r.remove_widget(self.text2)
+        self.r.add_widget(self.typeximage)
+        self.r.add_widget(self.typexlabel)
+
+    def imagepressed(self, *args):
+        f.write('image pressed\n')
+        self.r.remove_widget(self.lorenzimage)
+        self.r.remove_widget(self.lorenzlabel)
+        self.r.remove_widget(self.typeximage)
+        self.r.remove_widget(self.typexlabel)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+
+    def hype1pressed(self, *args):
+        f.write('hyperlink pressed\n')
+        webbrowser.open("http://www.codesandciphers.org.uk/")
+
+    def hype2pressed(self, *args):
+        f.write('hyperlink pressed\n')
+        webbrowser.open("https://www.nsa.gov/about/cryptologic-heritage/museum/")
+
+    def hype3pressed(self, *args):
+        f.write('hyperlink pressed\n')
+        webbrowser.open("http://jproc.ca/crypto/menu.html")
+
+    def hype4pressed(self, *args):
+        f.write('hyperlink pressed\n')
+        webbrowser.open("http://www.c-and-e-museum.org/")
+################################################################################
+#End Other WWII Ciphers Page
+################################################################################
 
 class TopBar(ButtonBehavior):
     def __init__(self):

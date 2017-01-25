@@ -3,7 +3,7 @@ American codebreakers were having an equally important influence on events in th
 Japanese ciphers such as Purple. For example, in June 1942, the Americans deciphered a message which enabled
 them to foil Japan's attempt to capture Midway Island in one of the most important battles of World War Two.
 
-The true strength and potential of machine ciphers was demonstrated by the Typex cipher machine, used by the
+The true strength and potential of machine ciphers was demonstrated by the [ref=lorenz][color=ffff66]Typex cipher machine[/color][/ref], used by the
 British Army and Air Force, and the SIGABA cipher machine, used by the American military. Both of these cipher
 machines were more complex than the Enigma machine and both were used properly, and therefore they remained
 unbroken throughout the war. Allied cryptographers were confident that complicated electromechanical machine
