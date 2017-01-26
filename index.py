@@ -8,6 +8,7 @@ import sys
 sys.path.insert(0, '/home/kevin/Documents/COS397/project-crypto/capstone/Ciphers')
 import caesar
 import webbrowser
+import binascii
 
 from kivy.uix.label import Label
 from kivy.uix.button import Button
@@ -64,7 +65,7 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = OtherWWIICiphersPage()
+        test = AOTI()
 
         #production
         #root.add_widget(mainpage.create())
@@ -2278,6 +2279,9 @@ class MC(ButtonBehavior):
 
     def agePressed(self, *args):
         f.write('age of the internet pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(AOTI().create())
 
     def futurePressed(self, *args):
         f.write('future of Cryptography pressed\n')
@@ -7007,6 +7011,992 @@ class OtherWWIICiphersPage(ButtonBehavior):
 ################################################################################
 #End Other WWII Ciphers Page
 ################################################################################
+
+################################################################################
+#Begin Age of the Internet Page
+################################################################################
+class AOTI(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Age of the Internet page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Age of the Internet")
+
+        with open('texts/ageoftheinternet.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.3, 'top':.8},
+                            size_hint = (.2,.2))
+
+        self.button1 = Button(text = "Computer\nCryptography",
+                                        pos_hint = {'x':.825, 'top':.925},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "Key\nDistribution\nProblem",
+                                        pos_hint = {'x':.825, 'top':.775},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "God\nRewards\nFools",
+                                        pos_hint = {'x':.825, 'top':.625},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.button4 = Button(text = "Public Key\nCryptography",
+                                        pos_hint = {'x':.825, 'top':.475},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fourPressed,
+                                        font_size = 14)
+
+        self.button5 = Button(text = "Not Just\nSecrets",
+                                        pos_hint = {'x':.825, 'top':.325},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fivePressed,
+                                        font_size = 14)
+
+        self.button6 = Button(text = "The Secret\nHistory",
+                                        pos_hint = {'x':.825, 'top':.175},
+                                        size_hint = (.15,.1),
+                                        on_release = self.sixPressed,
+                                        font_size = 14)
+
+        self.anim = VideoPlayer(source = 'flc/NUMBERS.mp4',
+                                        pos_hint = {'x':.3, 'top':.5},
+                                        size_hint = (.4,.4),
+                                        state = 'play',
+                                        options = {'eos':'loop'})
+
+        self.r.add_widget(self.anim)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.button5)
+        self.r.add_widget(self.button6)
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def onePressed(self, *args):
+        f.write("computer cryptography pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(ComputerCryptographyPage().create())
+
+    def twoPressed(self, *args):
+        f.write('key distribution problem pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(BuildingEnigmaPage().create())
+
+    def threePressed(self, *args):
+        f.write('god rewards fools pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(GodRewardsFoolsPage().create())
+
+    def fourPressed(self, *args):
+        f.write('public key cryptography pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(PublicKeyCryptographyPage().create())
+
+    def fivePressed(self, *args):
+        f.write('not just secrets pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(EnigmasImpactOnWWIIPage().create())
+
+    def sixPressed(self, *args):
+        f.write('the secret history pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(OtherWWIICiphersPage().create())
+
+################################################################################
+#End Age of the Internet Page
+################################################################################
+
+
+################################################################################
+#Begin Computer Cryptography Page
+################################################################################
+class ComputerCryptographyPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Computer Cryptography page entered\n')
+        MyApp.current = self
+        buttonx = .8
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Computer Cryptography")
+
+        with open('texts/computercryptography.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.3, 'top':.725},
+                            size_hint = (.2,.2))
+
+        self.button1 = Button(text = "Substitution",
+                                        pos_hint = {'x':buttonx, 'top':.9},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "Transposition",
+                                        pos_hint = {'x':buttonx, 'top':.75},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "Data\nEncryption\nStandard",
+                                        pos_hint = {'x':buttonx, 'top':.6},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.button4 = Button(text = "Other Modern\nCiphers",
+                                        pos_hint = {'x':buttonx, 'top':.45},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fourPressed,
+                                        font_size = 14)
+
+        self.plaintextinput = TextInput(text = 'HELLO',
+                                        pos_hint = {'x':.5, 'top':.35},
+                                        size_hint = (.25,.05))
+        self.plaintextlabel = Label(text = 'Plaintext',
+                                        pos_hint = {'x':.475, 'top':.4},
+                                        size_hint = (.15,.05),
+                                        font_size = 13)
+
+        self.asciibutton = Button(text = 'Turn Plaintext into ASCII',
+                                        pos_hint = {'x':.5, 'top':.285},
+                                        size_hint = (.25,.05),
+                                        on_release = self.p2apress)
+
+        self.asciidisplay = TextInput(text = '',
+                                        pos_hint = {'x':.5, 'top':.225},
+                                        size_hint = (.25,.2),
+                                        font_name = 'font/RobotoMono-Regular')
+        self.asciibin = RelativeLayout()
+        self.createDisplay()
+
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.asciibutton)
+        self.r.add_widget(self.asciidisplay)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+
+    def onePressed(self, *args):
+        f.write("Substitution pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CCSubstitutionPage().create())
+
+    def twoPressed(self, *args):
+        f.write('Transposition pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CCTranspositionPage().create())
+
+    def threePressed(self, *args):
+        f.write('data encryption standard pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(DESPage().create())
+
+    def fourPressed(self, *args):
+        f.write('other modern ciphers pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(OtherModernCiphersPage().create())
+
+    def createDisplay(self, *args):
+        f.write('creating ascii display...\n')
+        posx = .2
+        count = 0
+        postop = .125
+        for letter in reversed(self.alpha):
+            if count == 13:
+                postop = .125
+                posx = .05
+            letter = letter.upper()
+            f.write('bin ' + letter + ': ' + str(self.text_to_bits(letter)) + '\n')
+            templabel = Label(text = (letter + " | " + str(self.text_to_bits(letter)) + ' ' + str(ord(letter))),
+                                pos_hint = {'x':posx, 'top':postop},
+                                size_hint = (.15,.15),
+                                font_size = 12,
+                                font_name = 'font/RobotoMono-Regular')
+            self.asciibin.add_widget(templabel)
+            postop += .025
+            count += 1
+        self.r.add_widget(self.asciibin)
+
+
+    def text_to_bits(self, text, encoding='utf-8', errors='surrogatepass'):
+        bits = bin(int(binascii.hexlify(text.encode(encoding, errors)), 16))[2:]
+        return bits.zfill(8 * ((len(bits) + 7) // 8))
+
+    def p2apress(self, *args):
+        f.write('plaintext to ascii button pressed\n')
+        text = self.plaintextinput.text
+        count = 0
+        for letter in text:
+            count += 1
+            letter = letter.upper()
+            self.asciidisplay.text = self.asciidisplay.text + str(self.text_to_bits(letter)) + ' '
+            if count == 2:
+                self.asciidisplay.text = self.asciidisplay.text + '\n'
+
+################################################################################
+#End Computer Cryptography Page
+################################################################################
+
+
+################################################################################
+#Begin CC Substitution Page
+################################################################################
+class CCSubstitutionPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write("cc substitution page entered\n")
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Substitution")
+
+        with open('texts/ccsubstitution.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.8},
+                            size_hint = (.2,.2))
+
+        with open('texts/ccsubstitution2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.4, 'top':.25},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/ascii-ex.png',
+                            pos_hint = {'x':.15, 'top':.75},
+                            size_hint = (.7,.7))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End CC Substitution Page
+################################################################################
+
+
+################################################################################
+#Begin CC Transposition Page
+################################################################################
+class CCTranspositionPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write("cc Transposition page entered\n")
+        MyApp.current = self
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        self.templist1 = []
+        self.templist2 = []
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Transposition")
+
+        with open('texts/cctransposition1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.9},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.clickref)
+
+        with open('texts/cctransposition2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.4, 'top':.2},
+                            size_hint = (.2,.2))
+
+        self.messageinput = TextInput(text = 'HELLO',
+                            pos_hint = {'x':.25, 'top':.66},
+                            size_hint = (.5,.05),
+                            disabled = True)
+        self.messagelabel = Label(text = '[b]Message[/b]',
+                            pos_hint = {'x':.11, 'top':.735},
+                            size_hint = (.2,.2),
+                            font_size = 12,
+                            markup = True)
+        self.plaintextbin = Label(text = str(self.text_to_bits(self.messageinput.text)),
+                            pos_hint = {'x':.4, 'top':.65},
+                            size_hint = (.2,.2),
+                            font_size = 16,
+                            font_name = 'font/RobotoMono-Regular')
+        self.plaintextlabel = Label(text = '[b]Plaintext[/b]',
+                            pos_hint = {'x':.11, 'top':.653},
+                            size_hint = (.2,.2),
+                            font_size = 12,
+                            markup = True)
+
+        self.railfencebutton = Button(text = 'Railfence',
+                            pos_hint = {'x':.085, 'top':.45},
+                            size_hint = (.1,.035),
+                            on_release = self.railfencepressed)
+        self.createciphertext = Button(text = 'Create Ciphertext',
+                            pos_hint = {'x':.025, 'top':.29},
+                            size_hint = (.165,.035),
+                            on_release = self.createpressed,
+                            disabled = True)
+
+        self.label1 = Label(text = '',
+                            pos_hint = {'x':.4, 'top':.55},
+                            size_hint = (.2,.2),
+                            font_size = 14,
+                            font_name = 'font/RobotoMono-Regular',
+                            markup = True)
+        self.label2 = Label(text = '',
+                            pos_hint = {'x':.4175, 'top':.5},
+                            size_hint = (.2,.2),
+                            font_size = 14,
+                            font_name = 'font/RobotoMono-Regular',
+                            markup = True)
+
+        self.ciphertextdisplay = Label(text = '',
+                            pos_hint = {'x':.25, 'top':.3},
+                            size_hint = (.5,.05),
+                            font_name = 'font/RobotoMono-Regular',
+                            markup = True,
+                            font_size = 16)
+
+        self.r.add_widget(self.createciphertext)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.railfencebutton)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.messagelabel)
+        self.r.add_widget(self.plaintextbin)
+        self.r.add_widget(self.messageinput)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def clickref(self, *args):
+        f.write('click reference to railfence page pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(RailfencePage().create())
+
+    def text_to_bits(self, text, encoding='utf-8', errors='surrogatepass'):
+        bits = bin(int(binascii.hexlify(text.encode(encoding, errors)), 16))[2:]
+        return bits.zfill(8 * ((len(bits) + 7) // 8))
+
+    def railfencepressed(self, *args):
+        f.write('railfence button pressed\n')
+        bintext = self.plaintextbin.text
+        listbin = list(bintext)
+        count = 0
+        for i in range(len(listbin)):
+            if count == 0:
+                self.templist1.append(listbin[i])
+                count = 1
+            else:
+                self.templist2.append(listbin[i])
+                count = 0
+
+        self.label1.text = '[color=ff0000]' + '  '.join(self.templist1) + '[/color]'
+        self.label2.text = '[color=ff0000]' + '  '.join(self.templist2) + '[/color]'
+        self.r.add_widget(self.label1)
+        self.r.add_widget(self.label2)
+        self.createciphertext.disabled = False
+
+    def createpressed(self, *args):
+        f.write('create ciphertext pressed\n')
+        newlist = ''.join(self.templist1 + self.templist2)
+        self.ciphertextdisplay.text = '[color=ff0000]' + str(newlist) + '[/color]'
+################################################################################
+#End CC Substitution Page
+################################################################################
+
+
+################################################################################
+#Begin Data Encryption Standard Page
+################################################################################
+class DESPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Data Encryption Standard page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Data Encryption Standard")
+
+        with open('texts/dataencryptionstandard.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.55},
+                            size_hint = (.2,.2))
+
+        self.button = Button(text = "How DES\nWorks",
+                            pos_hint = {'x':.875, 'top':.9},
+                            size_hint = (.1,.1),
+                            on_release = self.pressed)
+
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def pressed(self, *args):
+        f.write('how des works pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(HowDESWorksPage().create())
+################################################################################
+#End Data Encryption Standard Page
+################################################################################
+
+
+################################################################################
+#Begin How DES Works Page
+################################################################################
+class HowDESWorksPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('How DES Works page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("How DES Works")
+
+        with open('texts/howdesworks.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.55},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/howdesworks.png',
+                            pos_hint = {'x':.275, 'top':.9},
+                            size_hint = (.9,.9))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End How DES Works Page
+################################################################################
+
+
+################################################################################
+#Begin Other Modern Ciphers Page
+################################################################################
+class OtherModernCiphersPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Other Modern Ciphers page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Other Modern Ciphers")
+
+        with open('texts/othermodernciphers.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.6},
+                            size_hint = (.2,.2))
+
+        self.label = Label(text = "For the latest information on the AES, you can visit:",
+                            pos_hint = {'x':.195, 'top':.185},
+                            size_hint = (.2,.2))
+        self.hyperlink1 = Label(text = '[color=ffff00][ref=h1]http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf[/ref][/color]',
+                            pos_hint = {'x':.15, 'top':.15},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.h1)
+        self.hyperlink2 = Label(text = '[color=ffff00][ref=h1]http://csrc.nist.gov/archive/aes/rijndael/Rijndael-ammended.pdf[/ref][/color]',
+                            pos_hint = {'x':.6, 'top':.15},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.h2)
+
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.hyperlink1)
+        self.r.add_widget(self.hyperlink2)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def h1(self, *args):
+        f.write('opening http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf ...\n')
+        webbrowser.open('http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf')
+
+    def h2(self, *args):
+        f.write('opening http://csrc.nist.gov/archive/aes/rijndael/Rijndael-ammended.pdf ...\n')
+        webbrowser.open('http://csrc.nist.gov/archive/aes/rijndael/Rijndael-ammended.pdf')
+################################################################################
+#End Other Modern Ciphers Page
+################################################################################
+
+################################################################################
+#Begin Key Distribution Problem Page
+################################################################################
+class KeyDistributionProblemPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Key Distribution Problem page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Key Distribution Problem")
+
+        with open('texts/keydistributionproblem1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.25, 'top':.9},
+                            size_hint = (.2,.2))
+
+        with open('texts/keydistributionproblem2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.32, 'top':.675},
+                            size_hint = (.2,.2))
+
+        with open('texts/keydistributionproblem3.txt', 'r') as myfile:
+            data3 = myfile.read()
+        self.text3 = Label(text = data3,
+                            pos_hint = {'x':.14, 'top':.35},
+                            size_hint = (.2,.2))
+
+        self.video = VideoPlayer(source = 'video/pub2new2.avi',
+                            pos_hint = {'x':.475, 'top':.5},
+                            size_hint = (.5,.5))
+
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.text3)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Key Distribution Problem Page
+################################################################################
+
+
+################################################################################
+#Begin God Rewards Fools Page
+################################################################################
+class GodRewardsFoolsPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('God Rewards Fools page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("God Rewards Fools")
+
+        with open('texts/godrewardsfools1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.275, 'top':.85},
+                            size_hint = (.2,.2))
+
+        with open('texts/godrewardsfools2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.145, 'top':.425},
+                            size_hint = (.2,.2))
+
+        self.video = VideoPlayer(source = 'video/pub3new3.avi',
+                            pos_hint = {'x':.475, 'top':.55},
+                            size_hint = (.5,.5))
+
+        self.label = Label(text = '[i]The video clip shows Diffie and Hellman\n' +
+                                    'talking about embarking on their\n' +
+                                    'cryptographic research.[/i]',
+                            pos_hint = {'x':.625, 'top':.675},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            font_size = 14)
+
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End God Rewards Fools Page
+################################################################################
+
+
+################################################################################
+#Begin Public Key Cryptography Page
+################################################################################
+class PublicKeyCryptographyPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Public Key Cryptography page entered\n')
+        MyApp.current = self
+        buttonx = .825
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Public Key Cryptography")
+
+        with open('texts/publickeycryptography.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.55, 'top':.6},
+                            size_hint = (.2,.2))
+
+        self.button1 = Button(text = "Asymmetric\nCipher",
+                                        pos_hint = {'x':buttonx, 'top':.9},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "Rivest,\nShamir and\nAdelman",
+                                        pos_hint = {'x':buttonx, 'top':.75},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "RSA\nEncryption\nTool",
+                                        pos_hint = {'x':buttonx, 'top':.6},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.button4 = Button(text = "Prime Number\nQuestions",
+                                        pos_hint = {'x':buttonx, 'top':.45},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fourPressed,
+                                        font_size = 14)
+
+        self.button5 = Button(text = "RSA in\nPractice",
+                                        pos_hint = {'x':buttonx, 'top':.3},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fivePressed,
+                                        font_size = 14)
+
+        self.image = Image(source = 'pics/diffie2.png',
+                                        pos_hint = {'x':-.15, 'top':.9},
+                                        size_hint = (.8,.8))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.button5)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+
+    def onePressed(self, *args):
+        f.write("asymmetric cipher pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(AsymmetricCipherPage().create())
+
+    def twoPressed(self, *args):
+        f.write('rivest, shamir and adelman pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(RivestShamirAdelmanPage().create())
+
+    def threePressed(self, *args):
+        f.write('rsa encryption tool pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(DESPage().create())
+
+    def fourPressed(self, *args):
+        f.write('prime number questions pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(OtherModernCiphersPage().create())
+
+    def fivePressed(self, *args):
+        f.write('rsa in practice pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(OtherModernCiphersPage().create())
+################################################################################
+#End Public Key Cryptography Page
+################################################################################
+
+
+################################################################################
+#Begin Asymmetric Cipher Page
+################################################################################
+class AsymmetricCipherPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Asymmetric Cipher page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Asymmetric Cipher")
+
+        with open('texts/asymmetriccipher1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.275, 'top':.775},
+                            size_hint = (.2,.2))
+
+        with open('texts/asymmetriccipher2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.145, 'top':.35},
+                            size_hint = (.2,.2))
+
+        self.video = VideoPlayer(source = 'video/pub4new2.avi',
+                            pos_hint = {'x':.475, 'top':.525},
+                            size_hint = (.5,.5))
+
+        self.label = Label(text = '[i]The video clip shows Diffie and Hellman\n' +
+                                    'talking about embarking on their\n' +
+                                    'cryptographic research.[/i]',
+                            pos_hint = {'x':.625, 'top':.675},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            font_size = 14)
+        self.button = Button(text = 'Mathematical\nPadlock',
+                            pos_hint = {'x':.8, 'top':.9},
+                            size_hint = (.15,.1),
+                            on_release = self.mathpad)
+
+        #self.r.add_widget(self.label)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def mathpad(self, *args):
+        f.write('mathematical padlock pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(MathematicalPadlockPage().create())
+################################################################################
+#End Asymmetric Cipher Page
+################################################################################
+
+
+################################################################################
+#Begin Mathematical Padlock Page
+################################################################################
+class MathematicalPadlockPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Mathematical Padlock page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Mathematical Padlock")
+
+        with open('texts/mathematicalpadlock.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.85},
+                            size_hint = (.2,.2))
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Mathematical Padlock Page
+################################################################################
+
+
+################################################################################
+#Begin Rivest, Sharmir and Adelman Page
+################################################################################
+class RivestShamirAdelmanPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Rivest, Sharmir and Adelman page entered\n')
+        MyApp.current = self
+        buttonx = .825
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Rivest, Sharmir and Adelman")
+
+        with open('texts/rsa.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.3, 'top':.85},
+                            size_hint = (.2,.2))
+
+        self.button1 = Button(text = "Modular\nArithmetic",
+                                        pos_hint = {'x':buttonx, 'top':.9},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = 'A One-way\nFunction',
+                                        pos_hint = {'x':buttonx, 'top':.75},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "Broad\nArgument",
+                                        pos_hint = {'x':buttonx, 'top':.6},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.button4 = Button(text = "RSA\nAlgorithm",
+                                        pos_hint = {'x':buttonx, 'top':.45},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fourPressed,
+                                        font_size = 14)
+
+        self.button5 = Button(text = "How do you\ncalculate d?",
+                                        pos_hint = {'x':buttonx, 'top':.3},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fivePressed,
+                                        font_size = 14)
+
+        self.image = Image(source = 'pics/rsalogo2.png',
+                                        pos_hint = {'x':-.025, 'top':.275},
+                                        size_hint = (.4,.4))
+
+        self.video = VideoPlayer(source = 'video/adle1-1.avi',
+                                        pos_hint = {'x':.325, 'top':.5},
+                                        size_hint = (.5,.5))
+
+        self.label = Label(text = '[i]The video clip shows an interview with\n' +
+                                    'Len Adleman, co-discoverer of the\n' +
+                                    'RSA encryption algorithm. He explains\n' +
+                                    'how surprised he was by the reaction\n' +
+                                    'to his cipher. He never expected that it\n' +
+                                    'would lead to a multi-billion dollar\n' +
+                                    'company, RSA Data Security Inc.[/i]',
+                                        pos_hint = {'x':.1, 'top':.375},
+                                        size_hint = (.2,.2),
+                                        markup = True,
+                                        font_size = 14)
+
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.button5)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+
+    def onePressed(self, *args):
+        f.write("modular arithmetic pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(AsymmetricCipherPage().create())
+
+    def twoPressed(self, *args):
+        f.write('a one way function pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(CCTranspositionPage().create())
+
+    def threePressed(self, *args):
+        f.write('broad argument pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(DESPage().create())
+
+    def fourPressed(self, *args):
+        f.write('rsa algorithm pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(OtherModernCiphersPage().create())
+
+    def fivePressed(self, *args):
+        f.write('how do you calculate d pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(OtherModernCiphersPage().create())
+################################################################################
+#End Rivest, Sharmir and Adelman Page
+################################################################################
+
 
 class TopBar(ButtonBehavior):
     def __init__(self):
