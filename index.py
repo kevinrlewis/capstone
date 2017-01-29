@@ -9,6 +9,7 @@ sys.path.insert(0, '/home/kevin/Documents/COS397/project-crypto/capstone/Ciphers
 import caesar
 import webbrowser
 import binascii
+import math
 
 from kivy.uix.label import Label
 from kivy.uix.button import Button
@@ -35,6 +36,7 @@ from kivy.core.window import Window
 from collections import deque
 from random import shuffle
 from random import randint
+from fractions import gcd
 
 kv = '''
 <CircularButton>:
@@ -65,7 +67,7 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = AOTI()
+        test = RSAEncryptionToolPage()
 
         #production
         #root.add_widget(mainpage.create())
@@ -7769,7 +7771,7 @@ class PublicKeyCryptographyPage(ButtonBehavior):
         f.write('rsa encryption tool pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(DESPage().create())
+        root.add_widget(RSAEncryptionToolPage().create())
 
     def fourPressed(self, *args):
         f.write('prime number questions pressed\n')
@@ -7968,35 +7970,746 @@ class RivestShamirAdelmanPage(ButtonBehavior):
         f.write("modular arithmetic pressed\n")
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(AsymmetricCipherPage().create())
+        root.add_widget(ModularArithmeticPage().create())
 
     def twoPressed(self, *args):
         f.write('a one way function pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(CCTranspositionPage().create())
+        root.add_widget(OneWayFunctionPage().create())
 
     def threePressed(self, *args):
         f.write('broad argument pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(DESPage().create())
+        root.add_widget(BroadArgumentPage().create())
 
     def fourPressed(self, *args):
         f.write('rsa algorithm pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(OtherModernCiphersPage().create())
+        root.add_widget(RSAAlgorithmPage().create())
 
     def fivePressed(self, *args):
         f.write('how do you calculate d pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(OtherModernCiphersPage().create())
+        root.add_widget(HowDoYouCalculateDPage().create())
 ################################################################################
 #End Rivest, Sharmir and Adelman Page
 ################################################################################
 
+
+################################################################################
+#Begin Modular Arithmetic Page
+################################################################################
+class ModularArithmeticPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Modular Arithmetic page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Modular Arithmetic")
+
+        with open('texts/modulararithmetic1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.225, 'top':.775},
+                            size_hint = (.2,.2))
+
+        with open('texts/modulararithmetic2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.345, 'top':.4},
+                            size_hint = (.2,.2))
+
+        self.label = Label(text = "5 x 4 = 20\n" +
+                                "            20 / 7 = 2, remainder 6\n" +
+                                "5 x 4 = 6(mod 7).",
+                            pos_hint = {'x':.345, 'top':.2},
+                            size_hint = (.2,.2))
+
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Modular Arithmetic Page
+################################################################################
+
+
+################################################################################
+#Begin One Way Function Page
+################################################################################
+class OneWayFunctionPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('One Way Function page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("One-way Function")
+
+        with open('texts/onewayfunction1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.7},
+                            size_hint = (.2,.2),
+                            font_size = 14)
+
+        with open('texts/onewayfunction2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.4, 'top':.175},
+                            size_hint = (.2,.2),
+                            font_size = 14)
+
+        self.image = Image(source = 'pics/oneway.png',
+                            pos_hint = {'x':.2, 'top':.52},
+                            size_hint = (.6,.6))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End One Way Function Page
+################################################################################
+
+
+################################################################################
+#Begin Broad Argument Page
+################################################################################
+class BroadArgumentPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Broad Argument page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Broad Argument")
+
+        with open('texts/broadargument1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.35, 'top':.775},
+                            size_hint = (.2,.2))
+
+        with open('texts/broadargument4.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.625, 'top':.835},
+                            size_hint = (.2,.2))
+
+        with open('texts/broadargument2.txt', 'r') as myfile:
+            data3 = myfile.read()
+        self.text3 = Label(text = data3,
+                            pos_hint = {'x':.175, 'top':.45},
+                            size_hint = (.2,.2))
+
+        with open('texts/broadargument3.txt', 'r') as myfile:
+            data4 = myfile.read()
+        self.text4 = Label(text = data4,
+                            pos_hint = {'x':.3, 'top':.15},
+                            size_hint = (.2,.2))
+
+        self.label = Label(text = '[i]A prime number is one that has no divisors. For example, 7\n' +
+                                    'is a prime number because no numbers, except 1 and 7, will\n' +
+                                    'divide into it without leaving a remainder. However, 8 is not\n' +
+                                    'a prime number, because it can be divided by 2 and 4.',
+                            pos_hint = {'x':.1875, 'top':.3},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.image = Image(source = 'pics/RSA.png',
+                            pos_hint = {'x':.475, 'top':.61},
+                            size_hint = (.6,.6))
+        self.button = Button(text = 'Broad Argument Page 2',
+                            pos_hint = {'x':.75, 'top':.9},
+                            size_hint = (.225,.05),
+                            on_release = self.page2)
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.text3)
+        self.r.add_widget(self.text4)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def page2(self, *args):
+        f.write('broad argument page 2 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(BroadArgument2Page().create())
+################################################################################
+#End Broad Argument Page
+################################################################################
+
+
+################################################################################
+#Begin Broad Argument 2 Page
+################################################################################
+class BroadArgument2Page(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Broad Argument 2 page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Broad Argument")
+
+        with open('texts/broadargumentpage2.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.6},
+                            size_hint = (.2,.2))
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Broad Argument 2 Page
+################################################################################
+
+
+################################################################################
+#Begin RSA Algorithm Page
+################################################################################
+class RSAAlgorithmPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('RSA Algorithm page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("RSA Algorithm")
+
+        with open('texts/rsaalgorithmpage1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.65},
+                            size_hint = (.2,.2),
+                            font_size = 14)
+
+        self.button = Button(text = 'RSA Algorithm Page 2',
+                            pos_hint = {'x':.75, 'top':.05},
+                            size_hint = (.225,.035),
+                            on_release = self.page2)
+
+        self.label1 = Label(text = 'C = 88^7(mod 187) x 88^2(mod 187) x 88^1(mod 187)',
+                            pos_hint = {'x':.4, 'top':.275},
+                            size_hint = (.2,.2))
+        self.label2 = Label(text = '88^1 = 88 = 88(mod 187)         88^2 = 7744 = 77(mod187)            88^4 = 59,969,536 = 132(mod187)',
+                            pos_hint = {'x':.4, 'top':.225},
+                            size_hint = (.2,.2))
+        self.label3 = Label(text = 'C = 88^7 = 88^4 x 88^2 x 88^1 = 88 x 7 x 132 = 894,432 = 11 (mod 187)',
+                            pos_hint = {'x':.4, 'top':.175},
+                            size_hint = (.2,.2))
+
+        self.r.add_widget(self.label1)
+        self.r.add_widget(self.label2)
+        self.r.add_widget(self.label3)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def page2(self, *args):
+        f.write('rsa algorithm page 2 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(RSAAlgorithm2Page().create())
+################################################################################
+#End RSA Algorithm Page
+################################################################################
+
+
+################################################################################
+#Begin RSA Algorithm 2 Page
+################################################################################
+class RSAAlgorithm2Page(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('RSA Algorithm 2 page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("RSA Algorithm")
+
+        with open('texts/rsaalgorithmpage2.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.55},
+                            size_hint = (.2,.2),
+                            font_size = 14)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End RSA Algorithm 2 Page
+################################################################################
+
+
+################################################################################
+#Begin How Do You Calculate D Page
+################################################################################
+class HowDoYouCalculateDPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('How Do You Calculate D page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("How Do You Calculate D?")
+
+        with open('texts/howdoyoucalculated1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.85},
+                            size_hint = (.2,.2))
+
+        with open('texts/howdoyoucalculated2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        data2 = data2.replace('\t', '    ')
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.4, 'top':.4},
+                            size_hint = (.2,.2))
+
+        self.hyperlink1 = Label(text = '[color=ffff00][ref=h1]http://mathforum.org/dr.math/problems/duong10.13.97.html[/ref][/color]',
+                            pos_hint = {'x':.65, 'top':.9},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h1,
+                            markup = True,
+                            font_size = 13)
+
+        self.hyperlink2 = Label(text = '[color=ffff00][ref=h2]http://mathworld.wolfram.com/EuclideanAlgorithm.html[/ref][/color]',
+                            pos_hint = {'x':.65, 'top':.85},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h2,
+                            markup = True,
+                            font_size = 13)
+
+        self.r.add_widget(self.hyperlink1)
+        self.r.add_widget(self.hyperlink2)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def h1(self, *args):
+        f.write('opening http://mathforum.org/dr.math/problems/duong10.13.97.html ...\n')
+        webbrowser.open('http://mathforum.org/dr.math/problems/duong10.13.97.html')
+
+    def h2(self, *args):
+        f.write('opening http://mathworld.wolfram.com/EuclideanAlgorithm.html ...\n')
+        webbrowser.open('http://mathworld.wolfram.com/EuclideanAlgorithm.html')
+################################################################################
+#End How Do You Calculate D Page
+################################################################################
+
+
+################################################################################
+#Begin RSA Encryption Tool Page
+################################################################################
+class RSAEncryptionToolPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('RSA Encryption Tool page entered\n')
+        MyApp.current = self
+        topline = .75
+        inputwidth = .35
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        self.numalpha = []
+        for i in range(len(self.alpha)):
+            if i < 10:
+                self.numalpha.append('0' + str(i))
+            else:
+                self.numalpha.append(str(i))
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("RSA Encryption Tool")
+
+        with open('texts/rsaencryptiontool.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.275, 'top':.925},
+                            size_hint = (.2,.2))
+
+        self.pinput = TextInput(text = '',
+                            pos_hint = {'x':.065, 'top':topline},
+                            size_hint = (.05,.05))
+        self.plabel = Label(text = 'p =',
+                            pos_hint = {'x':.025, 'top':topline},
+                            size_hint = (.05,.05))
+        self.qinput = TextInput(text = '',
+                            pos_hint = {'x':.145, 'top':topline},
+                            size_hint = (.05,.05))
+        self.qlabel = Label(text = 'q =',
+                            pos_hint = {'x':.105, 'top':topline},
+                            size_hint = (.05,.05))
+
+        self.nlabel = Label(text = 'N = p x q =',
+                            pos_hint = {'x':.3, 'top':topline},
+                            size_hint = (.05,.05))
+        self.ndisplay = TextInput(text = '',
+                            pos_hint = {'x':.375, 'top':topline},
+                            size_hint = (.075,.05))
+
+        self.einput = TextInput(text = '',
+                            pos_hint = {'x':.545, 'top':topline},
+                            size_hint = (.075,.05))
+        self.elabel = Label(text = 'e =',
+                            pos_hint = {'x':.5, 'top':topline},
+                            size_hint = (.05,.05))
+
+        self.dinput = TextInput(text = '',
+                            pos_hint = {'x':.685, 'top':topline},
+                            size_hint = (.075,.05))
+        self.dlabel = Label(text = 'd =',
+                            pos_hint = {'x':.645, 'top':topline},
+                            size_hint = (.05,.05))
+
+        self.autoprime = Button(text = 'Auto Select Primes',
+                            pos_hint = {'x':.035, 'top':.625},
+                            size_hint = (.175,.05),
+                            on_release = self.autoselect)
+
+        self.enter = Button(text = 'Enter',
+                            pos_hint = {'x':.2, 'top':topline},
+                            size_hint = (.065,.04),
+                            on_release = self.enterpressed)
+        self.pnot = Label(text = '',
+                            pos_hint = {'x':.05, 'top':.725},
+                            size_hint = (.1,.1))
+        self.qnot = Label(text = '',
+                            pos_hint = {'x':.05, 'top':.7},
+                            size_hint = (.1,.1))
+        self.bounds = Label(text = '',
+                            pos_hint = {'x':.6, 'top':.7},
+                            size_hint = (.1,.1))
+        self.publicalg = Label(text = 'Your public encryption algorithm is: M = C[sup]e[/sup](mod N):\n',
+                            pos_hint = {'x':.5, 'top':.65},
+                            size_hint = (.1,.1),
+                            markup = True,
+                            font_name = 'font/RobotoMono-Regular',
+                            font_size = 16)
+        self.privatealg = Label(text = 'Your private decryption algorithm is: C = M[sup]d[/sup](mod N):\n',
+                            pos_hint = {'x':.505, 'top':.575},
+                            size_hint = (.1,.1),
+                            markup = True,
+                            font_name = 'font/RobotoMono-Regular',
+                            font_size = 16)
+
+        self.label = Label(text = 'Bob can use your public encryption algorithm to send messages to you. In this\n' +
+                                'tool, Bob types in a message. Letters are paired up and then turned into numbers.\n' +
+                                'The 4-digit numbers are then put into the encryption algorithm.',
+                            pos_hint = {'x':.335, 'top':.45},
+                            size_hint = (.1,.1))
+
+        self.plaintextinput = TextInput(text = 'attack now',
+                            pos_hint = {'x':.35, 'top':.3},
+                            size_hint = (inputwidth,.05),
+                            font_name = 'font/RobotoMono-Regular')
+        self.plaintextlabel = Label(text = 'Plaintext',
+                            pos_hint = {'x':.255, 'top':.325},
+                            size_hint = (.1,.1),
+                            font_size = 12)
+        self.digraphdisplay = TextInput(text = '',
+                            pos_hint = {'x':.35, 'top':.225},
+                            size_hint = (inputwidth,.05),
+                            font_name = 'font/RobotoMono-Regular')
+        self.digraphlabel = Label(text = 'Digraph',
+                            pos_hint = {'x':.255, 'top':.25},
+                            size_hint = (.1,.1),
+                            font_size = 12)
+        self.numeralinput = TextInput(text = '',
+                            pos_hint = {'x':.35, 'top':.15},
+                            size_hint = (inputwidth,.05),
+                            font_name = 'font/RobotoMono-Regular')
+        self.numerallabel = Label(text = 'Numerals',
+                            pos_hint = {'x':.255, 'top':.175},
+                            size_hint = (.1,.1),
+                            font_size = 12)
+        self.ciphertextinput = TextInput(text = '',
+                            pos_hint = {'x':.35, 'top':.075},
+                            size_hint = (inputwidth,.05),
+                            font_name = 'font/RobotoMono-Regular')
+        self.ciphertextlabel = Label(text = 'Ciphertext',
+                            pos_hint = {'x':.255, 'top':.1},
+                            size_hint = (.1,.1),
+                            font_size = 12)
+
+        self.alphalabel = Label(text = '[color=0000ff]',
+                            pos_hint = {'x':.875, 'top':.5},
+                            size_hint = (.1,.1),
+                            font_name = 'font/RobotoMono-Regular',
+                            markup = True)
+        self.numalphalabel = Label(text = '[color=ff0000]',
+                            pos_hint = {'x':.9, 'top':.5},
+                            size_hint = (.1,.1),
+                            font_name = 'font/RobotoMono-Regular',
+                            markup = True)
+        self.digraphbutton = Button(text = 'Form Digraphs',
+                            pos_hint = {'x':.035, 'top':.225},
+                            size_hint = (.19,.05),
+                            on_release = self.formdigraphs)
+        self.convertonum = Button(text = 'Convert to Numerals',
+                            pos_hint = {'x':.035, 'top':.15},
+                            size_hint = (.19,.05),
+                            disabled = True,
+                            on_release = self.convert2numerals)
+        self.encrypt = Button(text = 'Encipher',
+                            pos_hint = {'x':.035, 'top':.075},
+                            size_hint = (.19,.05),
+                            disabled = True,
+                            on_release = self.encrypt)
+        self.reset = Button(text = 'Reset',
+                            pos_hint = {'x':.775, 'top':.925},
+                            size_hint = (.1,.05),
+                            on_release = self.reset)
+
+        for letter in range(len(self.alpha)):
+            self.alphalabel.text = self.alphalabel.text + self.alpha[letter] + '\n'
+            self.numalphalabel.text = self.numalphalabel.text + self.numalpha[letter] + '\n'
+        self.alphalabel.text = self.alphalabel.text + '[/color]'
+        self.numalphalabel.text = self.numalphalabel.text + '[/color]'
+
+        self.r.add_widget(self.reset)
+        self.r.add_widget(self.alphalabel)
+        self.r.add_widget(self.numalphalabel)
+        self.r.add_widget(self.pnot)
+        self.r.add_widget(self.qnot)
+        self.r.add_widget(self.bounds)
+        self.r.add_widget(self.enter)
+        self.r.add_widget(self.autoprime)
+        self.r.add_widget(self.einput)
+        self.r.add_widget(self.elabel)
+        self.r.add_widget(self.dinput)
+        self.r.add_widget(self.dlabel)
+        self.r.add_widget(self.nlabel)
+        self.r.add_widget(self.ndisplay)
+        self.r.add_widget(self.pinput)
+        self.r.add_widget(self.plabel)
+        self.r.add_widget(self.qinput)
+        self.r.add_widget(self.qlabel)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def autoselect(self, *args):
+        f.write('auto select primes pressed\n')
+        self.pinput.text = str(59)
+        self.qinput.text = str(83)
+        self.enterpressed()
+
+    def check(self, *args):
+        f.write('checking primes...\n')
+        pn = (self.is_prime(int(self.pinput.text)))
+        qn = (self.is_prime(int(self.qinput.text)))
+        f.write('p bool: ' + str(pn) + ' q bool: ' + str(qn) + '\n')
+        f.write('pn == False:' + str(pn == False) + '\n')
+        if(pn == False):
+            f.write('updating pnot text...\n')
+            self.pnot.text = 'p is not a prime'
+        if(qn == False):
+            f.write('updating qnot text...\n')
+            self.qnot.text = 'q is not a prime'
+        if(pn == False or qn == False):
+            return False
+        else:
+            return True
+
+    def enterpressed(self, *args):
+        f.write('enter pressed\n')
+        self.enter.disabled = True
+        self.autoprime.disabled = True
+        self.pnot.text = ''
+        self.qnot.text = ''
+        self.bounds.text = ''
+        p = int(self.pinput.text)
+        q = int(self.qinput.text)
+        if(self.check() == False):
+            f.write('either p or q is not prime\n')
+            return
+        n = p * q
+        if(n < 2525 or n > 10000):
+            f.write('n is not in the bounds\n')
+            self.bounds.text = 'N is not in the bounds of 2,525 and 10,000'
+            return
+
+        self.ndisplay.text = str(p * q)
+        picked = False
+        phi = (p - 1)*(q - 1)
+        e = 0
+        while(not picked):
+            rande = randint(1, (phi/50))
+            if(gcd(rande, phi) == 1):
+                e = rande
+                picked = True
+        self.einput.text = str(e)
+        picked2 = False
+        d = 0
+        while(not picked2):
+            randd = randint(1, phi)
+            if(((randd * e) % phi) == 1):
+                d = randd
+                picked2 = True
+        self.dinput.text = str(d)
+        self.publicalg.text = self.publicalg.text + 'M = C[sup]' + str(e) + '[/sup](mod' + str(n) + ')'
+        self.privatealg.text = self.privatealg.text + 'C = M[sup]' + str(d) + '[/sup](mod' + str(n) + ')'
+        self.r.add_widget(self.publicalg)
+        self.r.add_widget(self.privatealg)
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.digraphbutton)
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.ciphertextinput)
+        self.r.add_widget(self.ciphertextlabel)
+        self.r.add_widget(self.digraphdisplay)
+        self.r.add_widget(self.digraphlabel)
+        self.r.add_widget(self.numeralinput)
+        self.r.add_widget(self.numerallabel)
+        self.r.add_widget(self.convertonum)
+        self.r.add_widget(self.encrypt)
+
+    def is_prime(self, n):
+        if n==2 or n==3:
+            return True
+        if n%2==0 or n<2:
+            return False
+        for i in range(3,int(n**0.5)+1,2):   # only odd numbers
+            if n%i==0:
+                return False
+        return True
+
+    def formdigraphs(self, *args):
+        f.write('form digraphs pressed\n')
+        self.digraphbutton.disabled = True
+        self.convertonum.disabled = False
+        text = self.plaintextinput.text
+
+        tempstr = ''
+
+        count = 0
+        for letter in text:
+            if letter == ' ':
+                letter = 'x'
+            if count == 1:
+                tempstr = tempstr + letter + ' '
+                count = 0
+            else:
+                tempstr = tempstr + letter
+                count = count + 1
+
+        self.digraphdisplay.text = tempstr
+
+    def convert2numerals(self, *args):
+        f.write('convert to numerals pressed\n')
+        self.convertonum.disabled = True
+        self.encrypt.disabled = False
+        di = self.digraphdisplay.text
+        temp = ''
+        for letter in di:
+            if letter == ' ':
+                temp += ' '
+            else:
+                for i in range(len(self.alpha)):
+                    if letter == self.alpha[i]:
+                        temp += self.numalpha[i]
+
+        self.numeralinput.text = temp
+
+    def encrypt(self, *args):
+        f.write('encrypt pressed\n')
+        listdi = self.numeralinput.text.split()
+        new = ''
+        e = int(self.einput.text)
+        n = int(self.ndisplay.text)
+        for group in listdi:
+            tempint = int(group)
+            f.write('calc = (tempint**e) mod n\n')
+
+            calc = (tempint**e) % n
+            f.write(str(calc) + ' = (' + str(tempint) + '**' + str(e) + ')mod ' + str(n) + '\n')
+            new += str(calc) + ' '
+
+        self.ciphertextinput.text = new
+
+    def reset(self, *args):
+        f.write('resetting rsa encryption tool....\n')
+        self.autoprime.disabled = False
+        self.digraphbutton.disabled = False
+        self.convertonum.disabled = True
+        self.encrypt.disabled = True
+        self.publicalg.text = 'Your public encryption algorithm is: M = C[sup]e[/sup](mod N):\n'
+        self.privatealg.text = 'Your private decryption algorithm is: C = M[sup]d[/sup](mod N):\n'
+        self.pinput.text = ''
+        self.qinput.text = ''
+        self.einput.text = ''
+        self.ndisplay.text = ''
+        self.dinput.text = ''
+        self.plaintextinput.text = 'attack now'
+        self.ciphertextinput.text = ''
+        self.digraphdisplay.text = ''
+        self.numeralinput.text = ''
+        self.r.remove_widget(self.publicalg)
+        self.r.remove_widget(self.privatealg)
+        self.r.remove_widget(self.label)
+        self.r.remove_widget(self.digraphbutton)
+        self.r.remove_widget(self.plaintextinput)
+        self.r.remove_widget(self.plaintextlabel)
+        self.r.remove_widget(self.ciphertextinput)
+        self.r.remove_widget(self.ciphertextlabel)
+        self.r.remove_widget(self.digraphdisplay)
+        self.r.remove_widget(self.digraphlabel)
+        self.r.remove_widget(self.numeralinput)
+        self.r.remove_widget(self.numerallabel)
+        self.r.remove_widget(self.convertonum)
+        self.r.remove_widget(self.encrypt)
+################################################################################
+#End RSA Encryption Tool Page
+################################################################################
 
 class TopBar(ButtonBehavior):
     def __init__(self):

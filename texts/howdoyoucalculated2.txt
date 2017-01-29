@@ -1,19 +1,19 @@
 To determine d (the private key) in the previous example, we are trying to find
 the multiplicative inverse of 7 (mod 160). In effect, we are solving the equation:
 
-7 x d= 1 (mod 160)
+										7 x d = 1 (mod 160)
 
 We start by applying Euclid’s algorithm:
 
-160 = 22 x 7 + 6
+										160 = 22 x 7 + 6
 
-7 = 6 x 1 + 1
+										7 = 6 x 1 + 1
 
-Therefore: 1:7-6x1
+										Therefore: 1 = 7 - 6 x 1
 
-1=7-(160-22x7)x1
+										1 = 7 - (160 - 22 x 7) x 1
 
-1 = 7 x 23 - 160
+										1 = 7 x 23 - 160
 
 In other words, we are trying to build the number 1 from 7s and 160s, and
-the final equation tells us that 7 X 23 = 1 (mod 160), in other words d=23.
+the final equation tells us that 7 x 23 = 1 (mod 160), in other words d = 23.

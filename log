@@ -1,9 +1,23 @@
 -----------------------------------------------------
-26/01/2017 03:35:50
+28/01/2017 06:13:03
 starting app...
-Age of the Internet page entered
-public key cryptography pressed
-Public Key Cryptography page entered
-rivest, shamir and adelman pressed
-Rivest, Sharmir and Adelman page entered
+RSA Encryption Tool page entered
+auto select primes pressed
+enter pressed
+checking primes...
+p bool: True q bool: True
+pn == False:False
+form digraphs pressed
+convert to numerals pressed
+encrypt pressed
+calc = (tempint**e) mod n
+307 = (19**9)mod 4897
+calc = (tempint**e) mod n
+3674 = (1900**9)mod 4897
+calc = (tempint**e) mod n
+4877 = (210**9)mod 4897
+calc = (tempint**e) mod n
+1550 = (2313**9)mod 4897
+calc = (tempint**e) mod n
+1853 = (1422**9)mod 4897
 -----------------------------------------------------
