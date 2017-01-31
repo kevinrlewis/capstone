@@ -19,4 +19,3 @@ developing steganographic techniques appropriate for
 the Information Age. These are described in the next
 section. As well as implementing secrecy,
 steganography can be used as a digital watermark.
-You can find more details at:

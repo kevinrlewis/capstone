@@ -2287,6 +2287,9 @@ class MC(ButtonBehavior):
 
     def futurePressed(self, *args):
         f.write('future of Cryptography pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(FOC().create())
 
 ################################################################################
 #End Main Contents Page
@@ -9327,13 +9330,13 @@ class FOC(ButtonBehavior):
         f.write("politics of encryption pressed\n")
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(ComputerCryptographyPage().create())
+        root.add_widget(PoliticsOfEncryptionPage().create())
 
     def twoPressed(self, *args):
         f.write('steganography pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(BuildingEnigmaPage().create())
+        root.add_widget(SteganographyPage().create())
 
     def threePressed(self, *args):
         f.write('quantum cryptography pressed\n')
@@ -9349,6 +9352,318 @@ class FOC(ButtonBehavior):
 
 ################################################################################
 #End Future of Cryptography Page
+################################################################################
+
+################################################################################
+#Begin Politics of Encryption Page
+################################################################################
+class PoliticsOfEncryptionPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Politics of Encryption page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Politics of Encryption")
+
+        with open('texts/politicsofencryption.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.55, 'top':.65},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/philzimm.png',
+                            pos_hint = {'x':-.1, 'top':.875},
+                            size_hint = (.6,.6))
+
+        self.button1 = Button(text = 'Pro Encryption',
+                            pos_hint = {'x':.825, 'top':.9},
+                            size_hint = (.15,.15),
+                            on_release = self.button1pressed)
+        self.button2 = Button(text = 'Anti Encryption',
+                            pos_hint = {'x':.825, 'top':.7},
+                            size_hint = (.15,.15),
+                            on_release = self.button2pressed)
+
+        self.imagelabel = Label(text = 'Phil Zimmerman',
+                            pos_hint = {'x':.115, 'top':.325},
+                            size_hint = (.2,.2))
+
+        self.hyperlink1 = Label(text = '[color=ffff00][ref=h1]http://www.philzimmermann.com[/color][/ref]',
+                            pos_hint = {'x':.4, 'top':.2},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.h1)
+
+        self.hyperlink2 = Label(text = '[color=ffff00][ref=h2]http://www.pgpi.org[/color][/ref]',
+                            pos_hint = {'x':.4, 'top':.15},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.h2)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.imagelabel)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.hyperlink1)
+        self.r.add_widget(self.hyperlink2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def h1(self, *args):
+        f.write('opening http://www.philzimmermann.com ...\n')
+        webbrowser.open('http://www.philzimmermann.com')
+
+    def h2(self, *args):
+        f.write('opening http://www.pgpi.org ...\n')
+        webbrowser.open('http://www.pgpi.org')
+
+    def button1pressed(self, *args):
+        f.write('pro encryption pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(ProEncryptionPage().create())
+
+    def button2pressed(self, *args):
+        f.write('anti encryption pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(AntiEncryptionPage().create())
+################################################################################
+#End Politics of Encryption Page
+################################################################################
+
+
+################################################################################
+#Begin Pro Encryption Page
+################################################################################
+class ProEncryptionPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Pro Encryption page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Pro Encryption")
+
+        with open('texts/proencryption.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.6},
+                            size_hint = (.2,.2),
+                            font_size = 18)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Pro Encryption Page
+################################################################################
+
+################################################################################
+#Begin Anti Encryption Page
+################################################################################
+class AntiEncryptionPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Anti Encryption page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Anti Encryption")
+
+        with open('texts/antiencryption.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.6},
+                            size_hint = (.2,.2),
+                            font_size = 18)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Anti Encryption Page
+################################################################################
+
+################################################################################
+#Begin Steganography Page
+################################################################################
+class SteganographyPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Steganography page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Steganography")
+
+        with open('texts/steganography.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.65, 'top':.65},
+                            size_hint = (.2,.2))
+
+        self.label1 = Label(text = '[i]The Ancient Greeks were masters of\n' +
+                                    'steganography. Herodotus chronicled one\n' +
+                                    'example, whereby the message was not\n' +
+                                    'inscribed in wax, but written on the wooden\n' +
+                                    'tablet underneath the wax. The video clip\n' +
+                                    'describes one of the most bizarre examples\n' +
+                                    'of steganography.[/i]',
+                            pos_hint = {'x':.15, 'top':.35},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.video = VideoPlayer(source = 'video/shave2.avi',
+                            pos_hint = {'x':0, 'top':.9},
+                            size_hint = (.5,.5))
+
+        self.button = Button(text = 'Modern\nSteganography',
+                            pos_hint = {'x':.85, 'top':.9},
+                            size_hint = (.125,.125),
+                            on_release = self.buttonpressed,
+                            font_size = 14)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.label1)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('modern steganography pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(ModernSteganographyPage().create())
+################################################################################
+#End Steganography Page
+################################################################################
+
+################################################################################
+#Begin Modern Steganography Page
+################################################################################
+class ModernSteganographyPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Modern Steganography page entered\n')
+        MyApp.current = self
+        textht = .8
+        imght = .45
+        btnht = .55
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Modern Steganography")
+
+        with open('texts/modernsteganography1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.025, 'top':textht},
+                            size_hint = (.2,.2))
+
+        with open('texts/modernsteganography2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.275, 'top':textht},
+                            size_hint = (.2,.2))
+
+        with open('texts/modernsteganography3.txt', 'r') as myfile:
+            data3 = myfile.read()
+        self.text3 = Label(text = data3,
+                            pos_hint = {'x':.525, 'top':textht},
+                            size_hint = (.2,.2))
+
+        with open('texts/modernsteganography4.txt', 'r') as myfile:
+            data4 = myfile.read()
+        self.text4 = Label(text = data4,
+                            pos_hint = {'x':.775, 'top':textht},
+                            size_hint = (.2,.2))
+
+        self.baby1 = Image(source = 'pics/modsteg/baby4.png',
+                            pos_hint = {'x':-.075, 'top':imght},
+                            size_hint = (.4,.4))
+        self.ascii1 = Image(source = 'pics/modsteg/modsteg1.png',
+                            pos_hint = {'x':.175, 'top':imght},
+                            size_hint = (.4,.4))
+        self.ascii2 = Image(source = 'pics/modsteg/modsteg2.png',
+                            pos_hint = {'x':.425, 'top':imght},
+                            size_hint = (.4,.4))
+        self.baby2 = Image(source = 'pics/modsteg/baby4.png',
+                            pos_hint = {'x':.675, 'top':imght},
+                            size_hint = (.4,.4))
+
+        self.button1 = Button(text = 'Show Pixels',
+                            pos_hint = {'x':.0175, 'top':btnht},
+                            size_hint = (.225,.05),
+                            on_release = self.button1pressed)
+        self.button2 = Button(text = 'Show Greyscale Numbers',
+                            pos_hint = {'x':.2675, 'top':btnht},
+                            size_hint = (.225,.05),
+                            on_release = self.button2pressed,
+                            disabled = True)
+        self.button3 = Button(text = 'Add Message',
+                            pos_hint = {'x':.5175, 'top':btnht},
+                            size_hint = (.225,.05),
+                            on_release = self.button3pressed,
+                            disabled = True)
+        self.button4 = Button(text = 'Show New Picture',
+                            pos_hint = {'x':.7675, 'top':btnht},
+                            size_hint = (.225,.05),
+                            on_release = self.button4pressed,
+                            disabled = True)
+
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.text3)
+        self.r.add_widget(self.text4)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def button1pressed(self, *args):
+        f.write('show pixels pressed\n')
+        self.r.add_widget(self.baby1)
+        self.button1.disabled = True
+        self.button2.disabled = False
+    def button2pressed(self, *args):
+        f.write('show greyscale numbers pressed\n')
+        self.r.add_widget(self.ascii1)
+        self.button2.disabled = True
+        self.button3.disabled = False
+    def button3pressed(self, *args):
+        f.write('add message pressed\n')
+        self.r.add_widget(self.ascii2)
+        self.button3.disabled = True
+        self.button4.disabled = False
+    def button4pressed(self, *args):
+        f.write('show new picture pressed\n')
+        self.r.add_widget(self.baby2)
+        self.button4.disabled = True
+################################################################################
+#End Modern Steganography Page
 ################################################################################
 
 class TopBar(ButtonBehavior):
