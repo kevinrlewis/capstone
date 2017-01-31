@@ -1,23 +1,5 @@
 -----------------------------------------------------
-28/01/2017 06:13:03
+31/01/2017 02:11:20
 starting app...
-RSA Encryption Tool page entered
-auto select primes pressed
-enter pressed
-checking primes...
-p bool: True q bool: True
-pn == False:False
-form digraphs pressed
-convert to numerals pressed
-encrypt pressed
-calc = (tempint**e) mod n
-307 = (19**9)mod 4897
-calc = (tempint**e) mod n
-3674 = (1900**9)mod 4897
-calc = (tempint**e) mod n
-4877 = (210**9)mod 4897
-calc = (tempint**e) mod n
-1550 = (2313**9)mod 4897
-calc = (tempint**e) mod n
-1853 = (1422**9)mod 4897
+Future of Cryptography page entered
 -----------------------------------------------------

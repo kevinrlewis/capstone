@@ -1,4 +1,3 @@
 RSA offers prizes for those who can crack various asymmetric and symmetric
 ciphers. The challenges usually involve ciphers that are much weaker than
 those that would be used in practice, otherwise they would be unbreakable.
-You can find details at:

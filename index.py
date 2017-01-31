@@ -67,7 +67,7 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = RSAEncryptionToolPage()
+        test = FOC()
 
         #production
         #root.add_widget(mainpage.create())
@@ -7119,13 +7119,13 @@ class AOTI(ButtonBehavior):
         f.write('not just secrets pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(EnigmasImpactOnWWIIPage().create())
+        root.add_widget(NotJustSecretsPage().create())
 
     def sixPressed(self, *args):
         f.write('the secret history pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(OtherWWIICiphersPage().create())
+        root.add_widget(TheSecretHistoryPage().create())
 
 ################################################################################
 #End Age of the Internet Page
@@ -7777,13 +7777,13 @@ class PublicKeyCryptographyPage(ButtonBehavior):
         f.write('prime number questions pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(OtherModernCiphersPage().create())
+        root.add_widget(PrimeNumberQuestionsPage().create())
 
     def fivePressed(self, *args):
         f.write('rsa in practice pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(OtherModernCiphersPage().create())
+        root.add_widget(RSAInPracticePage().create())
 ################################################################################
 #End Public Key Cryptography Page
 ################################################################################
@@ -8709,6 +8709,646 @@ class RSAEncryptionToolPage(ButtonBehavior):
         self.r.remove_widget(self.encrypt)
 ################################################################################
 #End RSA Encryption Tool Page
+################################################################################
+
+
+
+################################################################################
+#Begin Prime Number Questions Page
+################################################################################
+class PrimeNumberQuestionsPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Prime Number Questions page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Prime Number Questions")
+
+        with open('texts/primenumberquestions.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.55, 'top':.85},
+                            size_hint = (.2,.2))
+
+        self.hyperlink1 = Label(text = '[b]The Prime Pages[/b]\n[color=ffff00][ref=h1]http://www.utm.edu/research/primes/[/ref][/color]\n' +
+                                        'Everything you ever wanted to know about prime numbers.',
+                            pos_hint = {'x':.475, 'top':.65},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h1,
+                            markup = True)
+
+        self.hyperlink2 = Label(text = '[b]Ask Dr. Math[/b]\n[color=ffff00][ref=h2]http://mathforum.org/dr.math/faq/faq.prime.num.html[/ref][/color]\n' +
+                                        'A more gentle introduction to the subject of prime numbers.',
+                            pos_hint = {'x':.4825, 'top':.525},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h2,
+                            markup = True)
+
+
+        self.hyperlink3 = Label(text = "[b]World's Largest Prime[/b]\n[color=ffff00][ref=h2]http://www.utm.edu/research/primes/largest.html#largest[/ref][/color]\n" +
+                                        "2[sup]13466917[/sup] - 1, find out about the world's biggest prime number discovered so far.",
+                            pos_hint = {'x':.555, 'top':.4},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h3,
+                            markup = True)
+
+        self.image = Image(source = 'pics/PRIME.png',
+                            pos_hint = {'x':-.2, 'top':.85},
+                            size_hint = (.7,.7))
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.hyperlink1)
+        self.r.add_widget(self.hyperlink2)
+        self.r.add_widget(self.hyperlink3)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def h1(self, *args):
+        f.write('opening http://www.utm.edu/research/primes/ ...\n')
+        webbrowser.open('http://www.utm.edu/research/primes/')
+
+    def h2(self, *args):
+        f.write('opening http://mathforum.org/dr.math/faq/faq.prime.num.html ...\n')
+        webbrowser.open('http://mathforum.org/dr.math/faq/faq.prime.num.html')
+
+    def h3(self, *args):
+        f.write('opening http://www.utm.edu/research/primes/largest.html#largest ...\n')
+        webbrowser.open('http://www.utm.edu/research/primes/largest.html#largest')
+################################################################################
+#End Prime Number Questions Page
+################################################################################
+
+
+################################################################################
+#Begin RSA In Practice Page
+################################################################################
+class RSAInPracticePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('RSA In Practice page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("RSA In Practice")
+
+        with open('texts/rsainpractice.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.1, 'top':.85},
+                            size_hint = (.2,.2))
+
+        self.video = VideoPlayer(source = 'video/adle2-2.avi',
+                            pos_hint = {'x':0, 'top':.65},
+                            size_hint = (.4,.4))
+
+        self.videolabel = Label(text = '[i]In the video clip, Len Adleman, one of the\n' +
+                                    'co-inventors of RSA, explains that RSA is\n' +
+                                    'used for security on the Internet. This has\n' +
+                                    'resulted in RSA being one of the most\n' +
+                                    'widely used pieces of software in the world.' +
+                                    '[/i]',
+                            pos_hint = {'x':.1, 'top':.25},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+
+        self.hyperlink1 = Label(text = '[b]SSL[/b]\n[color=ffff00][ref=h1]https://www.digicert.com/ssl-cryptography.htm[/ref][/color]\n' +
+                                        'Secure Sockets Layer (SSL) is the industry-\n' +
+                                        'standard method for protecting data exchange on\n' +
+                                        'the web. These sites explain the relationship\n' +
+                                        'between RSA and SSL.',
+                            pos_hint = {'x':.535, 'top':.9},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h1,
+                            markup = True)
+
+        self.hyperlink2 = Label(text = '[b]PKI[/b]\n[color=ffff00][ref=h2]http://searchsecurity.techtarget.com/definition/PKI[/ref][/color]\n' +
+                                        'Public Key Infrastructure (PKI) is the phrase used\n' +
+                                        'to describe what is required to make RSA operate\n' +
+                                        'in the real world. For example, if you have a public\n' +
+                                        'key, how will you make it publicly available? How\n' +
+                                        'will other people know that the public key is truly\n' +
+                                        'yours, rather than fake created by someone?',
+                            pos_hint = {'x':.545, 'top':.65},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h2,
+                            markup = True)
+
+        self.hyperlink3 = Label(text = '[b]RSA FAQ[/b]\n[color=ffff00][ref=h1]https://uk.emc.com/emc-plus/rsa-labs/historical/crypto-faq.htm[/ref][/color]',
+                            pos_hint = {'x':.6, 'top':.4},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h3,
+                            markup = True)
+
+        self.button = Button(text = 'Is RSA Secure?',
+                            pos_hint = {'x':.825, 'top':.1},
+                            size_hint = (.14,.075),
+                            on_release = self.buttonpress)
+
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.videolabel)
+        self.r.add_widget(self.hyperlink1)
+        self.r.add_widget(self.hyperlink2)
+        self.r.add_widget(self.hyperlink3)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def h1(self, *args):
+        f.write('opening https://www.digicert.com/ssl-cryptography.htm ...\n')
+        webbrowser.open('https://www.digicert.com/ssl-cryptography.htm')
+
+    def h2(self, *args):
+        f.write('opening http://searchsecurity.techtarget.com/definition/PKI ...\n')
+        webbrowser.open('http://searchsecurity.techtarget.com/definition/PKI')
+
+    def h3(self, *args):
+        f.write('opening https://uk.emc.com/emc-plus/rsa-labs/historical/crypto-faq.htm ...\n')
+        webbrowser.open('https://uk.emc.com/emc-plus/rsa-labs/historical/crypto-faq.htm')
+
+    def buttonpress(self, *args):
+        f.write('is rsa secure pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(IsRSASecurePage().create())
+################################################################################
+#End RSA In Practice Page
+################################################################################
+
+
+################################################################################
+#Begin Is RSA Secure? Page
+################################################################################
+class IsRSASecurePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Is RSA Secure? page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Is RSA Secure?")
+
+        with open('texts/isrsasecure1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.9},
+                            size_hint = (.2,.2))
+
+        with open('texts/isrsasecure2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.5, 'top':.7},
+                            size_hint = (.2,.2))
+
+        with open('texts/isrsasecure3.txt', 'r') as myfile:
+            data3 = myfile.read()
+        self.text3 = Label(text = data3,
+                            pos_hint = {'x':.5, 'top':.45},
+                            size_hint = (.2,.2))
+
+        with open('texts/isrsasecure4.txt', 'r') as myfile:
+            data4 = myfile.read()
+        self.text4 = Label(text = data4,
+                            pos_hint = {'x':.5, 'top':.2},
+                            size_hint = (.2,.2))
+
+        self.image1 = Image(source = 'pics/secure3.png',
+                            pos_hint = {'x':-.05, 'top':.81},
+                            size_hint = (.4,.4))
+        self.image2 = Image(source = 'pics/insecure.png',
+                            pos_hint = {'x':-.05, 'top':.55},
+                            size_hint = (.4,.4))
+        self.image3 = Image(source = 'pics/secure3.png',
+                            pos_hint = {'x':-.05, 'top':.31},
+                            size_hint = (.4,.4))
+
+        self.hyperlink1 = Label(text = '[color=ffff00][ref=h1]FAQ About RSA Challenges[/ref][/color]',
+                            pos_hint = {'x':.5, 'top':.35},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h1,
+                            markup = True)
+
+        self.r.add_widget(self.hyperlink1)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.text3)
+        self.r.add_widget(self.text4)
+        self.r.add_widget(self.image1)
+        self.r.add_widget(self.image2)
+        self.r.add_widget(self.image3)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def h1(self, *args):
+        f.write('opening https://singapore.emc.com/emc-plus/rsa-labs/historical/the-rsa-factoring-challenge-faq.htm ...\n')
+        webbrowser.open('https://singapore.emc.com/emc-plus/rsa-labs/historical/the-rsa-factoring-challenge-faq.htm')
+################################################################################
+#End Is RSA Secure? Page
+################################################################################
+
+################################################################################
+#Begin Not Just Secrets Page
+################################################################################
+class NotJustSecretsPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Not Just Secrets page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Not Just Secrets")
+
+        with open('texts/notjustsecrets1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.4, 'top':.675},
+                            size_hint = (.2,.2))
+
+        with open('texts/notjustsecrets2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.625, 'top':.6},
+                            size_hint = (.2,.2))
+
+        self.hyperlink1 = Label(text = 'To find out how US President Clinton and Irish Prime Minister Bertie Ahern put their digital\n' +
+                                        'signatures on a document, click [color=ffff00][ref=h1]here[/ref][/color].',
+                            pos_hint = {'x':.4, 'top':.25},
+                            size_hint = (.2,.2),
+                            on_ref_press = self.h1,
+                            markup = True)
+
+        self.r.add_widget(self.hyperlink1)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def h1(self, *args):
+        f.write('opening http://www.nytimes.com/1998/09/10/news/clinton-signs-off-on-digital-advance.html ...\n')
+        webbrowser.open('http://www.nytimes.com/1998/09/10/news/clinton-signs-off-on-digital-advance.html')
+################################################################################
+#End Not Just Secrets Page
+################################################################################
+
+
+################################################################################
+#Begin The Secret History Page
+################################################################################
+class TheSecretHistoryPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('The Secret History page entered\n')
+        MyApp.current = self
+        buttonx = .825
+        buttonsize = (.15,.15)
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("The Secret History")
+
+        with open('texts/thesecrethistory1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.125, 'top':.8},
+                            size_hint = (.2,.2))
+
+        with open('texts/thesecrethistory2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.525, 'top':.8},
+                            size_hint = (.2,.2))
+
+        self.button1 = Button(text = 'James Ellis\nAnd\nClifford Cocks',
+                            pos_hint = {'x':buttonx, 'top':.8},
+                            size_hint = buttonsize,
+                            on_release = self.button1pressed)
+        self.button2 = Button(text = 'Malcolm\nWilliamson',
+                            pos_hint = {'x':buttonx, 'top':.55},
+                            size_hint = buttonsize,
+                            on_release = self.button2pressed)
+        self.button3 = Button(text = '25 Year\nSecret',
+                            pos_hint = {'x':buttonx, 'top':.3},
+                            size_hint = buttonsize,
+                            on_release = self.button3pressed)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def button1pressed(self, *args):
+        f.write('james ellis and clifford cocks pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(JamesAndCliffordPage().create())
+
+    def button2pressed(self, *args):
+        f.write('malcolm williamson pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(MalcolmWilliamsonPage().create())
+
+    def button3pressed(self, *args):
+        f.write('25 year secret pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(YearSecretPage().create())
+################################################################################
+#End The Secret History Page
+################################################################################
+
+################################################################################
+#Begin James Ellis and Clifford Cocks Page
+################################################################################
+class JamesAndCliffordPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('James Ellis and Clifford Cocks page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("James Ellis and Clifford Cocks")
+
+        with open('texts/jamesandclifford1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.175, 'top':.85},
+                            size_hint = (.2,.2))
+
+        with open('texts/jamesandclifford2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.625, 'top':.85},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/ellis3.png',
+                            pos_hint = {'x':0, 'top':.6},
+                            size_hint = (.5,.5))
+
+        self.video = VideoPlayer(source = 'video/cocks1-1.avi',
+                            pos_hint = {'x':.475, 'top':.65},
+                            size_hint = (.5,.5))
+
+        self.videolabel = Label(text = '[i]Clifford Cocks tells how he first heard about the\n' +
+                                        'concept of an asymmetric cipher. This is the first\n' +
+                                        'ever interview with a GCHQ cryptographer.[/i]',
+                            pos_hint = {'x':.625, 'top':.2},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.imagelabel = Label(text = '[i]James Ellis[/i]',
+                            pos_hint = {'x':.15, 'top':.175},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.imagelabel)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.videolabel)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End James Ellis and Clifford Cocks Page
+################################################################################
+
+################################################################################
+#Begin Malcolm Williamson Page
+################################################################################
+class MalcolmWilliamsonPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Malcolm Williamson page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Malcolm Williamson")
+
+        with open('texts/malcolmwilliamson1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.85},
+                            size_hint = (.2,.2))
+
+        with open('texts/malcolmwilliamson2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.6, 'top':.85},
+                            size_hint = (.2,.2))
+
+        self.image1 = Image(source = 'pics/MALCWILL.png',
+                            pos_hint = {'x':.5, 'top':.6625},
+                            size_hint = (.6,.6))
+        self.image2 = Image(source = 'pics/MGS.png',
+                            pos_hint = {'x':.025, 'top':.725},
+                            size_hint = (.6,.6))
+        self.label1 = Label(text = '[i]Malcolm Williamson in a photo of the British team\n' +
+                                    'arriving for the Mathematical Olympiad in 1968 in\n' +
+                                    'Moscow. Williamson is second from the left. Clifford\n' +
+                                    'Cocks was also in the team and is on the right.[/i]',
+                            pos_hint = {'x':.25, 'top':.25},
+                            size_hint = (.2,.2),
+                            markup = True)
+        self.label2 = Label(text = '[i]Malcolm Williamson(1999)[/i]',
+                            pos_hint = {'x':.675, 'top':.175},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.image1)
+        self.r.add_widget(self.image2)
+        self.r.add_widget(self.label1)
+        self.r.add_widget(self.label2)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Malcolm Williamson Page
+################################################################################
+
+
+
+################################################################################
+#Begin 25 Year Secret Page
+################################################################################
+class YearSecretPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('25 Year Secret page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("25 Year Secret")
+
+        with open('texts/25yearsecret.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.175, 'top':.8},
+                            size_hint = (.2,.2))
+
+        with open('texts/25yearsecret2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.625, 'top':.8},
+                            size_hint = (.2,.2))
+
+        self.video = VideoPlayer(source = 'video/cocks2-3.avi',
+                            pos_hint = {'x':.475, 'top':.5},
+                            size_hint = (.5,.5))
+
+        self.videolabel = Label(text = "[i]Clifford Cocks' attitude is simple:\n" +
+                                        '\"You do not get involved in this business\n' +
+                                        'for public recognition.\" In the video\n' +
+                                        'clip, however, he explains that working\n' +
+                                        'for a top secret organisation did have\n' +
+                                        'some drawbacks. For example, working\n' +
+                                        'at home (where he discovered RSA)\n' +
+                                        'was made surprisingly difficult because\n' +
+                                        'of the security issues.[/i]',
+                            pos_hint = {'x':.2, 'top':.35},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.videolabel)
+        self.r.add_widget(self.tb)
+        return self.r
+
+################################################################################
+#End 25 Year Secret Page
+################################################################################
+
+
+################################################################################
+#Begin Future of Cryptography Page
+################################################################################
+class FOC(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Future of Cryptography page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+
+        #create the topbar navigation
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Future of Cryptography (1999)")
+
+        with open('texts/futureofcryptography.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.35, 'top':.7},
+                            size_hint = (.2,.2))
+
+        self.button1 = Button(text = "Politics of\nEncryption",
+                                        pos_hint = {'x':.825, 'top':.85},
+                                        size_hint = (.15,.1),
+                                        on_release = self.onePressed,
+                                        font_size = 14)
+
+        self.button2 = Button(text = "Steganography",
+                                        pos_hint = {'x':.825, 'top':.65},
+                                        size_hint = (.15,.1),
+                                        on_release = self.twoPressed,
+                                        font_size = 14)
+
+        self.button3 = Button(text = "Quantum\nCryptography",
+                                        pos_hint = {'x':.825, 'top':.45},
+                                        size_hint = (.15,.1),
+                                        on_release = self.threePressed,
+                                        font_size = 14)
+
+        self.button4 = Button(text = "The End?",
+                                        pos_hint = {'x':.825, 'top':.25},
+                                        size_hint = (.15,.1),
+                                        on_release = self.fourPressed,
+                                        font_size = 14)
+
+        self.anim = VideoPlayer(source = 'flc/NUMBERS.mp4',
+                                        pos_hint = {'x':.3, 'top':.5},
+                                        size_hint = (.4,.4),
+                                        state = 'play',
+                                        options = {'eos':'loop'})
+
+        #self.r.add_widget(self.anim)
+        self.r.add_widget(self.button1)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.button4)
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def onePressed(self, *args):
+        f.write("politics of encryption pressed\n")
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(ComputerCryptographyPage().create())
+
+    def twoPressed(self, *args):
+        f.write('steganography pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(BuildingEnigmaPage().create())
+
+    def threePressed(self, *args):
+        f.write('quantum cryptography pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(GodRewardsFoolsPage().create())
+
+    def fourPressed(self, *args):
+        f.write('the end? pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(PublicKeyCryptographyPage().create())
+
+################################################################################
+#End Future of Cryptography Page
 ################################################################################
 
 class TopBar(ButtonBehavior):
