@@ -24,7 +24,6 @@ quantum physics to protect the key.
 
 Bennett and Brassard proposed using photons
 polarised in different directions to represent
-
 1 or 0. If Eve tried to intercept the key, she
 would have to measure the photons, which
 would effectively mean absorbing them.

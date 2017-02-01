@@ -67,7 +67,7 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = FOC()
+        test = TheEndPage()
 
         #production
         #root.add_widget(mainpage.create())
@@ -9342,13 +9342,13 @@ class FOC(ButtonBehavior):
         f.write('quantum cryptography pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(GodRewardsFoolsPage().create())
+        root.add_widget(QuantumCryptography1().create())
 
     def fourPressed(self, *args):
         f.write('the end? pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(PublicKeyCryptographyPage().create())
+        root.add_widget(TheEndPage().create())
 
 ################################################################################
 #End Future of Cryptography Page
@@ -9664,6 +9664,608 @@ class ModernSteganographyPage(ButtonBehavior):
         self.button4.disabled = True
 ################################################################################
 #End Modern Steganography Page
+################################################################################
+
+################################################################################
+#Begin Quantum Cryptography Page 1
+################################################################################
+class QuantumCryptography1(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Quantum Cryptography page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Quantum Cryptography")
+
+        with open('texts/quantumcryptography1.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.45},
+                            size_hint = (.2,.2))
+
+        with open('texts/quantumcryptography2.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.65, 'top':.575},
+                            size_hint = (.2,.2))
+
+        self.button = Button(text = 'Next Page',
+                            pos_hint = {'x':.875, 'top':.075},
+                            size_hint = (.1,.05),
+                            on_release = self.buttonpressed,
+                            font_size = 14)
+        self.pagenum = Label(text = '1',
+                            pos_hint = {'x':.75, 'top':.15},
+                            size_hint = (.2,.2))
+
+        self.label = Label(text = '[b]This explanation of quantum cryptography is\n' +
+                                    'from an article I[Simon Singh] wrote for New\n' +
+                                    'Scientist magazine in 1999.[/b]',
+                            pos_hint = {'x':.15, 'top':.9},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.pagenum)
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('quantum cryptography 2 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(QuantumCryptography2().create())
+################################################################################
+#End Quantum Cryptography Page 1
+################################################################################
+
+################################################################################
+#Begin Quantum Cryptography Page 2
+################################################################################
+class QuantumCryptography2(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Quantum Cryptography 2 page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Quantum Cryptography")
+
+        with open('texts/quantumcryptography3.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.575},
+                            size_hint = (.2,.2))
+
+        with open('texts/quantumcryptography4.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.65, 'top':.575},
+                            size_hint = (.2,.2))
+
+        self.button = Button(text = 'Next Page',
+                            pos_hint = {'x':.875, 'top':.075},
+                            size_hint = (.1,.05),
+                            on_release = self.buttonpressed,
+                            font_size = 14)
+        self.pagenum = Label(text = '2',
+                            pos_hint = {'x':.75, 'top':.15},
+                            size_hint = (.2,.2))
+
+        self.label = Label(text = '[b]This button takes you to the\n' +
+                                    'demonstration of the one time pad[/b]',
+                            pos_hint = {'x':.1, 'top':.35},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.button2 = Button(text = 'One Time\nPad',
+                            pos_hint = {'x':.385, 'top':.315},
+                            size_hint = (.1,.1),
+                            font_size = 14)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.pagenum)
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('quantum cryptography 2 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(QuantumCryptography3().create())
+
+    def button2pressed(self, *args):
+        f.write('one time pad pressed\n')
+################################################################################
+#End Quantum Cryptography Page 2
+################################################################################
+
+
+
+################################################################################
+#Begin Quantum Cryptography Page 3
+################################################################################
+class QuantumCryptography3(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Quantum Cryptography page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Quantum Cryptography")
+
+        with open('texts/quantumcryptography5.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.565},
+                            size_hint = (.2,.2))
+
+        with open('texts/quantumcryptography6.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.65, 'top':.595},
+                            size_hint = (.2,.2))
+
+        self.button = Button(text = 'Next Page',
+                            pos_hint = {'x':.875, 'top':.075},
+                            size_hint = (.1,.05),
+                            on_release = self.buttonpressed,
+                            font_size = 14)
+        self.pagenum = Label(text = '3',
+                            pos_hint = {'x':.75, 'top':.15},
+                            size_hint = (.2,.2))
+
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.pagenum)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('quantum cryptography 4 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(QuantumCryptography4().create())
+################################################################################
+#End Quantum Cryptography Page 3
+################################################################################
+
+
+
+################################################################################
+#Begin Quantum Cryptography Page 4
+################################################################################
+class QuantumCryptography4(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Quantum Cryptography 4 page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Quantum Cryptography")
+
+        with open('texts/quantumcryptography7.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.7},
+                            size_hint = (.2,.2))
+
+        with open('texts/quantumcryptography8.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.65, 'top':.775},
+                            size_hint = (.2,.2))
+
+        self.button = Button(text = 'Next Page',
+                            pos_hint = {'x':.875, 'top':.075},
+                            size_hint = (.1,.05),
+                            on_release = self.buttonpressed,
+                            font_size = 14)
+        self.pagenum = Label(text = '4',
+                            pos_hint = {'x':.75, 'top':.15},
+                            size_hint = (.2,.2))
+
+        self.label = Label(text = '[b]This animation demonstrates the\n' +
+                                    'strange properties of photons in\n' +
+                                    'the quantum world and why they\n' +
+                                    'cannot be measured accurately.[/b]',
+                            pos_hint = {'x':.1, 'top':.3},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.button2 = Button(text = 'Polarisation\nof Light',
+                            pos_hint = {'x':.385, 'top':.25},
+                            size_hint = (.1,.1),
+                            font_size = 14)
+
+        self.button3 = Button(text = 'Quantum\nCrypto\nProtocol',
+                            pos_hint = {'x':.885, 'top':.25},
+                            size_hint = (.1,.1),
+                            font_size = 14)
+
+        self.label2 = Label(text = '[b]This tool demonstrates the principle\n' +
+                                    'of quantum key cryptography. This\n' +
+                                    'phase of quantum crypto allows\n' +
+                                    'Alice and Bob to securely exchange\n' +
+                                    'a key, which can then be used as a\n' +
+                                    'key for a one time pad.[/b]',
+                            pos_hint = {'x':.605, 'top':.3},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.button2)
+        self.r.add_widget(self.button3)
+        self.r.add_widget(self.label2)
+        self.r.add_widget(self.pagenum)
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('quantum cryptography 5 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(QuantumCryptography5().create())
+
+    def button2pressed(self, *args):
+        f.write('one time pad pressed\n')
+################################################################################
+#End Quantum Cryptography Page 4
+################################################################################
+
+################################################################################
+#Begin Quantum Cryptography Page 5
+################################################################################
+class QuantumCryptography5(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Quantum Cryptography 5 page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Quantum Cryptography")
+
+        with open('texts/quantumcryptography9.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.595},
+                            size_hint = (.2,.2))
+
+        with open('texts/quantumcryptography10.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.65, 'top':.585},
+                            size_hint = (.2,.2))
+
+        self.button = Button(text = 'Next Page',
+                            pos_hint = {'x':.875, 'top':.075},
+                            size_hint = (.1,.05),
+                            on_release = self.buttonpressed,
+                            font_size = 14)
+        self.pagenum = Label(text = '5',
+                            pos_hint = {'x':.75, 'top':.15},
+                            size_hint = (.2,.2))
+
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.pagenum)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('quantum cryptography 6 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(QuantumCryptography6().create())
+################################################################################
+#End Quantum Cryptography Page 5
+################################################################################
+
+################################################################################
+#Begin Quantum Cryptography Page 6
+################################################################################
+class QuantumCryptography6(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Quantum Cryptography 6 page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Quantum Cryptography")
+
+        with open('texts/quantumcryptography11.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.55},
+                            size_hint = (.2,.2))
+
+        with open('texts/quantumcryptography12.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.65, 'top':.595},
+                            size_hint = (.2,.2))
+
+        self.button = Button(text = 'Next Page',
+                            pos_hint = {'x':.875, 'top':.075},
+                            size_hint = (.1,.05),
+                            on_release = self.buttonpressed,
+                            font_size = 14)
+        self.pagenum = Label(text = '6',
+                            pos_hint = {'x':.75, 'top':.15},
+                            size_hint = (.2,.2))
+
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.pagenum)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('quantum cryptography 7 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(QuantumCryptography7().create())
+################################################################################
+#End Quantum Cryptography Page 6
+################################################################################
+
+################################################################################
+#Begin Quantum Cryptography Page 7
+################################################################################
+class QuantumCryptography7(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Quantum Cryptography 7 page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Quantum Cryptography")
+
+        with open('texts/quantumcryptography13.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.55},
+                            size_hint = (.2,.2))
+
+        with open('texts/quantumcryptography14.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.65, 'top':.62},
+                            size_hint = (.2,.2))
+
+        self.button = Button(text = 'Next Page',
+                            pos_hint = {'x':.875, 'top':.075},
+                            size_hint = (.1,.05),
+                            on_release = self.buttonpressed,
+                            font_size = 14)
+        self.pagenum = Label(text = '7',
+                            pos_hint = {'x':.75, 'top':.15},
+                            size_hint = (.2,.2))
+
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.pagenum)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('quantum cryptography 8 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(QuantumCryptography8().create())
+################################################################################
+#End Quantum Cryptography Page 7
+################################################################################
+
+################################################################################
+#Begin Quantum Cryptography Page 8
+################################################################################
+class QuantumCryptography8(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Quantum Cryptography 8 page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Quantum Cryptography")
+
+        with open('texts/quantumcryptography15.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.75},
+                            size_hint = (.2,.2))
+
+        with open('texts/quantumcryptography16.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.65, 'top':.4},
+                            size_hint = (.2,.2))
+
+        self.image1 = Image(source = 'pics/QALICE.png',
+                            pos_hint = {'x':0, 'top':.5},
+                            size_hint = (.5,.5))
+
+        self.image2 = Image(source = 'pics/QBOB.png',
+                            pos_hint = {'x':.5, 'top':1},
+                            size_hint = (.5,.5))
+
+        self.button = Button(text = 'Next Page',
+                            pos_hint = {'x':.875, 'top':.075},
+                            size_hint = (.1,.05),
+                            on_release = self.buttonpressed,
+                            font_size = 14)
+        self.pagenum = Label(text = '8',
+                            pos_hint = {'x':.75, 'top':.15},
+                            size_hint = (.2,.2))
+
+        self.r.add_widget(self.image1)
+        self.r.add_widget(self.image2)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.button)
+        self.r.add_widget(self.pagenum)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def buttonpressed(self, *args):
+        f.write('quantum cryptography 9 pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(QuantumCryptography9().create())
+################################################################################
+#End Quantum Cryptography Page 8
+################################################################################
+
+################################################################################
+#Begin Quantum Cryptography Page 9
+################################################################################
+class QuantumCryptography9(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Quantum Cryptography 9 page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Quantum Cryptography")
+
+        imght = .3
+        imgsz = (.25,.25)
+        with open('texts/quantumcryptography17.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.15, 'top':.7},
+                            size_hint = (.2,.2))
+
+        with open('texts/quantumcryptography18.txt', 'r') as myfile:
+            data2 = myfile.read()
+        self.text2 = Label(text = data2,
+                            pos_hint = {'x':.65, 'top':.7},
+                            size_hint = (.2,.2))
+
+        self.image1 = Image(source = 'pics/qcrypt9/STL.png',
+                            pos_hint = {'x':0.05, 'top':imght},
+                            size_hint = imgsz)
+
+        self.image2 = Image(source = 'pics/qcrypt9/STLENC.png',
+                            pos_hint = {'x':.375, 'top':imght},
+                            size_hint = imgsz)
+
+        self.image3 = Image(source = 'pics/qcrypt9/STLDEC.png',
+                            pos_hint = {'x':.7, 'top':imght},
+                            size_hint = imgsz)
+
+        self.pagenum = Label(text = '9',
+                            pos_hint = {'x':.8, 'top':.125},
+                            size_hint = (.2,.2))
+
+        self.label = Label(text = '[i]Original picture, encrypted picture sent by the Los Alamos experiment, ' +
+                                    'and the decrypted result.[/i]',
+                            pos_hint = {'x':.35, 'top':.125},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.r.add_widget(self.image1)
+        self.r.add_widget(self.image2)
+        self.r.add_widget(self.image3)
+        self.r.add_widget(self.label)
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.text2)
+        self.r.add_widget(self.pagenum)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Quantum Cryptography Page 9
+################################################################################
+
+
+################################################################################
+#Begin The End? Page
+################################################################################
+class TheEndPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('The End? page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("The End?")
+
+        with open('texts/theend.txt', 'r') as myfile:
+            data1 = myfile.read()
+        self.text1 = Label(text = data1,
+                            pos_hint = {'x':.125, 'top':.8},
+                            size_hint = (.2,.2),
+                            font_size = 16)
+
+        self.video = VideoPlayer(source = 'video/end3.avi',
+                            pos_hint = {'x':.45, 'top':.9},
+                            size_hint = (.5,.5))
+
+        self.r.add_widget(self.text1)
+        self.r.add_widget(self.video)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End The End? Page
 ################################################################################
 
 class TopBar(ButtonBehavior):
