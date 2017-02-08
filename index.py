@@ -1,3 +1,8 @@
+#author: Kevin Lewis
+#images, videos, and text by Simon Singh: http://simonsingh.net/
+
+#imports
+################################################################################
 import kivy
 from kivy.config import Config
 Config.set('graphics','resizable',0)
@@ -5,8 +10,6 @@ import kivy.input
 import time
 import os
 import sys
-sys.path.insert(0, '/home/kevin/Documents/COS397/project-crypto/capstone/Ciphers')
-import caesar
 import webbrowser
 import binascii
 import math
@@ -37,6 +40,7 @@ from collections import deque
 from random import shuffle
 from random import randint
 from fractions import gcd
+################################################################################
 
 kv = '''
 <CircularButton>:
@@ -47,12 +51,19 @@ kv = '''
 '''
 
 Builder.load_string(kv)
+
+################################################################################
+#log file
 try:
     os.remove('log')
 except OSError:
     print 'file does not exist'
 f = open('log', 'a')
+################################################################################
 
+################################################################################
+#Builds the App
+################################################################################
 class MyApp(App):
     topbar = None
     current = None
@@ -67,7 +78,7 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = TheEndPage()
+        test = RailfencePage()
 
         #production
         #root.add_widget(mainpage.create())
@@ -76,6 +87,7 @@ class MyApp(App):
         root.add_widget(test.create())
 
         return root
+################################################################################
 
 ################################################################################
 #Begin Home Page
@@ -87,35 +99,48 @@ class MainPage(ButtonBehavior):
     def create(self):
         f.write('main page entered\n')
         MyApp.current = self
+        #creates a trail of how the user got to a certain Page
+        #used for the back button in the top bar
         MyApp.trail = []
+
+        #initialize the topbar
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
         self.tb = self.topbar.create("")
+
+        #setup layouts
         self.r = RelativeLayout()
         self.title = RelativeLayout()
+
+        #button to get to the junior codebreakers section
         self.jcb = Button(text = 'Junior Code Breakers',
                                     size_hint = (.2,.3),
                                     pos_hint = {'center_x': .25, 'center_y': .55},
                                     on_release=self.pressed_jcb)
+        #button to get to the main contents section
         self.mc = Button(text = 'Main Contents',
                                     size_hint = (.2,.3),
                                     pos_hint = {'center_x': .5, 'center_y': .55},
                                     on_release=self.pressed_mc)
+        #button to get to the teachers section
         self.ts = Button(text = 'Teachers Section',
                                     size_hint = (.2,.3),
                                     pos_hint = {'center_x': .75, 'center_y': .55},
                                     on_release=self.pressed_ts)
 
+        #button to get to the highlights section of the application
         self.highlightsbutton = Button(text = '[b][color=ff6600]Highlights[/color][/b]',
                                     size_hint = (.15,.1),
                                     pos_hint = {'x': .025, 'top': .325},
                                     on_release=self.pressed_highlights,
                                     markup = True)
 
+        #set the image title
         titlestr = 'THE CODE BOOK'
 
         x = -.045
         top = .2
+        #loop through the letters to append images to the title layout
         for letter in titlestr:
             tempimage = Image()
             if letter == ' ':
@@ -127,7 +152,7 @@ class MainPage(ButtonBehavior):
                 x += .08
                 self.title.add_widget(tempimage)
 
-
+        #add widgets to the main layout
         self.r.add_widget(self.highlightsbutton)
         self.r.add_widget(self.title)
         self.r.add_widget(self.tb)
@@ -136,24 +161,40 @@ class MainPage(ButtonBehavior):
         self.r.add_widget(self.ts)
         return self.r
 
+    #function is called when the highlights button is pressed
+    #adds page to the trail
+    #clears all of the widgets from the root
+    #adds the new page to the root
     def pressed_highlights(self, *args):
         f.write('highlights button pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(HighlightsPage().create())
 
+    #function is called when the junior codebreakers button is pressed
+    #adds page to the trail
+    #clears all of the widgets from the root
+    #adds the new page to the root
     def pressed_jcb(self, *args):
         f.write('junior code breakers button pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(JCBPage().create())
 
+    #function is called when the main contents button is pressed
+    #adds page to the trail
+    #clears all of the widgets from the root
+    #adds the new page to the root
     def pressed_mc(self, *args):
         f.write('main contents button pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(MC().create())
 
+    #function is called when the teachers section button is pressed
+    #adds page to the trail
+    #clears all of the widgets from the root
+    #adds the new page to the root
     def pressed_ts(self, *args):
         f.write('teachers section button pressed\n')
 ################################################################################
@@ -174,8 +215,10 @@ class HighlightsPage(ButtonBehavior):
         self.r = RelativeLayout()
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
+        #create the topbar and add the title to it
         self.tb = self.topbar.create('Highlights')
 
+        #components of the page
         self.text1 = Label(text = 'If you want a quick overview of what the CD-ROM contains, then you can dip into\n' +
                             'the following highlights, which range from encryption tools to video clips to animations.',
                             pos_hint = {'x':.4, 'top':.95},
@@ -244,6 +287,7 @@ class HighlightsPage(ButtonBehavior):
                             pos_hint = {'x':.535, 'top':.365},
                             size_hint = (.2,.2))
 
+        #add widgets to the main layout
         self.r.add_widget(self.label1)
         self.r.add_widget(self.label2)
         self.r.add_widget(self.label3)
@@ -260,6 +304,7 @@ class HighlightsPage(ButtonBehavior):
         self.r.add_widget(self.tb)
         return self.r
 
+    #button functions to create new pages
     def onepressed(self, *args):
         f.write('highlights - atbash pressed\n')
         MyApp.trail.append(self)
@@ -294,7 +339,7 @@ class HighlightsPage(ButtonBehavior):
         f.write('highlights - cliff cocks interview pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        #root.add_widget(ByHookOrByCrookPage().create())
+        root.add_widget(JamesAndCliffordPage().create())
 ################################################################################
 #End Highlights Page
 ################################################################################
@@ -317,6 +362,7 @@ class JCBPage(ButtonBehavior):
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
         self.tb = self.topbar.create('Junior Codebreakers')
+        #setup layouts
         self.leftc = RelativeLayout(size_hint = (.5,.6),
                                     pos_hint = {'left':1})
         self.rightc = RelativeLayout(size_hint = (.5,.6),
@@ -371,6 +417,7 @@ class JCBPage(ButtonBehavior):
                             pos_hint = {'x':self.leftx, 'center_y':.125},
                             size_hint = (.9,.06),
                             on_release = self.genmonopressed)
+        #add components to left layout
         self.leftc.add_widget(self.railfence)
         self.leftc.add_widget(self.latin)
         self.leftc.add_widget(self.scytale)
@@ -413,6 +460,8 @@ class JCBPage(ButtonBehavior):
                             pos_hint = {'x':self.rightx, 'center_y':.125},
                             size_hint = (.9,.06),
                             on_release = self.codetalkerspressed)
+
+        #add components to right layout
         self.rightc.add_widget(self.howfreq)
         self.rightc.add_widget(self.digraph)
         self.rightc.add_widget(self.playfair)
@@ -422,7 +471,7 @@ class JCBPage(ButtonBehavior):
         self.rightc.add_widget(self.meetenigma)
         self.rightc.add_widget(self.codetalkers)
 
-
+        #add the rest of components to main layout
         self.buttonlay.add_widget(self.leftc)
         self.buttonlay.add_widget(self.rightc)
         self.r.add_widget(self.lefttext)
@@ -431,6 +480,7 @@ class JCBPage(ButtonBehavior):
         self.r.add_widget(self.buttonlay)
         return self.r
 
+    #button functions
     def caesarpressed(self, *args):
         f.write('caesar shift button pressed\n')
         MyApp.trail.append(self)
@@ -524,8 +574,12 @@ class JCBPage(ButtonBehavior):
 #End Junior Codebreakers Page
 ################################################################################
 
+""" TOUCH UP """
 ################################################################################
 #Begin Railfence Cipher Page
+"""TO DO:
+- possible cap on the amount of plaintext input
+"""
 ################################################################################
 class RailfencePage(ButtonBehavior):
     def __init__(self):
@@ -534,7 +588,7 @@ class RailfencePage(ButtonBehavior):
     def create(self):
         f.write('railfence page entered\n')
         MyApp.current = self
-
+        self.big = []
         self.r = RelativeLayout()
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
@@ -543,46 +597,70 @@ class RailfencePage(ButtonBehavior):
                                     size_hint = (1,.5))
         self.passive = RelativeLayout(pos_hint = {'top':1},
                                     size_hint = (1,.5))
+        self.tooltop = 1.1
 
+        #setup components
         with open('texts/railfenceciphertext.txt', 'r') as myfile:
             data = myfile.read()
         self.text = Label(text = data,
-                            pos_hint = {'x':.25, 'top':.7},
+                            pos_hint = {'x':.25, 'top':.975},
                             size_hint = (.5,.5))
 
         self.shiftlabel = Label(text = 'Number of Lines',
-                                pos_hint = {'x':.125, 'y':.9},
+                                pos_hint = {'x':.1, 'y':1.15},
                                 size_hint = (.05,.05))
-        self.decrem = Button(text = '<', pos_hint = {'x':0, 'top':.85},
+        self.decrem = Button(text = '<', pos_hint = {'x':.05, 'top':self.tooltop},
                             size_hint = (.05,.05),
                             on_release = self.decr)
-        self.shiftnum = Label(text = '2', font_size = '20sp', pos_hint = {'x':.05, 'top':.85},
+        self.shiftnum = Label(text = '2', font_size = '20sp', pos_hint = {'x':.1, 'top':self.tooltop},
                             size_hint = (.05,.05))
-        self.increm = Button(text = '>', pos_hint = {'x':.1, 'top':.85},
+        self.increm = Button(text = '>', pos_hint = {'x':.15, 'top':self.tooltop},
                             size_hint = (.05,.05),
                             on_release = self.incr)
 
-        self.plaintextinput = TextInput(pos_hint = {'x':.25, 'top':.85},
-                                    size_hint = (.65, .15))
+        self.plaintextinput = TextInput(text = '',
+                                    pos_hint = {'x':.25, 'top':1.2},
+                                    size_hint = (.65, .15),
+                                    font_name = 'font/RobotoMono-Regular')
         self.plaintextlabel = Label(text = 'Plaintext',
-                                    pos_hint = {'x':.4, 'top':.95},
+                                    pos_hint = {'x':.4, 'top':1.3},
                                     size_hint = (.27,.1))
 
         self.ciphertextdisplay = TextInput(text = '',
-                                            pos_hint = {'x':.25, 'top':.325},
+                                            pos_hint = {'x':.25, 'top':.225},
                                             size_hint = (.65, .15),
-                                            disabled = True)
+                                            disabled = True,
+                                            font_name = 'font/RobotoMono-Regular')
         self.ciphertextlabel = Label(text = 'Ciphertext',
-                                    pos_hint = {'x':.4, 'top':.425},
+                                    pos_hint = {'x':.4, 'top':.325},
                                     size_hint = (.27,.1))
 
         self.encipherbutton = Button(text = "Encipher Text",
-                                        pos_hint = {'x':.425, 'top':.1},
+                                        pos_hint = {'x':.05, 'top':.2},
                                         size_hint = (.15,.1),
-                                        on_release = self.encipherPressed)
+                                        on_release = self.encipherPressed,
+                                        disabled = True)
 
+        self.raillabel = Label(text = '',
+                                        pos_hint = {'x':.5, 'top':.7},
+                                        size_hint = (.15,.1),
+                                        markup = True,
+                                        font_name = 'font/RobotoMono-Regular',
+                                        font_size = 16)
+        self.railbutton = Button(text = 'Create Railfence',
+                                        pos_hint = {'x':.05, 'top':.35},
+                                        size_hint = (.15,.1),
+                                        on_release = self.rail)
+
+        self.instr1 = Label(text = 'You can see how the Railfence Cipher works by:\n' +
+                                    '1. Typing your message into the Plaintext box\n' +
+                                    '2. Click the Railfence button\n' +
+                                    '3. Click the Create Ciphertext button to encrypt\n',
+                                        pos_hint = {'x':.2, 'top':.55},
+                                        size_hint = (.2,.2))
 
         self.passive.add_widget(self.text)
+        self.passive.add_widget(self.instr1)
 
         self.active.add_widget(self.shiftlabel)
         self.active.add_widget(self.decrem)
@@ -593,37 +671,72 @@ class RailfencePage(ButtonBehavior):
         self.active.add_widget(self.ciphertextdisplay)
         self.active.add_widget(self.ciphertextlabel)
         self.active.add_widget(self.encipherbutton)
+        self.active.add_widget(self.railbutton)
+        self.active.add_widget(self.raillabel)
 
         self.r.add_widget(self.tb)
         self.r.add_widget(self.passive)
         self.r.add_widget(self.active)
         return self.r
 
+    #when the encipher button is pressed set the ciphertextdisplay text to
+    #the newly encrypted text
     def encipherPressed(self, *args):
         f.write("encipher pressed\n")
-        self.ciphertextdisplay.text = self.encode(self.plaintextinput.text, int(self.shiftnum.text))
+        self.ciphertextdisplay.text = ''
+        self.ciphertextdisplay.text = self.encode()
 
-    def fence(self, lst, numrails, *args):
-        fence = [[None] * len(lst) for n in range(numrails)]
-        rails = range(numrails - 1) + range(numrails - 1, 0, -1)
-        for n, x in enumerate(lst):
-            fence[rails[n % len(rails)]][n] = x
+    def rail(self, *args):
+        f.write('creating railfence...\n')
+        self.encipherbutton.disabled = False
+        self.raillabel.text = ''
+        self.ciphertextdisplay.text = ''
+        self.big = []
+        text = self.plaintextinput.text
+        text = text.replace(' ', '')
+        n = int(self.shiftnum.text)
+        f.write(text + '\n')
+        f.write('n: ' + str(n) + '\n')
+        textlist = []
+        for c in text:
+            textlist.append(str(c))
+        count = n
+        newstr = ''
 
-        if 0: # debug
-            for rail in fence:
-                print ''.join('.' if c is None else str(c) for c in rail)
+        for i in range(count):
+            newlist = []
+            for k in range(len(textlist)):
+                if (k % count) == 0:
+                    try:
+                        newlist.append(textlist[k + i])
+                        newstr = newstr + textlist[k + i]
+                    except Exception as e:
+                        pass
+            self.big.append(newlist)
 
-        return [c for rail in fence for c in rail if c is not None]
+        #create the text for the label
+        railtext = '[color=#ff0000]'
+        nm = 1
+        #iterate through the lists in big
+        for l in self.big:
+            #iterate through the letters in the inner list
+            for c in l:
+                #creates the string so that the rail appearance is shown through spaces
+                railtext = railtext + c + str(count*' ')
+            railtext = railtext + '\n' + str(nm*' ')
+            nm += 1
+        railtext += '[/color]'
+        self.raillabel.text = railtext
 
-    def encode(self, text, n, *args):
-        return ''.join(self.fence(text, n))
 
-    def decode(self, text, n, *args):
-        rng = range(len(text))
-        pos = self.fence(rng, n)
-        return ''.join(text[pos.index(n)] for n in rng)
+    def encode(self, *args):
+        f.write('railfence encoding...\n')
+        newstr = ''
+        for l in self.big:
+            newstr = newstr + ''.join(l)
+        return newstr
 
-
+    #increments the rail amount
     def incr(self, *args):
         if(int(self.shiftnum.text) == 9):
             self.shiftnum.text = '0'
@@ -631,6 +744,7 @@ class RailfencePage(ButtonBehavior):
             temp = int(self.shiftnum.text) + 1
             self.shiftnum.text = str(temp)
 
+    #decrements the rail amount
     def decr(self, *args):
         if(int(self.shiftnum.text) == 0):
             pass
@@ -665,7 +779,7 @@ class LatinSquarePage(ButtonBehavior):
                             size_hint = (.5,.5),
                             font_size = 14)
 
-        self.lsimage = Image(source = 'pics/wordsqu3.bmp',
+        self.lsimage = Image(source = 'pics/wordsqu3.png',
                                     pos_hint = {'x':.55, 'top':.9},
                                     size_hint = (.7,.5))
 
@@ -691,13 +805,69 @@ class LatinSquarePage(ButtonBehavior):
         self.r.add_widget(self.deciphimage)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Latin Square Cipher Page
 ################################################################################
 
+""" NOT STARTED """
+################################################################################
+#Begin Scytale Cipher Page
+################################################################################
+class ScytalePage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Scytale page entered\n')
+        MyApp.current = self
+
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        self.tb = self.topbar.create("Scytale")
+
+        with open('texts/latinsquare.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.05, 'top':.7},
+                            size_hint = (.5,.5),
+                            font_size = 14)
+
+        self.lsimage = Image(source = 'pics/wordsqu3.png',
+                                    pos_hint = {'x':.55, 'top':.9},
+                                    size_hint = (.7,.5))
+
+        self.imagetext = Label(text = 'The Manchester Museum\n' +
+                                        'The University of Manchester',
+                                        pos_hint = {'x':.775, 'top':.55},
+                                        size_hint = (.25,.25),
+                                        font_size = 11)
+
+        self.lsquareimage = Image(source = 'pics/latsqcrop.png',
+                                    pos_hint = {'x':.55, 'top':.65},
+                                    size_hint = (.25,.25))
+
+        self.deciphimage = Image(source = 'pics/paternoster.bmp',
+                                    pos_hint = {'x':.475, 'top':.5},
+                                    size_hint = (.6,.6))
+
+
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.lsimage)
+        self.r.add_widget(self.imagetext)
+        self.r.add_widget(self.lsquareimage)
+        self.r.add_widget(self.deciphimage)
+        self.r.add_widget(self.tb)
+        return self.r
+################################################################################
+#End Scytale Cipher Page
+################################################################################
+
 ################################################################################
 #Begin Atbash Cipher Page
+"""TO DO:
+- fix image
+"""
 ################################################################################
 class AtbashPage(ButtonBehavior):
     def __init__(self):
@@ -706,11 +876,14 @@ class AtbashPage(ButtonBehavior):
     def create(self):
         f.write('atbash page entered\n')
         MyApp.current = self
+        #create cipher alphabet
         self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
 
+        #create the list as a string
         self.stralpha = ''.join(self.alpha)
+        #reverse the string
         self.newalpha = self.alpha[::-1]
 
         self.r = RelativeLayout()
@@ -756,7 +929,7 @@ class AtbashPage(ButtonBehavior):
         self.clabel = Label(text = 'Ciphertext Alphabet',
                             pos_hint = {'x':.7, 'top':.5},
                             size_hint = (.27,.1))
-
+        #joins the reversed alphabet and creates a string out of it
         self.strnewalpha = "".join(list(self.newalpha))
         self.cipheralphabet = TextInput(text = self.strnewalpha,
                                     pos_hint = {'x':.7, 'top':.4},
@@ -782,7 +955,7 @@ class AtbashPage(ButtonBehavior):
                                         size_hint = (.15,.15),
                                         on_release = self.encipherPressed)
 
-
+        #add components
         self.passive.add_widget(self.text)
         self.passive.add_widget(self.atbashimage)
         self.passive.add_widget(self.imagetext)
@@ -804,24 +977,29 @@ class AtbashPage(ButtonBehavior):
         self.r.add_widget(self.active)
         return self.r
 
+    #encryption function for atbashen
     def atbashen(self, text, spaces, *args):
         enciphered = ""
         text = text.lower()
 
+        #iterate throught the plaintext letters
         for letter in text:
+            #iterate throught the original alphabet
             for i in range(len(self.alpha)):
+                #append the reversed letter
                 if self.alpha[i] == letter:
                     enciphered += self.newalpha[i]
             if (letter == " ") and spaces:
                 enciphered += " "
-
         return enciphered
 
+    #when the encipher button is pressed
+    #calls the function atbashen
+    #sets the ciphertextdisplay text to the newly encipher text
     def encipherPressed(self, *args):
         f.write('encipher button pressed\n')
         enciphered = self.atbashen(self.plaintextinput.text, self.spacebox.active)
         self.ciphertextdisplay.text = enciphered
-
 ################################################################################
 #End Atbash Cipher Page
 ################################################################################
@@ -836,9 +1014,11 @@ class CaesarShiftPage(ButtonBehavior):
     def create(self):
         f.write('caesar shift page entered\n')
         MyApp.current = self
+        #create the two alphabets
         self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
+        #using deque to allow shifting of the lists
         self.newalpha = deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z'])
@@ -880,19 +1060,22 @@ class CaesarShiftPage(ButtonBehavior):
                             size_hint = (.27,.1))
         self.alphabet = TextInput(text = self.stralpha,
                                     pos_hint = {'x':.5, 'top':.8},
-                                    size_hint = (.27,.1),
-                                    disabled = True)
+                                    size_hint = (.315,.1),
+                                    disabled = True,
+                                    font_name = 'font/RobotoMono-Regular')
 
         self.clabel = Label(text = 'Ciphertext Alphabet',
                             pos_hint = {'x':.5, 'top':.7},
                             size_hint = (.27,.1))
 
+        #rotates the newalphabet by the shift amount
         self.newalpha.rotate(-(int(self.shiftnum.text)))
         self.strnewalpha = "".join(list(self.newalpha))
         self.cipheralphabet = TextInput(text = self.strnewalpha,
                                     pos_hint = {'x':.5, 'top':.6},
-                                    size_hint = (.27,.1),
-                                    disabled = True)
+                                    size_hint = (.315,.1),
+                                    disabled = True,
+                                    font_name = 'font/RobotoMono-Regular')
 
         self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.4},
                                     size_hint = (.35, .35))
@@ -929,6 +1112,7 @@ class CaesarShiftPage(ButtonBehavior):
                                         size_hint = (.2,.2),
                                         font_size = 11)
 
+        #add components to layout
         self.active.add_widget(self.shiftlabel)
         self.active.add_widget(self.cboxlabel)
         self.active.add_widget(self.spacebox)
@@ -954,6 +1138,7 @@ class CaesarShiftPage(ButtonBehavior):
         self.r.add_widget(self.tb)
         return self.r
 
+    #function called when the encipher button is pressed
     def encipherPressed(self, *args):
         f.write('encipher button pressed\n')
         enciphered = self.caesarEncrypt(self.shiftnum.text, self.plaintextinput.text, self.spacebox.active)
@@ -984,6 +1169,8 @@ class CaesarShiftPage(ButtonBehavior):
         f.write('\nencipherd: ' + enciphered + '\n')
         return enciphered
 
+    #increases the shift amount
+    #updates the alphabet display
     def incr(self, *args):
         self.newalpha = deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -998,6 +1185,8 @@ class CaesarShiftPage(ButtonBehavior):
         self.strnewalpha = "".join(list(self.newalpha))
         self.cipheralphabet.text = self.strnewalpha
 
+    #decreases the shift amount
+    #updates the alphabet display
     def decr(self, *args):
         self.newalpha = deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -1011,7 +1200,6 @@ class CaesarShiftPage(ButtonBehavior):
         self.newalpha.rotate(-(int(self.shiftnum.text)))
         self.strnewalpha = "".join(list(self.newalpha))
         self.cipheralphabet.text = self.strnewalpha
-
 ################################################################################
 #End Caesar Shift Page
 ################################################################################
@@ -1051,11 +1239,11 @@ class PigpenGravePage(ButtonBehavior):
                             size_hint = (.4,.4))
 
         self.image3 = Image(source = 'pics/piggrave/PIG3.png',
-                            pos_hint = {'x':.425, 'top':.5},
+                            pos_hint = {'x':.455, 'top':.5},
                             size_hint = (.5,.5))
 
         self.label = Label(text = 'The meaning of the ciphertext at the foot of the gravestone\nappears to be "Holiness of the Lord".',
-                            pos_hint = {'x':.58, 'top':.2},
+                            pos_hint = {'x':.6, 'top':.2},
                             size_hint = (.2,.2),
                             font_size = 15)
         self.smalllabel = Label(text = 'Photograph by John Mee',
@@ -1063,6 +1251,7 @@ class PigpenGravePage(ButtonBehavior):
                             size_hint = (.2,.2),
                             font_size = 11)
 
+        #add components to the layout
         self.r.add_widget(self.text)
         self.r.add_widget(self.image1)
         self.r.add_widget(self.image2)
@@ -1072,13 +1261,16 @@ class PigpenGravePage(ButtonBehavior):
 
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Pigpen Gravestone Page
 ################################################################################
 
 ################################################################################
 #Begin Pigpen Cipher Page
+"""TO DO:
+- cap the amount of input allowed for plaintext so the ciphertext does not
+overload the ciphertext display box
+"""
 ################################################################################
 class PigpenPage(ButtonBehavior):
     def __init__(self):
@@ -1092,13 +1284,13 @@ class PigpenPage(ButtonBehavior):
                 'v', 'w', 'x', 'y', 'z']
         self.images = []
 
+        #appends image file path to the list of images
         for i in self.alpha:
             self.images.append('pics/pigpen/' + i + '.bmp')
 
         #setup layouts
-        self.r2 = RelativeLayout()
         self.r = RelativeLayout()
-        self.canvas = Canvas()
+        self.r2 = RelativeLayout()
         #create the topbar navigation
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
@@ -1189,6 +1381,7 @@ class PigpenPage(ButtonBehavior):
                             pos_hint = {'x':.2, 'top':.4},
                             size_hint = (.2,.2))
 
+        #add components to the layout
         self.r.add_widget(self.instructions)
         self.r.add_widget(self.text)
         self.r.add_widget(self.piggy0)
@@ -1215,12 +1408,14 @@ class PigpenPage(ButtonBehavior):
         self.r.add_widget(self.tb)
         return self.r
 
+    #function called when the encipher button is pressed
     def encipherPressed(self, *args):
         f.write('encipher button pressed\n')
         self.r2.clear_widgets()
         self.r.remove_widget(self.r2)
         self.pigpenEncode(self.plaintextinput.text)
 
+    #encrypts the plaintext with the pigpen cipher
     def pigpenEncode(self, text, *args):
         self.templist = []
         tem = .49
@@ -1246,13 +1441,16 @@ class PigpenPage(ButtonBehavior):
             self.r2.add_widget(self.templist[i])
 
         self.r.add_widget(self.r2)
-
 ################################################################################
 #End Pigpen Cipher Page
 ################################################################################
 
 ################################################################################
 #Begin General Monoalphabetic Shift Page
+"""TO DO:
+- possible cap
+- center the text in alphabets or find optimum size for text inputs
+"""
 ################################################################################
 class GenMonoPage(ButtonBehavior):
     def __init__(self):
@@ -1270,7 +1468,7 @@ class GenMonoPage(ButtonBehavior):
         shuffle(self.newalpha)
 
 
-        self.stralpha = '  '.join(self.alpha)
+        self.stralpha = ''.join(self.alpha)
         #setup layouts
         self.r = RelativeLayout()
         self.active = RelativeLayout(pos_hint = {'bottom':1},
@@ -1300,18 +1498,20 @@ class GenMonoPage(ButtonBehavior):
                             size_hint = (.27,.1))
         self.alphabet = TextInput(text = self.stralpha,
                                     pos_hint = {'x':.375, 'top':.8},
-                                    size_hint = (.525,.1),
-                                    disabled = True)
+                                    size_hint = (.35,.1),
+                                    disabled = True,
+                                    font_name = 'font/RobotoMono-Regular')
 
         self.clabel = Label(text = 'Ciphertext Alphabet',
                             pos_hint = {'x':.5, 'top':.7},
                             size_hint = (.27,.1))
 
-        self.strnewalpha = "  ".join(self.newalpha)
+        self.strnewalpha = "".join(self.newalpha)
         self.cipheralphabet = TextInput(text = self.strnewalpha,
                                     pos_hint = {'x':.375, 'top':.6},
-                                    size_hint = (.525,.1),
-                                    disabled = True)
+                                    size_hint = (.35,.1),
+                                    disabled = True,
+                                    font_name = 'font/RobotoMono-Regular')
 
         self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.4},
                                     size_hint = (.35, .35))
