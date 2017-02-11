@@ -1,4 +1,4 @@
-The key in a bok cipher is a piece of text, often from a book. Each letter of the keytext (or perhaps 
+The key in a book cipher is a piece of text, often from a book. Each letter of the keytext (or perhaps 
 just the inital letter of each word) is sequentially numbered. Then, to encrypt a letter in the 
 message, you need to find the same letter in the keytext and identify its associated number. Each 
 letter is then substituted with a number. Imagine that the previous sentence is the keytext, then the 

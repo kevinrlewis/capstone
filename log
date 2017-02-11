@@ -1,11 +1,58 @@
 -----------------------------------------------------
-07/02/2017 10:27:04
+11/02/2017 05:45:12
 starting app...
-railfence page entered
-home pressed
 main page entered
-junior code breakers button pressed
-Junior Code Breakers entered
-frequency analysis pressed
-how Frequency Analysis works entered
+main contents button pressed
+the code book description page entered
+mechanising secrecy pressed
+Mechanisation of Secrecy page entered
+world war I pressed
+world war i page entered
+back pressed
+[<__main__.MainPage object at 0x7fc24f7c2410>, <__main__.MC object at 0x7fc24f6a9fd0>, <__main__.MOFS object at 0x7fc24f49af10>]
+Mechanisation of Secrecy page entered
+back pressed
+[<__main__.MainPage object at 0x7fc24f7c2410>, <__main__.MC object at 0x7fc24f6a9fd0>]
+the code book description page entered
+the uncrackable code pressed
+the uncrackable code page entered
+vigenere cipher pressed
+vigenere page entered
+why vigenere strong pressed
+why vigenere strong page entered
+back pressed
+[<__main__.MainPage object at 0x7fc24f7c2410>, <__main__.MC object at 0x7fc24f6a9fd0>, <__main__.UncrackableCode object at 0x7fc24ec43a90>, <__main__.VigenerePage object at 0x7fc24eaa7ed0>]
+vigenere page entered
+back pressed
+[<__main__.MainPage object at 0x7fc24f7c2410>, <__main__.MC object at 0x7fc24f6a9fd0>, <__main__.UncrackableCode object at 0x7fc24ec43a90>]
+the uncrackable code page entered
+vigenere cipher pressed
+vigenere page entered
+back pressed
+[<__main__.MainPage object at 0x7fc24f7c2410>, <__main__.MC object at 0x7fc24f6a9fd0>, <__main__.UncrackableCode object at 0x7fc24ec43a90>]
+the uncrackable code page entered
+cracking the vigenere pressed
+cracking the vigenere page entered
+charles babbage pressed
+charles babbage page entered
+babbages computers pressed
+babbages computers page entered
+back pressed
+[<__main__.MainPage object at 0x7fc24f7c2410>, <__main__.MC object at 0x7fc24f6a9fd0>, <__main__.UncrackableCode object at 0x7fc24ec43a90>, <__main__.CrackingVigenerePage object at 0x7fc24876bfd0>, <__main__.CharlesBabbagePage object at 0x7fc2491c1610>]
+charles babbage page entered
+babbage the codebreaker pressedbabbage the codebreaker page entered
+back pressed
+[<__main__.MainPage object at 0x7fc24f7c2410>, <__main__.MC object at 0x7fc24f6a9fd0>, <__main__.UncrackableCode object at 0x7fc24ec43a90>, <__main__.CrackingVigenerePage object at 0x7fc24876bfd0>, <__main__.CharlesBabbagePage object at 0x7fc2491c1610>]
+charles babbage page entered
+babbages computers pressed
+babbages computers page entered
+back pressed
+[<__main__.MainPage object at 0x7fc24f7c2410>, <__main__.MC object at 0x7fc24f6a9fd0>, <__main__.UncrackableCode object at 0x7fc24ec43a90>, <__main__.CrackingVigenerePage object at 0x7fc24876bfd0>, <__main__.CharlesBabbagePage object at 0x7fc2491c1610>]
+charles babbage page entered
+babbage the codebreaker pressedbabbage the codebreaker page entered
+back pressed
+[<__main__.MainPage object at 0x7fc24f7c2410>, <__main__.MC object at 0x7fc24f6a9fd0>, <__main__.UncrackableCode object at 0x7fc24ec43a90>, <__main__.CrackingVigenerePage object at 0x7fc24876bfd0>, <__main__.CharlesBabbagePage object at 0x7fc2491c1610>]
+charles babbage page entered
+babbages computers pressed
+babbages computers page entered
 -----------------------------------------------------

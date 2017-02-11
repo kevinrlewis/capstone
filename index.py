@@ -3,6 +3,10 @@
 
 #imports
 ################################################################################
+"""TO DO:
+- up Button
+- clean up log file
+"""
 import kivy
 from kivy.config import Config
 Config.set('graphics','resizable',0)
@@ -78,13 +82,13 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = RailfencePage()
+        test = JCBPage()
 
         #production
-        #root.add_widget(mainpage.create())
+        root.add_widget(mainpage.create())
 
         #testing
-        root.add_widget(test.create())
+        #root.add_widget(test.create())
 
         return root
 ################################################################################
@@ -394,33 +398,29 @@ class JCBPage(ButtonBehavior):
                             pos_hint = {'x':self.leftx, 'center_y':.875},
                             size_hint = (.9,.06),
                             on_release = self.latinsqpressed)
-        self.scytale = Button(text = 'Transposition - Scytale',
-                            pos_hint = {'x':self.leftx, 'center_y':.75},
-                            size_hint = (.9,.06))
         self.caesar = Button(text = 'Caesar Cipher',
-                            pos_hint = {'x':self.leftx, 'center_y':.625},
+                            pos_hint = {'x':self.leftx, 'center_y':.75},
                             size_hint = (.9,.06),
                             on_release = self.caesarpressed)
         self.pigpen = Button(text = 'Pigpen Cipher',
-                            pos_hint = {'x':self.leftx, 'center_y':.5},
+                            pos_hint = {'x':self.leftx, 'center_y':.625},
                             size_hint = (.9,.06),
                             on_release = self.pigpenpressed)
         self.pigpengrave = Button(text = 'Pigpen Gravestone',
-                            pos_hint = {'x':self.leftx, 'center_y':.375},
+                            pos_hint = {'x':self.leftx, 'center_y':.5},
                             size_hint = (.9,.06),
                             on_release = self.pigpengravepressed)
         self.atbash = Button(text = 'Atbash Cipher',
-                            pos_hint = {'x':self.leftx, 'center_y':.25},
+                            pos_hint = {'x':self.leftx, 'center_y':.375},
                             size_hint = (.9,.06),
                             on_release = self.atbashpressed)
         self.mono = Button(text = 'General Monoalphabetic',
-                            pos_hint = {'x':self.leftx, 'center_y':.125},
+                            pos_hint = {'x':self.leftx, 'center_y':.25},
                             size_hint = (.9,.06),
                             on_release = self.genmonopressed)
         #add components to left layout
         self.leftc.add_widget(self.railfence)
         self.leftc.add_widget(self.latin)
-        self.leftc.add_widget(self.scytale)
         self.leftc.add_widget(self.caesar)
         self.leftc.add_widget(self.pigpen)
         self.leftc.add_widget(self.pigpengrave)
@@ -574,12 +574,8 @@ class JCBPage(ButtonBehavior):
 #End Junior Codebreakers Page
 ################################################################################
 
-""" TOUCH UP """
 ################################################################################
 #Begin Railfence Cipher Page
-"""TO DO:
-- possible cap on the amount of plaintext input
-"""
 ################################################################################
 class RailfencePage(ButtonBehavior):
     def __init__(self):
@@ -618,10 +614,11 @@ class RailfencePage(ButtonBehavior):
                             size_hint = (.05,.05),
                             on_release = self.incr)
 
-        self.plaintextinput = TextInput(text = '',
+        self.plaintextinput = maxinput(text = '',
                                     pos_hint = {'x':.25, 'top':1.2},
                                     size_hint = (.65, .15),
                                     font_name = 'font/RobotoMono-Regular')
+        self.plaintextinput.max_chars = 55
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.4, 'top':1.3},
                                     size_hint = (.27,.1))
@@ -752,6 +749,9 @@ class RailfencePage(ButtonBehavior):
             temp = int(self.shiftnum.text) - 1
             self.shiftnum.text = str(temp)
 
+    def checkinput(self, *args):
+        if len(self.plaintextinput.text) > 50:
+            self.plaintextinput.disabled = True
 ################################################################################
 #End Railfence Cipher Page
 ################################################################################
@@ -809,65 +809,8 @@ class LatinSquarePage(ButtonBehavior):
 #End Latin Square Cipher Page
 ################################################################################
 
-""" NOT STARTED """
-################################################################################
-#Begin Scytale Cipher Page
-################################################################################
-class ScytalePage(ButtonBehavior):
-    def __init__(self):
-        pass
-
-    def create(self):
-        f.write('Scytale page entered\n')
-        MyApp.current = self
-
-        self.r = RelativeLayout()
-        self.topbar = TopBar()
-        MyApp.topbar = self.topbar
-        self.tb = self.topbar.create("Scytale")
-
-        with open('texts/latinsquare.txt', 'r') as myfile:
-            data = myfile.read()
-        self.text = Label(text = data,
-                            pos_hint = {'x':.05, 'top':.7},
-                            size_hint = (.5,.5),
-                            font_size = 14)
-
-        self.lsimage = Image(source = 'pics/wordsqu3.png',
-                                    pos_hint = {'x':.55, 'top':.9},
-                                    size_hint = (.7,.5))
-
-        self.imagetext = Label(text = 'The Manchester Museum\n' +
-                                        'The University of Manchester',
-                                        pos_hint = {'x':.775, 'top':.55},
-                                        size_hint = (.25,.25),
-                                        font_size = 11)
-
-        self.lsquareimage = Image(source = 'pics/latsqcrop.png',
-                                    pos_hint = {'x':.55, 'top':.65},
-                                    size_hint = (.25,.25))
-
-        self.deciphimage = Image(source = 'pics/paternoster.bmp',
-                                    pos_hint = {'x':.475, 'top':.5},
-                                    size_hint = (.6,.6))
-
-
-        self.r.add_widget(self.text)
-        self.r.add_widget(self.lsimage)
-        self.r.add_widget(self.imagetext)
-        self.r.add_widget(self.lsquareimage)
-        self.r.add_widget(self.deciphimage)
-        self.r.add_widget(self.tb)
-        return self.r
-################################################################################
-#End Scytale Cipher Page
-################################################################################
-
 ################################################################################
 #Begin Atbash Cipher Page
-"""TO DO:
-- fix image
-"""
 ################################################################################
 class AtbashPage(ButtonBehavior):
     def __init__(self):
@@ -880,6 +823,7 @@ class AtbashPage(ButtonBehavior):
         self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
+        self.stoptext = ''
 
         #create the list as a string
         self.stralpha = ''.join(self.alpha)
@@ -902,7 +846,7 @@ class AtbashPage(ButtonBehavior):
                             size_hint = (.5,.5),
                             font_size = 13)
 
-        self.atbashimage = Image(source = 'pics/BABEL.bmp',
+        self.atbashimage = Image(source = 'pics/BABEL.png',
                                     pos_hint = {'x':.47, 'top':.75},
                                     size_hint = (.75,.75))
 
@@ -919,25 +863,28 @@ class AtbashPage(ButtonBehavior):
                                 size_hint = (.05,.05))
 
         self.alabel = Label(text = 'Plaintext Alphabet',
-                            pos_hint = {'x':.7, 'top':.7},
+                            pos_hint = {'x':.675, 'top':.7},
                             size_hint = (.27,.1))
         self.alphabet = TextInput(text = self.stralpha,
-                                    pos_hint = {'x':.7, 'top':.6},
-                                    size_hint = (.27,.1),
-                                    disabled = True)
+                                    pos_hint = {'x':.65, 'top':.6},
+                                    size_hint = (.32,.1),
+                                    disabled = True,
+                                    font_name = 'font/RobotoMono-Regular')
 
         self.clabel = Label(text = 'Ciphertext Alphabet',
-                            pos_hint = {'x':.7, 'top':.5},
+                            pos_hint = {'x':.675, 'top':.5},
                             size_hint = (.27,.1))
         #joins the reversed alphabet and creates a string out of it
         self.strnewalpha = "".join(list(self.newalpha))
         self.cipheralphabet = TextInput(text = self.strnewalpha,
-                                    pos_hint = {'x':.7, 'top':.4},
-                                    size_hint = (.27,.1),
-                                    disabled = True)
+                                    pos_hint = {'x':.65, 'top':.4},
+                                    size_hint = (.32,.1),
+                                    disabled = True,
+                                    font_name = 'font/RobotoMono-Regular')
 
-        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.2},
+        self.plaintextinput = maxinput(pos_hint = {'x':.2, 'top':.2},
                                     size_hint = (.35, .15))
+        self.plaintextinput.max_chars = 35
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.25, 'top':.275},
                                     size_hint = (.27,.1))
@@ -1077,8 +1024,9 @@ class CaesarShiftPage(ButtonBehavior):
                                     disabled = True,
                                     font_name = 'font/RobotoMono-Regular')
 
-        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.4},
+        self.plaintextinput = maxinput(pos_hint = {'x':.2, 'top':.4},
                                     size_hint = (.35, .35))
+        self.plaintextinput.max_chars = 150
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.25, 'top':.475},
                                     size_hint = (.27,.1))
@@ -1267,10 +1215,6 @@ class PigpenGravePage(ButtonBehavior):
 
 ################################################################################
 #Begin Pigpen Cipher Page
-"""TO DO:
-- cap the amount of input allowed for plaintext so the ciphertext does not
-overload the ciphertext display box
-"""
 ################################################################################
 class PigpenPage(ButtonBehavior):
     def __init__(self):
@@ -1303,8 +1247,9 @@ class PigpenPage(ButtonBehavior):
                                     size_hint = (.27,.1),
                                     font_size = 13)
 
-        self.plaintextinput = TextInput(pos_hint = {'x':.55, 'top':.7},
+        self.plaintextinput = maxinput(pos_hint = {'x':.55, 'top':.7},
                                     size_hint = (.4, .2))
+        self.plaintextinput.max_chars = 50
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.35, 'top':.7},
                                     size_hint = (.27,.1))
@@ -1447,10 +1392,6 @@ class PigpenPage(ButtonBehavior):
 
 ################################################################################
 #Begin General Monoalphabetic Shift Page
-"""TO DO:
-- possible cap
-- center the text in alphabets or find optimum size for text inputs
-"""
 ################################################################################
 class GenMonoPage(ButtonBehavior):
     def __init__(self):
@@ -1482,12 +1423,6 @@ class GenMonoPage(ButtonBehavior):
         self.tb = self.topbar.create("General Monoalphabetic Cipher")
 
         #elements of the page
-        self.spacebox = CheckBox(pos_hint = {'x':.265, 'y':.85},
-                                size_hint = (.05,.05))
-        self.cboxlabel = Label(text = 'Keep Spaces Between Words',
-                                pos_hint = {'x':.115, 'y':.85},
-                                size_hint = (.05,.05))
-
         self.randomize = Button(text = 'Randomize Cipher\nAlphabet',
                             pos_hint = {'x':.025, 'top':.8},
                             size_hint = (.2,.15),
@@ -1497,8 +1432,8 @@ class GenMonoPage(ButtonBehavior):
                             pos_hint = {'x':.5, 'top':.9},
                             size_hint = (.27,.1))
         self.alphabet = TextInput(text = self.stralpha,
-                                    pos_hint = {'x':.375, 'top':.8},
-                                    size_hint = (.35,.1),
+                                    pos_hint = {'x':.475, 'top':.8},
+                                    size_hint = (.315,.1),
                                     disabled = True,
                                     font_name = 'font/RobotoMono-Regular')
 
@@ -1508,13 +1443,14 @@ class GenMonoPage(ButtonBehavior):
 
         self.strnewalpha = "".join(self.newalpha)
         self.cipheralphabet = TextInput(text = self.strnewalpha,
-                                    pos_hint = {'x':.375, 'top':.6},
-                                    size_hint = (.35,.1),
+                                    pos_hint = {'x':.475, 'top':.6},
+                                    size_hint = (.315,.1),
                                     disabled = True,
                                     font_name = 'font/RobotoMono-Regular')
 
-        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.4},
+        self.plaintextinput = maxinput(pos_hint = {'x':.2, 'top':.4},
                                     size_hint = (.35, .35))
+        self.plaintextinput.max_chars = 150
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.25, 'top':.475},
                                     size_hint = (.27,.1))
@@ -1545,8 +1481,6 @@ class GenMonoPage(ButtonBehavior):
 
 
         self.active.add_widget(self.randomize)
-        self.active.add_widget(self.cboxlabel)
-        self.active.add_widget(self.spacebox)
         self.active.add_widget(self.alabel)
         self.active.add_widget(self.alphabet)
         self.active.add_widget(self.clabel)
@@ -1567,15 +1501,15 @@ class GenMonoPage(ButtonBehavior):
 
     def encipherPressed(self, *args):
         f.write('encipher button pressed\n')
-        enciphered = self.monoencrypt(self.plaintextinput.text, self.spacebox.active)
+        enciphered = self.monoencrypt(self.plaintextinput.text)
         self.ciphertextdisplay.text = enciphered
 
     def genrandomPressed(self, *args):
         f.write('generate random cipher pressed\n')
         shuffle(self.newalpha)
-        self.cipheralphabet.text = "  ".join(self.newalpha)
+        self.cipheralphabet.text = "".join(self.newalpha)
 
-    def monoencrypt(self, word, spaces, *args):
+    def monoencrypt(self, word, *args):
         enciphered = ""
 
         #iterate through the string of text
@@ -1584,7 +1518,7 @@ class GenMonoPage(ButtonBehavior):
             for i in range(len(self.alpha)):
                 if self.alpha[i] == letter:
                     enciphered += self.newalpha[i]
-            if (letter == " ") and spaces:
+            if (letter == " "):
                 enciphered += " "
 
         return enciphered
@@ -1618,7 +1552,8 @@ class HowFreqPage(ButtonBehavior):
 
         self.vid = VideoPlayer(source = 'video/freqful3.avi',
                             pos_hint = {'x':.55, 'top':.5},
-                            size_hint = (.45,.45))
+                            size_hint = (.45,.45),
+                            allow_fullscreen = False)
 
         self.freqimage = Image(source = 'pics/Letter_frequency-wide.png',
                             pos_hint = {'x':.25, 'top':1.075},
@@ -1654,36 +1589,7 @@ class DigraphPage(ButtonBehavior):
         self.alpha2 = deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z'])
-
-        self.random1 = randint(0, 26)
-        self.random2 = randint(0, 26)
-
-        self.alpha1.rotate(self.random1)
-        self.alpha2.rotate(self.random2)
-
-        self.stralpha1 = "".join(list(self.alpha1))
-        self.stralpha2 = "".join(list(self.alpha2))
-        f.write('alpha1: ' + self.stralpha1 + '\n')
-        f.write('alpha2: ' + self.stralpha2 + '\n')
-
-        self.listalpha1 = list(self.alpha1)
-        self.listalpha2 = list(self.alpha2)
-        self.dub = []
-
-        for letter in self.listalpha1:
-            templist = []
-            for letter2 in self.listalpha2:
-                templist.append((letter2, letter))
-            self.dub.append(templist)
-
-        self.table = '  ' + ' |'.join(self.alpha) + '\n'
-
-        for col in range(len(self.dub)):
-            self.table = self.table + self.alpha[col] + '|'
-            for tup in self.dub[col]:
-                self.table = self.table + ''.join(tup) + '|'
-            self.table = self.table + '\n'
-
+        self.table = ''
         #setup layouts
         self.r = RelativeLayout()
 
@@ -1694,12 +1600,13 @@ class DigraphPage(ButtonBehavior):
 
         #elements of the page
         self.tablelabel = Label(text = self.table,
-                                    pos_hint = {'x':.4, 'top':.6},
+                                    pos_hint = {'x':.4, 'top':.7},
                                     size_hint = (.5,.5),
                                     font_name = 'font/RobotoMono-Regular',
                                     font_size = 11)
-        self.plaintextinput = TextInput(pos_hint = {'x':.025, 'top':.335},
+        self.plaintextinput = maxinput(pos_hint = {'x':.025, 'top':.335},
                                     size_hint = (.25, .1))
+        self.plaintextinput.max_chars = 55
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.015, 'top':.395},
                                     size_hint = (.27,.1),
@@ -1725,7 +1632,7 @@ class DigraphPage(ButtonBehavior):
                                         size_hint = (.15,.04),
                                         on_release = self.formPressed)
         self.randdigraph = Button(text = "Randomize Digraph",
-                                        pos_hint = {'x':.575, 'top':.75},
+                                        pos_hint = {'x':.575, 'top':.85},
                                         size_hint = (.2,.04),
                                         on_release = self.randomDigraph)
 
@@ -1746,6 +1653,7 @@ class DigraphPage(ButtonBehavior):
         self.r.add_widget(self.digraphbutton)
 
         self.r.add_widget(self.tb)
+        self.randomDigraph()
         return self.r
 
     def encipherPressed(self, *args):
@@ -1830,6 +1738,13 @@ class DigraphPage(ButtonBehavior):
 
 ################################################################################
 #Begin Playfair Cipher Page
+"""TO DO:
+- finish the cipher
+- fix form digraphs
+    - no duplicate letters
+    - even number of letters
+    - j = i
+"""
 ################################################################################
 class PlayfairPage(ButtonBehavior):
     def __init__(self):
@@ -1862,8 +1777,7 @@ class PlayfairPage(ButtonBehavior):
 
         self.plaintextinput = TextInput(text = 'meet me at hammersmith bridge tonight',
                                         pos_hint = {'x':.25, 'top':.125},
-                                        size_hint = (.325,.1),
-                                        disabled = True)
+                                        size_hint = (.325,.1))
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.19, 'top':.245},
                                     size_hint = (.2,.2),
@@ -1880,7 +1794,7 @@ class PlayfairPage(ButtonBehavior):
         self.digraphbutton = Button(text = 'Form Digraphs',
                                     pos_hint = {'x':.05, 'top':.125},
                                     size_hint = (.15,.05),
-                                    on_release = self.formdigraphs)
+                                    on_release = self.form)
 
         self.encipherbutton = Button(text = 'Encipher Text',
                                     pos_hint = {'x':.05, 'top':.065},
@@ -1917,11 +1831,38 @@ class PlayfairPage(ButtonBehavior):
         enciphered = self.caesarEncrypt(self.shiftnum.text, self.plaintextinput.text, self.spacebox.active)
         self.ciphertextdisplay.text = enciphered
 
+    def form(self, *args):
+        text = self.plaintextinput.text
+        text = text.replace(" ", "")
+        text = text.strip()
+        tempstr = ''
+
+        count = 0
+        for letter in text:
+            if count == 1:
+                tempstr = tempstr + letter + ' '
+                count = 0
+            else:
+                tempstr = tempstr + letter
+                count = count + 1
+
+        f.write('length: ' + str(len(tempstr)) + '\n')
+        if (len(text) % 2) != 0:
+            tempstr = tempstr + 'x'
+
+        for i in range(len(tempstr)):
+            if tempstr[i] == tempstr[i+1]:
+                f.write('tempstr: ' + tempstr + '\n')
+                tempstr = tempstr[:i] + 'x' + tempstr[i+1:]
+                f.write('newtempstr: ' + tempstr + '\n')
+
+        self.plaintextinput.text = tempstr
+
     def formdigraphs(self, *args):
         f.write('form digraphs pressed\n')
         text = self.plaintextinput.text
         text = text.replace(" ", "")
-        f.write(text + '\n')
+        #f.write(text + '\n')
         temp = 0
         ditext = ''
         for i in range(len(text)):
@@ -1930,15 +1871,25 @@ class PlayfairPage(ButtonBehavior):
                     ditext = ditext + text[i]
                 else:
                     #f.write(ditext[len(ditext) - 2] + ' | ' + text[i] + '\n')
-                    f.write(text[i + 1] + ' | ' + text[i] + '\n')
-                    if(text[i + 1] == text[i]):
-                        ditext = ditext + ' x' + text[i] + ' '
-                    else:
-                        ditext = ditext + text[i]
+                    #f.write(text[i + 1] + ' | ' + text[i] + '\n')
+                    try:
+                        if(text[i + 1] == text[i]):
+                            ditext = ditext + ' x' + text[i] + ' '
+                        else:
+                            ditext = ditext + text[i]
+                    except Exception as e:
+                        pass
             else:
                 ditext = ditext + text[i] + ' '
 
             f.write(ditext + '\n')
+        for c in range(len(ditext)):
+            if ditext[c] == 'j':
+                f.write(ditext[:c] + '\ni\n' + ditext[(c+1):] + '\n')
+                try:
+                    ditext = ditext[:c] + 'i' + ditext[(c+1):]
+                except Exception as e:
+                    pass
 
 
         self.plaintextinput.text = ditext
@@ -1949,6 +1900,11 @@ class PlayfairPage(ButtonBehavior):
 
 ################################################################################
 #Begin Homophonic Page
+"""TO DO:
+- finish page?
+- encipher error when pressed
+- missing elements
+"""
 ################################################################################
 class HomophonicPage(ButtonBehavior):
     def __init__(self):
@@ -2072,8 +2028,9 @@ class MorsePage(ButtonBehavior):
         self.tb = self.topbar.create("Morse Code")
 
         #elements of the page
-        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.175},
+        self.plaintextinput = maxinput(pos_hint = {'x':.2, 'top':.175},
                                     size_hint = (.35, .15))
+        self.plaintextinput.max_chars = 20
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.25, 'top':.25},
                                     size_hint = (.27,.1))
@@ -2112,7 +2069,8 @@ class MorsePage(ButtonBehavior):
                             pos_hint = {'x':.015, 'top':.95},
                             size_hint = (.45,.45),
                             state = 'play',
-                            options = {'eos': 'loop'})
+                            options = {'eos': 'loop'},
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.plaintextinput)
         self.r.add_widget(self.plaintextlabel)
@@ -2174,8 +2132,9 @@ class DancingMenPage(ButtonBehavior):
         self.tb = self.topbar.create("Dancing Men Cipher")
 
         #elements of the page
-        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.185},
+        self.plaintextinput = maxinput(pos_hint = {'x':.2, 'top':.185},
                                     size_hint = (.35, .175))
+        self.plaintextinput.max_chars = 17
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.25, 'top':.275},
                                     size_hint = (.27,.1))
@@ -2225,7 +2184,7 @@ class DancingMenPage(ButtonBehavior):
 
         self.r.add_widget(self.plaintextinput)
         self.r.add_widget(self.plaintextlabel)
-        self.r.add_widget(self.ciphertextdisplay)
+        #self.r.add_widget(self.ciphertextdisplay)
         self.r.add_widget(self.ciphertextlabel)
         self.r.add_widget(self.encipherbutton)
 
@@ -2251,7 +2210,6 @@ class DancingMenPage(ButtonBehavior):
                         tempimage = Image(source = self.images[i])
                         x = x + .04
 
-                        f.write('| ' + str(tempimage.source) + ' ' + str(x) + '\n')
                         if x >= .89:
                             top = top - .08
                             x = .572
@@ -2301,7 +2259,8 @@ class MeetEnigmaPage(ButtonBehavior):
 
         self.vid = VideoPlayer(source = 'video/En1_1.avi',
                             pos_hint = {'x':.5, 'top':.55},
-                            size_hint = (.45,.45))
+                            size_hint = (.45,.45),
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.vid)
         self.r.add_widget(self.text1)
@@ -2351,7 +2310,7 @@ class CodetalkersPage(ButtonBehavior):
                             font_size = 12,
                             font_name = 'font/RobotoMono-Regular')
 
-        self.image = Image(source = 'pics/talkers.bmp',
+        self.image = Image(source = 'pics/talkers.png',
                             pos_hint = {'x':-.025, 'top':.5},
                             size_hint = (.55,.55))
 
@@ -2368,6 +2327,10 @@ class CodetalkersPage(ButtonBehavior):
 
 ################################################################################
 #Begin Main Contents Page
+"""TO DO:
+- fix text positioning
+- missing animation
+"""
 ################################################################################
 class MC(ButtonBehavior):
     def __init__(self):
@@ -2505,7 +2468,9 @@ class BOFC(ButtonBehavior):
     def create(self):
         f.write('the birth of Cryptography page entered\n')
         MyApp.current = self
-
+        buttonx = .775
+        buttonht = .165
+        buttonw = .125
         self.r = RelativeLayout()
 
         #create the topbar navigation
@@ -2520,32 +2485,32 @@ class BOFC(ButtonBehavior):
                             size_hint = (.5,.5))
 
         self.button1 = Button(text = "Transposition",
-                                        pos_hint = {'x':.68, 'top':.9},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.9},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.onePressed,
                                         font_size = 14)
 
         self.button2 = Button(text = "Substitution",
-                                        pos_hint = {'x':.68, 'top':.725},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.725},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.twoPressed,
                                         font_size = 14)
 
         self.button3 = Button(text = "Cracking the\nSubstitution\nCipher",
-                                        pos_hint = {'x':.68, 'top':.55},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.55},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.threePressed,
                                         font_size = 14)
 
         self.button4 = Button(text = "Key Secrets",
-                                        pos_hint = {'x':.68, 'top':.375},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.375},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.fourPressed,
                                         font_size = 14)
 
         self.button5 = Button(text = "The\nTragedy of\nMary Queen\nof Scots",
-                                        pos_hint = {'x':.68, 'top':.2},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.2},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.fivePressed,
                                         font_size = 14)
 
@@ -2594,6 +2559,9 @@ class BOFC(ButtonBehavior):
 
 ################################################################################
 #Begin Transposition Page
+"""TO DO:
+- missing animation
+"""
 ################################################################################
 class Transposition(ButtonBehavior):
     def __init__(self):
@@ -2602,7 +2570,7 @@ class Transposition(ButtonBehavior):
     def create(self):
         f.write('Transposition page entered\n')
         MyApp.current = self
-
+        buttonx = .8
         self.r = RelativeLayout()
 
         #create the topbar navigation
@@ -2617,19 +2585,19 @@ class Transposition(ButtonBehavior):
                             size_hint = (.5,.5))
 
         self.button1 = Button(text = "Railfence",
-                                        pos_hint = {'x':.68, 'top':.9},
+                                        pos_hint = {'x':buttonx, 'top':.9},
                                         size_hint = (.15,.1),
                                         on_release = self.onePressed,
                                         font_size = 14)
 
         self.button2 = Button(text = "Latin Square",
-                                        pos_hint = {'x':.68, 'top':.725},
+                                        pos_hint = {'x':buttonx, 'top':.725},
                                         size_hint = (.15,.1),
                                         on_release = self.twoPressed,
                                         font_size = 14)
 
         self.button3 = Button(text = "Scytale",
-                                        pos_hint = {'x':.68, 'top':.55},
+                                        pos_hint = {'x':buttonx, 'top':.55},
                                         size_hint = (.15,.1),
                                         on_release = self.threePressed,
                                         font_size = 14)
@@ -2674,6 +2642,9 @@ class Substitution(ButtonBehavior):
     def create(self):
         f.write('Substitution page entered\n')
         MyApp.current = self
+        buttonx = .75
+        buttonht = .175
+        buttonw = .115
 
         self.r = RelativeLayout()
 
@@ -2685,42 +2656,42 @@ class Substitution(ButtonBehavior):
         with open('texts/substitution.txt', 'r') as myfile:
             data = myfile.read()
         self.text = Label(text = data,
-                            pos_hint = {'x':.1, 'top':.9},
+                            pos_hint = {'x':.1, 'top':.7},
                             size_hint = (.5,.5))
 
         self.button1 = Button(text = "Caesar\nCipher",
-                                        pos_hint = {'x':.68, 'top':.875},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.875},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.onePressed,
                                         font_size = 14)
 
         self.button2 = Button(text = "Kama-Sutra\nCipher",
-                                        pos_hint = {'x':.68, 'top':.75},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.725},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.twoPressed,
                                         font_size = 14)
 
         self.button3 = Button(text = "Pigpen\nCipher",
-                                        pos_hint = {'x':.68, 'top':.625},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.575},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.threePressed,
                                         font_size = 14)
 
         self.button4 = Button(text = "Atbash\nCipher",
-                                        pos_hint = {'x':.68, 'top':.5},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.425},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.fourPressed,
                                         font_size = 14)
 
         self.button5 = Button(text = "Affine\nCipher",
-                                        pos_hint = {'x':.68, 'top':.375},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':buttonx, 'top':.275},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.fivePressed,
                                         font_size = 14)
 
-        self.button6 = Button(text = "General\nMono-\nalphabetic\nCipher",
-                                        pos_hint = {'x':.68, 'top':.25},
-                                        size_hint = (.15,.1),
+        self.button6 = Button(text = "General Mono-\nalphabetic\nCipher",
+                                        pos_hint = {'x':buttonx, 'top':.125},
+                                        size_hint = (buttonht,buttonw),
                                         on_release = self.sixPressed,
                                         font_size = 14)
 
@@ -2799,19 +2770,14 @@ class KamasutraPage(ButtonBehavior):
         self.tb = self.topbar.create("Kama-Sutra Cipher")
 
         #elements of the page
-        self.spacebox = CheckBox(pos_hint = {'x':.15, 'y':.25},
-                                size_hint = (.05,.05))
-        self.cboxlabel = Label(text = 'Keep Spaces\nBetween Words',
-                                pos_hint = {'x':.065, 'y':.25},
-                                size_hint = (.05,.05))
-
         self.randomize = Button(text = 'Randomize Cipher\nAlphabet',
                             pos_hint = {'x':.015, 'top':.2},
                             size_hint = (.175,.075),
                             on_release = self.genrandomPressed)
 
-        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.175},
+        self.plaintextinput = maxinput(pos_hint = {'x':.2, 'top':.175},
                                     size_hint = (.35, .15))
+        self.plaintextinput.max_chars = 150
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.25, 'top':.25},
                                     size_hint = (.27,.1))
@@ -2880,8 +2846,6 @@ class KamasutraPage(ButtonBehavior):
             self.r2.add_widget(spacelabel)
 
         self.r.add_widget(self.randomize)
-        self.r.add_widget(self.cboxlabel)
-        self.r.add_widget(self.spacebox)
         self.r.add_widget(self.plaintextinput)
         self.r.add_widget(self.plaintextlabel)
         self.r.add_widget(self.ciphertextdisplay)
@@ -2897,7 +2861,7 @@ class KamasutraPage(ButtonBehavior):
 
     def encipherPressed(self, *args):
         f.write('encipher button pressed\n')
-        enciphered = self.kamaencrypt(self.plaintextinput.text, self.spacebox.active)
+        enciphered = self.kamaencrypt(self.plaintextinput.text)
         self.ciphertextdisplay.text = enciphered
 
     def genrandomPressed(self, *args):
@@ -2939,7 +2903,7 @@ class KamasutraPage(ButtonBehavior):
 
         self.r.add_widget(self.r2)
 
-    def kamaencrypt(self, word, spaces, *args):
+    def kamaencrypt(self, word, *args):
         enciphered = ""
         for i in word:
             for k in self.cipheralpha:
@@ -2949,7 +2913,7 @@ class KamasutraPage(ButtonBehavior):
                     else:
                         enciphered += k[0]
 
-            if (i == " ") and spaces:
+            if (i == " "):
                 enciphered += " "
 
         return enciphered
@@ -2960,6 +2924,9 @@ class KamasutraPage(ButtonBehavior):
 
 ################################################################################
 #Begin Affine Page
+"""TO DO:
+- missing affine cipher tool page
+"""
 ################################################################################
 class AffinePage(ButtonBehavior):
     def __init__(self):
@@ -3008,6 +2975,9 @@ class AffinePage(ButtonBehavior):
 
 ################################################################################
 #Begin Cracking Substitution Page
+"""TO DO:
+- missing animation
+"""
 ################################################################################
 class CrackingSubstitutionPage(ButtonBehavior):
     def __init__(self):
@@ -3079,7 +3049,7 @@ class CrackingSubstitutionPage(ButtonBehavior):
         f.write('finer points pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(PigpenPage().create())
+        root.add_widget(FinerPointsPage().create())
 
     def fourPressed(self, *args):
         f.write('statistics pressed\n')
@@ -3431,7 +3401,6 @@ class TragedyPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(MaryExPage().create())
-
 ################################################################################
 #End Tragedy of Mary Queen of Scots Page
 ################################################################################
@@ -3462,7 +3431,8 @@ class BabingtonPlotPage(ButtonBehavior):
         self.video = VideoPlayer(source = 'video/mqsexp3.avi',
                             pos_hint = {'x':.5, 'top':.4},
                             size_hint = (.4,.4),
-                            state = 'stop')
+                            state = 'stop',
+                            allow_fullscreen = False)
 
         self.instructions = Label(text = "The video clip shows Babington's list of cipher\n" +
                                         "substitutions and how they would have been used\n" +
@@ -3475,7 +3445,6 @@ class BabingtonPlotPage(ButtonBehavior):
         self.r.add_widget(self.text1)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Babington Plot Page
 ################################################################################
@@ -3513,7 +3482,8 @@ class CrackingBabingtonPage(ButtonBehavior):
         self.video = VideoPlayer(source = 'video/marcrac2.avi',
                             pos_hint = {'x':.5, 'top':.5},
                             size_hint = (.5,.5),
-                            state = 'stop')
+                            state = 'stop',
+                            allow_fullscreen = False)
 
         self.image = Image(source = 'pics/babing4.png',
                             pos_hint = {'x':0, 'top':1.35},
@@ -3525,7 +3495,6 @@ class CrackingBabingtonPage(ButtonBehavior):
         self.r.add_widget(self.text2)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Cracking Babington Plot Page
 ################################################################################
@@ -3564,7 +3533,8 @@ class MaryExPage(ButtonBehavior):
         self.video = VideoPlayer(source = 'video/maryex11.avi',
                             pos_hint = {'x':.5, 'top':.5},
                             size_hint = (.5,.5),
-                            state = 'stop')
+                            state = 'stop',
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.video)
         self.r.add_widget(self.text1)
@@ -3578,6 +3548,9 @@ class MaryExPage(ButtonBehavior):
 
 ################################################################################
 #Begin Uncrackable Code Page
+"""TO DO:
+- missing animation
+"""
 ################################################################################
 class UncrackableCode(ButtonBehavior):
     def __init__(self):
@@ -3813,8 +3786,9 @@ class SwappingPage(ButtonBehavior):
                                     font_name = 'font/RobotoMono-Regular')
 
 
-        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.1},
+        self.plaintextinput = maxinput(pos_hint = {'x':.2, 'top':.1},
                                     size_hint = (.375, .1))
+        self.plaintextinput.max_chars = 28
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.25, 'top':.175},
                                     size_hint = (.27,.1))
@@ -3947,7 +3921,7 @@ class VigenereSquarePage(ButtonBehavior):
 
         #elements of the page
         self.tablelabel = Label(text = self.table,
-                                    pos_hint = {'x':.5, 'top':.8},
+                                    pos_hint = {'x':.45, 'top':.8},
                                     size_hint = (.5,.5),
                                     font_name = 'font/RobotoMono-Regular',
                                     font_size = 11)
@@ -3984,6 +3958,9 @@ class VigenereSquarePage(ButtonBehavior):
 
 ################################################################################
 #Begin Vigenere Square 2 Page
+"""TO DO:
+- maybe highlight more letters to make square more understandable
+"""
 ################################################################################
 class VigenereSquarePage2(ButtonBehavior):
     def __init__(self):
@@ -4022,7 +3999,7 @@ class VigenereSquarePage2(ButtonBehavior):
 
         #elements of the page
         self.tablelabel = Label(text = self.table,
-                                    pos_hint = {'x':.5, 'top':.8},
+                                    pos_hint = {'x':.45, 'top':.8},
                                     size_hint = (.5,.5),
                                     font_name = 'font/RobotoMono-Regular',
                                     font_size = 11,
@@ -4200,7 +4177,8 @@ class HowVigenerePage(ButtonBehavior):
         self.video = VideoPlayer(source = 'video/chf3-1-7.avi',
                             pos_hint = {'x':.215, 'top':.7},
                             size_hint = (.6,.6),
-                            state = 'stop')
+                            state = 'stop',
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.video)
         self.r.add_widget(self.text1)
@@ -4213,6 +4191,10 @@ class HowVigenerePage(ButtonBehavior):
 
 ################################################################################
 #Begin Why so strong Vigenere Page
+"""TO DO:
+- fix text enciphered
+- finish page
+"""
 ################################################################################
 class StrongVigenerePage(ButtonBehavior):
     def __init__(self):
@@ -4422,6 +4404,9 @@ class AlternativeCiphersPage(ButtonBehavior):
 
 ################################################################################
 #Begin Book Ciphers Page
+"""TO DO:
+- finish page
+"""
 ################################################################################
 class BookCiphersPage(ButtonBehavior):
     def __init__(self):
@@ -5051,12 +5036,28 @@ class CharlesBabbagePage(ButtonBehavior):
 
     def button1pressed(self, *args):
         f.write('babbages computers pressed\n')
+        for child in MyApp.current.r.children:
+            try:
+                if child.source[0] == 'v':
+                    child.state = 'stop'
+                else:
+                    pass
+            except AttributeError:
+                pass
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(BabbagesComputersPage().create())
 
     def button2pressed(self, *args):
         f.write('babbage the codebreaker pressed')
+        for child in MyApp.current.r.children:
+            try:
+                if child.source[0] == 'v':
+                    child.state = 'stop'
+                else:
+                    pass
+            except AttributeError:
+                pass
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(BabbageCodebreakerPage().create())
@@ -5067,6 +5068,9 @@ class CharlesBabbagePage(ButtonBehavior):
 
 ################################################################################
 #Begin Babbage's Computers Page
+"""TO DO:
+- missing image
+"""
 ################################################################################
 class BabbagesComputersPage(ButtonBehavior):
     def __init__(self):
@@ -5147,6 +5151,9 @@ class BabbageCodebreakerPage(ButtonBehavior):
 
 ################################################################################
 #Begin The Cracking Principle Page
+"""TO DO:
+- missing interactive part
+"""
 ################################################################################
 class TheCrackingPrinciplePage(ButtonBehavior):
     def __init__(self):
@@ -5179,6 +5186,9 @@ class TheCrackingPrinciplePage(ButtonBehavior):
 
 ################################################################################
 #Begin A Cracking Example Page
+"""TO DO:
+- not in app?
+"""
 ################################################################################
 class ACrackingExamplePage(ButtonBehavior):
     def __init__(self):
@@ -5255,6 +5265,9 @@ class ForgottenGeniusPage(ButtonBehavior):
 
 ################################################################################
 #Begin Mechanisation of Secrecy Page
+"""TO DO:
+- missing animation
+"""
 ################################################################################
 class MOFS(ButtonBehavior):
     def __init__(self):
@@ -5357,7 +5370,6 @@ class MOFS(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(OtherWWIICiphersPage().create())
-
 ################################################################################
 #End Mechanisation of Secrecy Page
 ################################################################################
@@ -5494,7 +5506,8 @@ class CodesPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/zimmer32.avi',
                             pos_hint = {'x':.55, 'top':.45},
-                            size_hint = (.4,.4))
+                            size_hint = (.4,.4),
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.text1)
         self.r.add_widget(self.text2)
@@ -5535,7 +5548,8 @@ class TheZimmermannTelegramPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/zimmer92.avi',
                             pos_hint = {'x':.55, 'top':.45},
-                            size_hint = (.4,.4))
+                            size_hint = (.4,.4),
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.text1)
         self.r.add_widget(self.text2)
@@ -5582,7 +5596,8 @@ class CrackingZimmermannPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/dgscb2.avi',
                             pos_hint = {'x':.5, 'top':.5},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.description = Label(text = "The video clip shows de Grey's replica code\n" +
                                 "book, and the section that follows explains\n" +
@@ -5623,7 +5638,6 @@ class CrackingZimmermannPage(ButtonBehavior):
         self.r.add_widget(self.decoded)
         self.r.add_widget(self.video)
         self.r.add_widget(self.description)
-
 ################################################################################
 #End Cracking Zimmermann Page
 ################################################################################
@@ -5657,7 +5671,8 @@ class WeaknessOfCodesPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/degdk2-2.avi',
                             pos_hint = {'x':.5, 'top':.55},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.text1)
         self.r.add_widget(self.text2)
@@ -5733,20 +5748,22 @@ class ADFGVXPage(ButtonBehavior):
                                     pos_hint = {'x':.07, 'top':.6},
                                     size_hint = (.15,.05),
                                     on_release = self.randomizeGrid)
-        self.keywordinput = TextInput(text = 'MARK',
+        self.keywordinput = maxinput(text = 'MARK',
                                     pos_hint = {'x':.275, 'top':.6},
                                     size_hint = (.2,.05),
                                     font_name = 'font/RobotoMono-Regular')
+        self.keywordinput.max_chars = 5
         self.keywordinput.bind(text=self.textchange)
         self.keywordlabel = Label(text = 'Keyword',
                                     pos_hint = {'x':.325, 'top':.675},
                                     size_hint = (.1,.1),
                                     font_size = 12)
 
-        self.plaintextinput = TextInput(text = 'attack at 10pm',
+        self.plaintextinput = maxinput(text = 'attack at 10pm',
                                     pos_hint = {'x':.275, 'top':.5},
                                     size_hint = (.2,.1),
                                     font_name = 'font/RobotoMono-Regular')
+        self.plaintextinput.max_chars = 26
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.325, 'top':.575},
                                     size_hint = (.1,.1),
@@ -6095,8 +6112,11 @@ class BuildingEnigmaPage(ButtonBehavior):
 #End Building Enigma Page
 ################################################################################
 
-################################################################################
+###############################i#################################################
 #Begin Basic Principle Page
+"""TO DO:
+- finish page
+"""
 ################################################################################
 class BasicPrinciplePage(ButtonBehavior):
     def __init__(self):
@@ -6127,6 +6147,9 @@ class BasicPrinciplePage(ButtonBehavior):
 
 ################################################################################
 #Begin Three Rotor Machine Page
+"""TO DO:
+- finish implementing
+"""
 ################################################################################
 class ThreeRotorMachinePage(ButtonBehavior):
     def __init__(self):
@@ -6149,7 +6172,8 @@ class ThreeRotorMachinePage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/Rot_1.avi',
                             pos_hint = {'x':.475, 'top':.5},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.text1)
         self.r.add_widget(self.video)
@@ -6161,6 +6185,9 @@ class ThreeRotorMachinePage(ButtonBehavior):
 
 ################################################################################
 #Begin Reflector Page
+"""TO DO:
+- finish implementing interactive part
+"""
 ################################################################################
 class ReflectorPage(ButtonBehavior):
     def __init__(self):
@@ -6196,6 +6223,9 @@ class ReflectorPage(ButtonBehavior):
 
 ################################################################################
 #Begin Plugboard Page
+"""TO DO:
+- finish implementing interactive part
+"""
 ################################################################################
 class PlugboardPage(ButtonBehavior):
     def __init__(self):
@@ -6218,7 +6248,8 @@ class PlugboardPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/Pb_1.avi',
                             pos_hint = {'x':.475, 'top':.5},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.text1)
         self.r.add_widget(self.video)
@@ -6259,7 +6290,8 @@ class CompleteOverviewPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/En2_1.avi',
                             pos_hint = {'x':.475, 'top':.7},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.image = Image(source = 'pics/eniglogo.png',
                             pos_hint = {'x':.4, 'top':.2},
@@ -6837,6 +6869,9 @@ class TuringsBombePage(ButtonBehavior):
 
 ################################################################################
 #Begin Bombe Demo Page
+"""TO DO:
+- finish or leave out
+"""
 ################################################################################
 class BombeDemoPage(ButtonBehavior):
     def __init__(self):
@@ -7060,6 +7095,9 @@ class SecretSuccessPage(ButtonBehavior):
 
 ################################################################################
 #Begin Other WWII Ciphers Page
+"""TO DO:
+- button to this page is missing
+"""
 ################################################################################
 class OtherWWIICiphersPage(ButtonBehavior):
     def __init__(self):
@@ -7219,6 +7257,9 @@ class OtherWWIICiphersPage(ButtonBehavior):
 
 ################################################################################
 #Begin Age of the Internet Page
+"""TO DO:
+- fix animation
+"""
 ################################################################################
 class AOTI(ButtonBehavior):
     def __init__(self):
@@ -7304,7 +7345,7 @@ class AOTI(ButtonBehavior):
         f.write('key distribution problem pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(BuildingEnigmaPage().create())
+        root.add_widget(KeyDistributionProblemPage().create())
 
     def threePressed(self, *args):
         f.write('god rewards fools pressed\n')
@@ -7384,9 +7425,10 @@ class ComputerCryptographyPage(ButtonBehavior):
                                         on_release = self.fourPressed,
                                         font_size = 14)
 
-        self.plaintextinput = TextInput(text = 'HELLO',
+        self.plaintextinput = maxinput(text = 'HELLO',
                                         pos_hint = {'x':.5, 'top':.35},
                                         size_hint = (.25,.05))
+        self.plaintextinput.max_chars = 8
         self.plaintextlabel = Label(text = 'Plaintext',
                                         pos_hint = {'x':.475, 'top':.4},
                                         size_hint = (.15,.05),
@@ -7400,7 +7442,8 @@ class ComputerCryptographyPage(ButtonBehavior):
         self.asciidisplay = TextInput(text = '',
                                         pos_hint = {'x':.5, 'top':.225},
                                         size_hint = (.25,.2),
-                                        font_name = 'font/RobotoMono-Regular')
+                                        font_name = 'font/RobotoMono-Regular',
+                                        disabled = True)
         self.asciibin = RelativeLayout()
         self.createDisplay()
 
@@ -7469,6 +7512,7 @@ class ComputerCryptographyPage(ButtonBehavior):
 
     def p2apress(self, *args):
         f.write('plaintext to ascii button pressed\n')
+        self.asciidisplay.text = ''
         text = self.plaintextinput.text
         count = 0
         for letter in text:
@@ -7763,15 +7807,17 @@ class OtherModernCiphersPage(ButtonBehavior):
                             pos_hint = {'x':.195, 'top':.185},
                             size_hint = (.2,.2))
         self.hyperlink1 = Label(text = '[color=ffff00][ref=h1]http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf[/ref][/color]',
-                            pos_hint = {'x':.15, 'top':.15},
+                            pos_hint = {'x':.25, 'top':.15},
                             size_hint = (.2,.2),
                             markup = True,
-                            on_ref_press = self.h1)
+                            on_ref_press = self.h1,
+                            font_size = 14)
         self.hyperlink2 = Label(text = '[color=ffff00][ref=h1]http://csrc.nist.gov/archive/aes/rijndael/Rijndael-ammended.pdf[/ref][/color]',
-                            pos_hint = {'x':.6, 'top':.15},
+                            pos_hint = {'x':.2735, 'top':.125},
                             size_hint = (.2,.2),
                             markup = True,
-                            on_ref_press = self.h2)
+                            on_ref_press = self.h2,
+                            font_size = 14)
 
         self.r.add_widget(self.label)
         self.r.add_widget(self.hyperlink1)
@@ -7827,7 +7873,8 @@ class KeyDistributionProblemPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/pub2new2.avi',
                             pos_hint = {'x':.475, 'top':.5},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.video)
         self.r.add_widget(self.text1)
@@ -7870,7 +7917,8 @@ class GodRewardsFoolsPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/pub3new3.avi',
                             pos_hint = {'x':.475, 'top':.55},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.label = Label(text = '[i]The video clip shows Diffie and Hellman\n' +
                                     'talking about embarking on their\n' +
@@ -8022,7 +8070,8 @@ class AsymmetricCipherPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/pub4new2.avi',
                             pos_hint = {'x':.475, 'top':.525},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.label = Label(text = '[i]The video clip shows Diffie and Hellman\n' +
                                     'talking about embarking on their\n' +
@@ -8056,6 +8105,9 @@ class AsymmetricCipherPage(ButtonBehavior):
 
 ################################################################################
 #Begin Mathematical Padlock Page
+"""TO DO:
+- missing implementation
+"""
 ################################################################################
 class MathematicalPadlockPage(ButtonBehavior):
     def __init__(self):
@@ -8142,7 +8194,8 @@ class RivestShamirAdelmanPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/adle1-1.avi',
                                         pos_hint = {'x':.325, 'top':.5},
-                                        size_hint = (.5,.5))
+                                        size_hint = (.5,.5),
+                                        allow_fullscreen = False)
 
         self.label = Label(text = '[i]The video clip shows an interview with\n' +
                                     'Len Adleman, co-discoverer of the\n' +
@@ -8205,6 +8258,9 @@ class RivestShamirAdelmanPage(ButtonBehavior):
 
 ################################################################################
 #Begin Modular Arithmetic Page
+"""TO DO:
+- missing image file
+"""
 ################################################################################
 class ModularArithmeticPage(ButtonBehavior):
     def __init__(self):
@@ -8455,6 +8511,9 @@ class RSAAlgorithmPage(ButtonBehavior):
 
 ################################################################################
 #Begin RSA Algorithm 2 Page
+"""TO DO:
+- fix text tabbing
+"""
 ################################################################################
 class RSAAlgorithm2Page(ButtonBehavior):
     def __init__(self):
@@ -8548,6 +8607,10 @@ class HowDoYouCalculateDPage(ButtonBehavior):
 
 ################################################################################
 #Begin RSA Encryption Tool Page
+"""TO DO:
+- fix encryption algorithm
+- possible cap
+"""
 ################################################################################
 class RSAEncryptionToolPage(ButtonBehavior):
     def __init__(self):
@@ -9012,7 +9075,8 @@ class RSAInPracticePage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/adle2-2.avi',
                             pos_hint = {'x':0, 'top':.65},
-                            size_hint = (.4,.4))
+                            size_hint = (.4,.4),
+                            allow_fullscreen = False)
 
         self.videolabel = Label(text = '[i]In the video clip, Len Adleman, one of the\n' +
                                     'co-inventors of RSA, explains that RSA is\n' +
@@ -9215,6 +9279,9 @@ class NotJustSecretsPage(ButtonBehavior):
 
 ################################################################################
 #Begin The Secret History Page
+"""TO DO:
+- missing image or animation
+"""
 ################################################################################
 class TheSecretHistoryPage(ButtonBehavior):
     def __init__(self):
@@ -9319,7 +9386,8 @@ class JamesAndCliffordPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/cocks1-1.avi',
                             pos_hint = {'x':.475, 'top':.65},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.videolabel = Label(text = '[i]Clifford Cocks tells how he first heard about the\n' +
                                         'concept of an asymmetric cipher. This is the first\n' +
@@ -9341,7 +9409,6 @@ class JamesAndCliffordPage(ButtonBehavior):
         self.r.add_widget(self.videolabel)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End James Ellis and Clifford Cocks Page
 ################################################################################
@@ -9404,8 +9471,6 @@ class MalcolmWilliamsonPage(ButtonBehavior):
 #End Malcolm Williamson Page
 ################################################################################
 
-
-
 ################################################################################
 #Begin 25 Year Secret Page
 ################################################################################
@@ -9436,7 +9501,8 @@ class YearSecretPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/cocks2-3.avi',
                             pos_hint = {'x':.475, 'top':.5},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.videolabel = Label(text = "[i]Clifford Cocks' attitude is simple:\n" +
                                         '\"You do not get involved in this business\n' +
@@ -9457,7 +9523,6 @@ class YearSecretPage(ButtonBehavior):
         self.r.add_widget(self.videolabel)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End 25 Year Secret Page
 ################################################################################
@@ -9549,7 +9614,6 @@ class FOC(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(TheEndPage().create())
-
 ################################################################################
 #End Future of Cryptography Page
 ################################################################################
@@ -9732,7 +9796,8 @@ class SteganographyPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/shave2.avi',
                             pos_hint = {'x':0, 'top':.9},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.button = Button(text = 'Modern\nSteganography',
                             pos_hint = {'x':.85, 'top':.9},
@@ -9929,6 +9994,9 @@ class QuantumCryptography1(ButtonBehavior):
 
 ################################################################################
 #Begin Quantum Cryptography Page 2
+"""TO DO:
+- one time pad not implemented
+"""
 ################################################################################
 class QuantumCryptography2(ButtonBehavior):
     def __init__(self):
@@ -10056,6 +10124,9 @@ class QuantumCryptography3(ButtonBehavior):
 
 ################################################################################
 #Begin Quantum Cryptography Page 4
+"""TO DO:
+- button pages not implemented
+"""
 ################################################################################
 class QuantumCryptography4(ButtonBehavior):
     def __init__(self):
@@ -10435,6 +10506,9 @@ class QuantumCryptography9(ButtonBehavior):
 
 ################################################################################
 #Begin The End? Page
+"""TO DO:
+- missing image or something
+"""
 ################################################################################
 class TheEndPage(ButtonBehavior):
     def __init__(self):
@@ -10458,7 +10532,8 @@ class TheEndPage(ButtonBehavior):
 
         self.video = VideoPlayer(source = 'video/end3.avi',
                             pos_hint = {'x':.45, 'top':.9},
-                            size_hint = (.5,.5))
+                            size_hint = (.5,.5),
+                            allow_fullscreen = False)
 
         self.r.add_widget(self.text1)
         self.r.add_widget(self.video)
@@ -10468,6 +10543,10 @@ class TheEndPage(ButtonBehavior):
 #End The End? Page
 ################################################################################
 
+
+"""TO DO:
+- implement up functionality
+"""
 class TopBar(ButtonBehavior):
     def __init__(self):
         pass
@@ -10530,6 +10609,13 @@ class TopBar(ButtonBehavior):
 
     def index_press(self, *args):
         f.write('index pressed\n')
+
+class maxinput(TextInput):
+    max_chars = None
+    def insert_text(self, substring, from_undo=False):
+        if not from_undo and (len(self.text)+len(substring) > self.max_chars):
+            return
+        super(maxinput, self).insert_text(substring, from_undo)
 
 if __name__ == '__main__':
     f.write("-----------------------------------------------------\n")
