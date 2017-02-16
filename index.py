@@ -44,6 +44,9 @@ from collections import deque
 from random import shuffle
 from random import randint
 from fractions import gcd
+
+from flask import Flask, render_template
+
 ################################################################################
 
 kv = '''
@@ -65,6 +68,8 @@ except OSError:
 f = open('log', 'a')
 ################################################################################
 
+
+
 ################################################################################
 #Builds the App
 ################################################################################
@@ -82,13 +87,13 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = JCBPage()
+        test = PlayfairPage()
 
         #production
-        root.add_widget(mainpage.create())
+        #root.add_widget(mainpage.create())
 
         #testing
-        #root.add_widget(test.create())
+        root.add_widget(test.create())
 
         return root
 ################################################################################
@@ -1739,11 +1744,7 @@ class DigraphPage(ButtonBehavior):
 ################################################################################
 #Begin Playfair Cipher Page
 """TO DO:
-- finish the cipher
-- fix form digraphs
-    - no duplicate letters
-    - even number of letters
-    - j = i
+- make keyword customizable
 """
 ################################################################################
 class PlayfairPage(ButtonBehavior):
@@ -1753,8 +1754,8 @@ class PlayfairPage(ButtonBehavior):
     def create(self):
         f.write('playfair page entered\n')
         MyApp.current = self
-        self.keyword = 'charles'
-
+        self.keyword = 'kevin'
+        self.comb = []
         #setup layouts
         self.r = RelativeLayout()
 
@@ -1775,9 +1776,11 @@ class PlayfairPage(ButtonBehavior):
                             pos_hint = {'x':.38, 'top':.565},
                             size_hint = (.5,.5))
 
-        self.plaintextinput = TextInput(text = 'meet me at hammersmith bridge tonight',
+        self.plaintextinput = maxinput(text = 'meet me at hammersmith bridge tonight',
                                         pos_hint = {'x':.25, 'top':.125},
-                                        size_hint = (.325,.1))
+                                        size_hint = (.325,.1),
+                                        font_name = 'font/RobotoMono-Regular')
+        self.plaintextinput.max_chars = 48
         self.plaintextlabel = Label(text = 'Plaintext',
                                     pos_hint = {'x':.19, 'top':.245},
                                     size_hint = (.2,.2),
@@ -1785,7 +1788,8 @@ class PlayfairPage(ButtonBehavior):
 
         self.ciphertextdisplay = TextInput(pos_hint = {'x':.65, 'top':.125},
                                         size_hint = (.325,.1),
-                                        disabled = True)
+                                        disabled = True,
+                                        font_name = 'font/RobotoMono-Regular')
         self.ciphertextlabel = Label(text = 'Ciphertext',
                                     pos_hint = {'x':.59, 'top':.245},
                                     size_hint = (.2,.2),
@@ -1798,7 +1802,9 @@ class PlayfairPage(ButtonBehavior):
 
         self.encipherbutton = Button(text = 'Encipher Text',
                                     pos_hint = {'x':.05, 'top':.065},
-                                    size_hint = (.15,.05))
+                                    size_hint = (.15,.05),
+                                    on_release = self.encipherPressed,
+                                    disabled = True)
         self.keyworddisplay = TextInput(text = self.keyword,
                                         pos_hint = {'x':.075, 'top':.49},
                                         size_hint = (.1,.05),
@@ -1808,11 +1814,19 @@ class PlayfairPage(ButtonBehavior):
                                     size_hint = (.1,.1),
                                     font_size = 13)
 
+        self.tablelabel = Label(text = '',
+                                    pos_hint = {'x':.085, 'top':.33},
+                                    size_hint = (.1,.1),
+                                    font_size = 18,
+                                    line_height = 1.15,
+                                    font_name = 'font/RobotoMono-Regular')
+        self.creategrid()
         self.grid = Image(source = 'pics/grid.png',
                         pos_hint = {'x':.025, 'top':.4},
                         size_hint = (.2,.25))
 
         self.r.add_widget(self.grid)
+        self.r.add_widget(self.tablelabel)
         self.r.add_widget(self.keyworddisplay)
         self.r.add_widget(self.keywordlabel)
         self.r.add_widget(self.digraphbutton)
@@ -1828,72 +1842,169 @@ class PlayfairPage(ButtonBehavior):
 
     def encipherPressed(self, *args):
         f.write('encipher button pressed\n')
-        enciphered = self.caesarEncrypt(self.shiftnum.text, self.plaintextinput.text, self.spacebox.active)
+        self.digraphbutton.disabled = True
+        self.encipherbutton.disabled = True
+        enciphered = self.encrypt()
         self.ciphertextdisplay.text = enciphered
 
+    def encrypt(self, *args):
+        final = ''
+        templist = []
+        newlist = []
+        ditext = str(self.plaintextinput.text)
+        dilist = ditext.split(" ")
+        #set newlist up into a 2 dimensional list
+        #5 rows i.e. 5 lists within a list
+        #each index of the inner list corresponds to a column
+        for i in range(len(self.comb)):
+            if (i+1) % 5 == 0:
+                templist.append(self.comb[i])
+                newlist.append(templist)
+                templist = []
+            else:
+                templist.append(self.comb[i])
+        f.write(str(newlist) + '\n')
+
+        for i in dilist:
+            if i == '':
+                dilist.remove(i)
+        f.write(str(dilist) + '\n')
+
+        for di in dilist:
+            #if both letter in the di are in the same row
+            #then they are replaced by the letter to the right
+            #of them
+            pass1 = False
+            for inner in newlist:
+                if di[0] in inner and di[1] in inner:
+                    try:
+                        final += inner[inner.index(di[0]) + 1]
+                    except Exception as e:
+                        final += inner[0]
+                    try:
+                        final += inner[inner.index(di[1]) + 1] + ' '
+                    except Exception as e:
+                        final += inner[0] + ' '
+                    pass1 = True
+                    break
+            if pass1:
+                continue
+            #if both letters are in the same column
+            #then they are replaced by the letter beneath
+            #them
+            i1 = 0
+            i2 = 0
+            inner1 = 0
+            inner2 = 0
+            for inner in range(len(newlist)):
+                inn = newlist[inner]
+                for i in range(len(inn)):
+                    if inn[i] == di[0]:
+                        i1 = i
+                        inner1 = inner
+                    if inn[i] == di[1]:
+                        i2 = i
+                        inner2 = inner
+            if i1 == i2:
+                index = i1
+                try:
+                    final += newlist[inner1+1][index]
+                except Exception as e:
+                    final += newlist[0][index]
+                try:
+                    final += newlist[inner2+1][index] + ' '
+                except Exception as e:
+                    final += newlist[0][index] + ' '
+                continue
+
+            #if the letters are neither in the same column
+            #nor row then the letter is replaced by a letter of
+            #the same row of the first letter and of the same
+            #column of the second letter and vice versa
+            loc1 = []
+            loc2 = []
+            for inner in range(len(newlist)):
+                inn = newlist[inner]
+                for i in range(len(inn)):
+                    if di[0] == inn[i]:
+                        loc1.append(inner)
+                        loc1.append(i)
+                    if di[1] == inn[i]:
+                        loc2.append(inner)
+                        loc2.append(i)
+            final += newlist[loc1[0]][loc2[1]]
+            final += newlist[loc2[0]][loc1[1]] + ' '
+
+        return final
+
     def form(self, *args):
+        self.encipherbutton.disabled = False
         text = self.plaintextinput.text
         text = text.replace(" ", "")
         text = text.strip()
+        #f.write('text: ' + text + '\n')
         tempstr = ''
 
         count = 0
-        for letter in text:
+        yes = 0
+        for letter in range(len(text)):
+            #f.write(tempstr + '\n')
             if count == 1:
-                tempstr = tempstr + letter + ' '
+                tempstr = tempstr + text[letter] + ' '
                 count = 0
             else:
-                tempstr = tempstr + letter
-                count = count + 1
+                try:
+                    f.write('match ' + text[letter+1] + '\n')
+                    yes = 1
+                except Exception as e:
+                    yes = 0
 
-        f.write('length: ' + str(len(tempstr)) + '\n')
-        if (len(text) % 2) != 0:
+                if yes and text[letter] == text[letter+1]:
+                    tempstr = tempstr + text[letter] + 'x '
+                    count = 0
+                else:
+                    tempstr = tempstr + text[letter]
+                    count += 1
+
+
+        #f.write('length: ' + str(len(tempstr)) + '\n')
+        #f.write(str(len(tempstr)) + '\n')
+        check = tempstr.replace(' ', '')
+
+        if (len(check) % 2) != 0:
             tempstr = tempstr + 'x'
 
-        for i in range(len(tempstr)):
-            if tempstr[i] == tempstr[i+1]:
-                f.write('tempstr: ' + tempstr + '\n')
-                tempstr = tempstr[:i] + 'x' + tempstr[i+1:]
-                f.write('newtempstr: ' + tempstr + '\n')
 
         self.plaintextinput.text = tempstr
 
-    def formdigraphs(self, *args):
-        f.write('form digraphs pressed\n')
-        text = self.plaintextinput.text
-        text = text.replace(" ", "")
-        #f.write(text + '\n')
-        temp = 0
-        ditext = ''
-        for i in range(len(text)):
-            if ((i+2) % 2) == 0:
-                if(len(ditext) == 0):
-                    ditext = ditext + text[i]
-                else:
-                    #f.write(ditext[len(ditext) - 2] + ' | ' + text[i] + '\n')
-                    #f.write(text[i + 1] + ' | ' + text[i] + '\n')
-                    try:
-                        if(text[i + 1] == text[i]):
-                            ditext = ditext + ' x' + text[i] + ' '
-                        else:
-                            ditext = ditext + text[i]
-                    except Exception as e:
-                        pass
-            else:
-                ditext = ditext + text[i] + ' '
+    def creategrid(self, *args):
+        f.write('creating grid...\n')
+        #alphabet without j
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        newalpha = []
+        for letter in self.keyword:
+            for i in self.alpha:
+                #f.write(self.alpha[letter] + '==' + self.keyword[i] + '\n')
+                if letter == i:
+                    self.alpha.remove(i)
 
-            f.write(ditext + '\n')
-        for c in range(len(ditext)):
-            if ditext[c] == 'j':
-                f.write(ditext[:c] + '\ni\n' + ditext[(c+1):] + '\n')
-                try:
-                    ditext = ditext[:c] + 'i' + ditext[(c+1):]
-                except Exception as e:
-                    pass
+        keylist = list(self.keyword)
+        shuffle(self.alpha)
+        self.comb = keylist + self.alpha
+        f.write('combined list: ' + str(self.comb) + '\n')
 
+        count = 0
+        tempstr = ''
+        for i in self.comb:
+            if count == 5:
+                tempstr += '\n'
+                count = 0
+            tempstr += i + '  '
+            count += 1
 
-        self.plaintextinput.text = ditext
-
+        self.tablelabel.text = tempstr
 ################################################################################
 #End Playfair Cipher Page
 ################################################################################
@@ -1993,7 +2104,6 @@ class HomophonicPage(ButtonBehavior):
                 enciphered += " "
 
         return enciphered
-
 ################################################################################
 #End Homophonic Page
 ################################################################################

@@ -18,8 +18,6 @@ application with elevated privileges, i.e. sudo
 -----------------------------------------------------------
 ##files
 * index.py - Main file that runs the full application
-* Ciphers - Contains cipher python files that contain 
-functions to run ciphers
 * flc - Folder with flash animations, needs to be converted
 * font - Contains fonts not included with Kivy
 * pics - Folder contains all of the pics required when
@@ -38,3 +36,5 @@ runs
 * http://www.onlineocr.net/
 * http://textmechanic.com/text-tools/basic-text-tools/addremove-line-breaks/
 * http://simonsingh.net/
+* https://kivy.org/#home
+* https://github.com/
