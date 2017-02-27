@@ -1,0 +1,5 @@
+Modern cryptography can be divided into [color=00ff00]modern symmetric-key(public key) algorithms[/color] and 
+[color=00ff00]modern asymmetric-key(private key) algorithms[/color]. Public key algorithms are more prominent 
+and can be further divided into [color=ff00ff]block ciphers[/color] and [color=ff00ff]stream ciphers[/color] based on their input type. 
+Then there are cryptographic hash functions which are also useful when encrypting a message. 
+Select which area you would like to explore by clicking a button.

@@ -1,0 +1,4 @@
+The Advanced Encryption Standard (AES) algorithm is a symmetric encryption algorithm that uses block ciphers. 
+It was created by two Belgian cryptographers, Joan Daemen and Vincent Rijmen. AES was designed to be efficient 
+in both hardware and software, and it supports a block length of 128 bits and key lengths of 128, 192, and 
+256 bits.

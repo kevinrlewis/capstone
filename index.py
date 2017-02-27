@@ -17,6 +17,8 @@ import sys
 import webbrowser
 import binascii
 import math
+import base64
+import hashlib
 
 from kivy.uix.label import Label
 from kivy.uix.button import Button
@@ -38,13 +40,15 @@ from kivy.graphics.instructions import Canvas, InstructionGroup
 from kivy.vector import Vector
 from kivy.utils import escape_markup
 from kivy.core.window import Window
+#from kivy.garden import Graph, MeshLinePlot
 
 
 from collections import deque
 from random import shuffle
 from random import randint
+from random import choice
 from fractions import gcd
-
+from Crypto.Cipher import AES, Blowfish
 from flask import Flask, render_template
 
 ################################################################################
@@ -87,7 +91,7 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = PlayfairPage()
+        test = AESPage()
 
         #production
         #root.add_widget(mainpage.create())
@@ -111,6 +115,7 @@ class MainPage(ButtonBehavior):
         #creates a trail of how the user got to a certain Page
         #used for the back button in the top bar
         MyApp.trail = []
+        self.btrowtop = .4
 
         #initialize the topbar
         self.topbar = TopBar()
@@ -123,26 +128,45 @@ class MainPage(ButtonBehavior):
 
         #button to get to the junior codebreakers section
         self.jcb = Button(text = 'Junior Code Breakers',
-                                    size_hint = (.2,.3),
-                                    pos_hint = {'center_x': .25, 'center_y': .55},
+                                    size_hint = (.3,.2),
+                                    pos_hint = {'x': .05, 'top': .75},
                                     on_release=self.pressed_jcb)
         #button to get to the main contents section
         self.mc = Button(text = 'Main Contents',
-                                    size_hint = (.2,.3),
-                                    pos_hint = {'center_x': .5, 'center_y': .55},
+                                    size_hint = (.3,.2),
+                                    pos_hint = {'x': .415, 'top': .75},
                                     on_release=self.pressed_mc)
-        #button to get to the teachers section
-        self.ts = Button(text = 'Teachers Section',
-                                    size_hint = (.2,.3),
-                                    pos_hint = {'center_x': .75, 'center_y': .55},
-                                    on_release=self.pressed_ts)
 
         #button to get to the highlights section of the application
         self.highlightsbutton = Button(text = '[b][color=ff6600]Highlights[/color][/b]',
                                     size_hint = (.15,.1),
-                                    pos_hint = {'x': .025, 'top': .325},
+                                    pos_hint = {'x': .015, 'top':self.btrowtop},
                                     on_release=self.pressed_highlights,
                                     markup = True)
+
+        self.kev = Button(text = "Kevin's Twist",
+                                    size_hint = (.15,.1),
+                                    pos_hint = {'x': .615, 'top':self.btrowtop},
+                                    on_release = self.pressed_kev)
+
+        self.simonbutton = Button(text = "Simon Singh",
+                                    size_hint = (.15,.1),
+                                    pos_hint = {'x': .415, 'top':self.btrowtop})
+
+        self.codebook = Button(text = "The Code\nBook",
+                                    size_hint = (.15,.1),
+                                    pos_hint = {'x': .215, 'top':self.btrowtop},
+                                    halign = 'center')
+
+        self.simonpic = Image(source = 'pics/simong2.png',
+                                    size_hint = (.8,.8),
+                                    pos_hint = {'x': .5, 'top': 1})
+
+        self.link = Label(text = '[ref=simon][color=ffff00]simonsingh.net[/color][/ref]',
+                                    size_hint = (.2,.2),
+                                    pos_hint = {'x':.01, 'top': 1},
+                                    markup = True,
+                                    on_ref_press = self.linkpress)
 
         #set the image title
         titlestr = 'THE CODE BOOK'
@@ -163,11 +187,15 @@ class MainPage(ButtonBehavior):
 
         #add widgets to the main layout
         self.r.add_widget(self.highlightsbutton)
+        self.r.add_widget(self.link)
+        self.r.add_widget(self.simonbutton)
+        self.r.add_widget(self.codebook)
+        self.r.add_widget(self.simonpic)
+        self.r.add_widget(self.kev)
         self.r.add_widget(self.title)
         self.r.add_widget(self.tb)
         self.r.add_widget(self.jcb)
         self.r.add_widget(self.mc)
-        self.r.add_widget(self.ts)
         return self.r
 
     #function is called when the highlights button is pressed
@@ -200,14 +228,464 @@ class MainPage(ButtonBehavior):
         root.clear_widgets()
         root.add_widget(MC().create())
 
-    #function is called when the teachers section button is pressed
-    #adds page to the trail
-    #clears all of the widgets from the root
-    #adds the new page to the root
-    def pressed_ts(self, *args):
-        f.write('teachers section button pressed\n')
+    def linkpress(self, *args):
+        f.write('opening simonsingh.net...\n')
+        webbrowser.open("http://simonsingh.net/")
+
+    def pressed_kev(self, *args):
+        f.write('kev pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(KevPage().create())
+
 ################################################################################
 #End Home Page
+################################################################################
+
+################################################################################
+#Begin Kev Page
+################################################################################
+class KevPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('kevs page entered\n')
+        MyApp.current = self
+        #root layout of the instance
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        #create the topbar and add the title to it
+        self.tb = self.topbar.create('Modern Times')
+        self.x = .75
+        self.btnsize = (.2,.1)
+
+        with open('texts/kevstuff.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.425, 'top':.9},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        #buttons
+        self.symmetric = Button(text = 'Symmetric\nAlgorithms',
+                            pos_hint = {'x':self.x, 'top':.65},
+                            size_hint = self.btnsize,
+                            on_release = self.symmetricpressed)
+        self.asymmetric = Button(text = 'Asymmetric\nAlgorithms',
+                            pos_hint = {'x':self.x, 'top':.45},
+                            size_hint = self.btnsize,
+                            on_release = self.asymmetricpressed)
+        self.hash = Button(text = 'Hash\nEncryption',
+                            pos_hint = {'x':self.x, 'top':.25},
+                            size_hint = self.btnsize,
+                            on_release = self.hashingpressed)
+
+        #add widgets to the main layout
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.symmetric)
+        self.r.add_widget(self.asymmetric)
+        self.r.add_widget(self.hash)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def symmetricpressed(self, *args):
+        f.write('symmetric button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(SymmetricPage().create())
+
+    def asymmetricpressed(self, *args):
+        f.write('asymmetric button pressed\n')
+
+    def hashingpressed(self, *args):
+        f.write('hashing button pressed\n')
+        #md5, sha1, sha256 interactive
+        #md5 and sha0 are vulnerable
+################################################################################
+#End Kev Page
+################################################################################
+
+
+################################################################################
+#Begin Symmetric Page
+################################################################################
+class SymmetricPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Symmetric page entered\n')
+        MyApp.current = self
+        #root layout of the instance
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        #create the topbar and add the title to it
+        self.tb = self.topbar.create('Symmetric Algorithms')
+        self.x = .75
+        self.btnsize = (.2,.1)
+
+        with open('texts/symmetrickev.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.4, 'top':.9},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        #buttons
+        #aes, blowfish, twofish, ideaalg
+        #RC4
+        self.aes = Button(text = 'AES',
+                            pos_hint = {'x':self.x, 'top':.75},
+                            size_hint = self.btnsize,
+                            on_release = self.aespressed)
+
+        self.blowfish = Button(text = 'Blowfish',
+                            pos_hint = {'x':self.x, 'top':.55},
+                            size_hint = self.btnsize,
+                            on_release = self.blowfishpressed)
+
+        self.twofish = Button(text = 'Twofish',
+                            pos_hint = {'x':self.x, 'top':.35},
+                            size_hint = self.btnsize,
+                            on_release = self.twofishpressed)
+
+        self.idea = Button(text = 'IDEA',
+                            pos_hint = {'x':self.x, 'top':.35},
+                            size_hint = self.btnsize,
+                            on_release = self.ideapressed)
+
+        #add widgets to the main layout
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.aes)
+        self.r.add_widget(self.blowfish)
+        self.r.add_widget(self.twofish)
+        self.r.add_widget(self.idea)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def aespressed(self, *args):
+        f.write('aes button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(AESPage().create())
+
+    def blowfishpressed(self, *args):
+        f.write('blowfish button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(BlowfishPage().create())
+
+    def twofishpressed(self, *args):
+        f.write('twofish button pressed\n')
+
+    def ideapressed(self, *args):
+        f.write('idea button pressed\n')
+
+################################################################################
+#End Symmetric Page
+################################################################################
+
+################################################################################
+#Begin AES Page
+################################################################################
+class AESPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('aes page entered\n')
+        MyApp.current = self
+        self.cipher = ''
+        self.secret = ''
+        self.encoded = ''
+
+        #root layout of the instance
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        #create the topbar and add the title to it
+        self.tb = self.topbar.create('AES')
+        self.x = .75
+        self.btnsize = (.2,.1)
+        self.txtinsz = (.475,.2)
+
+        with open('texts/aes.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.4, 'top':.9},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.link1 = Label(text = 'Information from: [color=ffff00][ref=aes]http://aesencryption.net/[/ref][/color]',
+                            pos_hint = {'x':.4, 'top':.15},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.link1)
+        self.link2 = Label(text = 'Algorithm from: [color=ffff00][ref=aesalg]http://www.codekoala.com/posts/aes-encryption-python-using-pycrypto/[/ref][/color]',
+                            pos_hint = {'x':.4, 'top':.125},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.link2)
+
+        self.plaintextlabel = Label(text = "Plaintext",
+                            pos_hint = {'x':.4375, 'top':.825},
+                            size_hint = (.2,.2),
+                            font_size = 13)
+        self.plaintextinput = maxinput(text = '',
+                            pos_hint = {'x':.5, 'top':.7},
+                            size_hint = self.txtinsz)
+        self.plaintextinput.max_chars = 32
+
+        self.ciphertextlabel = Label(text = "Ciphertext",
+                            pos_hint = {'x':.4375, 'top':.525},
+                            size_hint = (.2,.2),
+                            font_size = 13)
+        self.ciphertextdisplay = Label(text = '',
+                            pos_hint = {'x':0, 'top':.65},
+                            size_hint = (1,1),
+                            markup = True,
+                            font_size = 24)
+
+        self.encryptbutton = Button(text = 'Encrypt',
+                            pos_hint = {'x':.5, 'top':.495},
+                            size_hint = (.475,.05),
+                            on_release = self.encryptpressed)
+
+        self.decryptbutton = Button(text = 'Decrypt',
+                            pos_hint = {'x':.5, 'top':.425},
+                            size_hint = (.475,.05),
+                            on_release = self.decryptpressed,
+                            disabled = True)
+
+        self.decryptdisplay = Label(text = '',
+                            pos_hint = {'x':0, 'top':.6},
+                            size_hint = (1,1),
+                            markup = True,
+                            font_size = 24)
+
+        self.instructions = Label(text = 'Type your message into the plaintext box\n' +
+                                        'and press the encrypt button. The AES encrypted\n' +
+                                        'message will display at the bottom of the page.\n' +
+                                        'Pressing the decrypt button will decrypt the AES\n' +
+                                        'encrypted message and display it at the bottom of\n' +
+                                        'the screen.',
+                            pos_hint = {'x':.135, 'top':.725},
+                            size_hint = (.2,.2))
+
+        self.image = Image(source = 'pics/first_round_process.jpg',
+                            pos_hint = {'x':.025, 'top':.5},
+                            size_hint = (.3,.3))
+
+        self.imagelabel = Label(text = 'TutorialsPoint',
+                            pos_hint = {'x':0, 'top':.285},
+                            size_hint = (.2,.2),
+                            font_size = 10)
+
+        #add widgets to the main layout
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.imagelabel)
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.link1)
+        self.r.add_widget(self.link2)
+        self.r.add_widget(self.plaintextlabel)
+        #self.r.add_widget(self.ciphertextlabel)
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.encryptbutton)
+        self.r.add_widget(self.decryptbutton)
+        self.r.add_widget(self.decryptdisplay)
+        self.r.add_widget(self.instructions)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def encryptpressed(self, *args):
+        f.write('encrypt button pressed\n')
+        text = self.plaintextinput.text
+        self.encoded = self.encrypt(text)
+        self.ciphertextdisplay.text = '[color=ff0000][b]' + self.encoded + '[/b][/color]'
+        self.decryptbutton.disabled = False
+        self.decryptdisplay.text = ''
+
+    def decryptpressed(self, *args):
+        f.write('decrypt button pressed\n')
+        decoded = self.decrypt(self.encoded)
+        self.decryptbutton.disabled = True
+        if decoded == 'hello':
+            self.decryptdisplay.font_size = 500
+            self.decryptdisplay.pos_hint = {'x':0, 'top':1}
+        else:
+            self.decryptdisplay.font_size = 18
+            self.decryptdisplay.pos_hint = {'x':0, 'top':.6}
+        self.decryptdisplay.text = '[color=ff0000][b]' + decoded + '[/b][/color]'
+
+
+    def encrypt(self, text, *args):
+        #http://www.codekoala.com/posts/aes-encryption-python-using-pycrypto/
+        # the block size for the cipher object; must be 16 per FIPS-197
+        BLOCK_SIZE = 16
+
+        # the character used for padding--with a block cipher such as AES, the value
+        # you encrypt must be a multiple of BLOCK_SIZE in length.  This character is
+        # used to ensure that your value is always a multiple of BLOCK_SIZE
+        PADDING = '{'
+
+        # one-liner to sufficiently pad the text to be encrypted
+        pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * PADDING
+
+        # one-liners to encrypt/encode a string
+        # encrypt with AES, encode with base64
+        EncodeAES = lambda c, s: base64.b64encode(c.encrypt(pad(s)))
+        # generate a random secret key
+        self.secret = os.urandom(BLOCK_SIZE)
+
+        # create a cipher object using the random secret
+        self.cipher = AES.new(self.secret)
+
+        # encode a string
+        encoded = EncodeAES(self.cipher, text)
+        f.write('Encrypted string:' + encoded + '\n')
+        return encoded
+
+    def decrypt(self, encoded, *args):
+        f.write('decrypting aes...\n')
+        PADDING = '{'
+        DecodeAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
+        # decode the encoded string
+        decoded = DecodeAES(self.cipher, encoded)
+        f.write('Decrypted string:' + decoded + '\n')
+        return decoded
+
+    def link1(self, *args):
+        f.write('opening http://aesencryption.net/ ...\n')
+        webbrowser.open("http://aesencryption.net/")
+
+    def link2(self, *args):
+        f.write('opening http://www.codekoala.com/posts/aes-encryption-python-using-pycrypto/ ...\n')
+        webbrowser.open("http://www.codekoala.com/posts/aes-encryption-python-using-pycrypto/")
+################################################################################
+#End AES Page
+################################################################################
+
+################################################################################
+#Begin Blowfish Page
+################################################################################
+class BlowfishPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Blowfish page entered\n')
+        MyApp.current = self
+        self.cipher = ''
+        self.secret = ''
+        self.encoded = ''
+
+        #root layout of the instance
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        #create the topbar and add the title to it
+        self.tb = self.topbar.create('Blowfish')
+        self.x = .75
+        self.btnsize = (.2,.1)
+        self.txtinsz = (.475,.2)
+
+        with open('texts/blowfish.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.4, 'top':.9},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.link1 = Label(text = 'Information from: [color=ffff00][ref=aes]http://aesencryption.net/[/ref][/color]',
+                            pos_hint = {'x':.4, 'top':.15},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.link1)
+        self.link2 = Label(text = 'Algorithm from: [color=ffff00][ref=aesalg]http://www.codekoala.com/posts/aes-encryption-python-using-pycrypto/[/ref][/color]',
+                            pos_hint = {'x':.4, 'top':.125},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.link2)
+
+        self.plaintextlabel = Label(text = "Plaintext",
+                            pos_hint = {'x':.4375, 'top':.825},
+                            size_hint = (.2,.2),
+                            font_size = 13)
+        self.plaintextinput = maxinput(text = '',
+                            pos_hint = {'x':.5, 'top':.7},
+                            size_hint = self.txtinsz)
+        self.plaintextinput.max_chars = 32
+
+        self.ciphertextlabel = Label(text = "Ciphertext",
+                            pos_hint = {'x':.4375, 'top':.525},
+                            size_hint = (.2,.2),
+                            font_size = 13)
+        self.ciphertextdisplay = Label(text = '',
+                            pos_hint = {'x':0, 'top':.7},
+                            size_hint = (1,1),
+                            markup = True,
+                            font_size = 24)
+
+        self.encryptbutton = Button(text = 'Encrypt',
+                            pos_hint = {'x':.5, 'top':.495},
+                            size_hint = (.475,.05),
+                            on_release = self.encryptpressed)
+
+        self.decryptbutton = Button(text = 'Decrypt',
+                            pos_hint = {'x':.5, 'top':.425},
+                            size_hint = (.475,.05),
+                            on_release = self.decryptpressed,
+                            disabled = True)
+
+        self.decryptdisplay = Label(text = '',
+                            pos_hint = {'x':0, 'top':.6},
+                            size_hint = (1,1),
+                            markup = True,
+                            font_size = 24)
+
+        self.instructions = Label(text = 'Type your message into the plaintext box\n' +
+                                        'and press the encrypt button. The AES encrypted\n' +
+                                        'message will display at the bottom of the page.\n' +
+                                        'Pressing the decrypt button will decrypt the AES\n' +
+                                        'encrypted message and display it at the bottom of\n' +
+                                        'the screen.',
+                            pos_hint = {'x':.135, 'top':.685},
+                            size_hint = (.2,.2))
+
+        #add widgets to the main layout
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.link1)
+        self.r.add_widget(self.link2)
+        self.r.add_widget(self.plaintextlabel)
+        #self.r.add_widget(self.ciphertextlabel)
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.encryptbutton)
+        self.r.add_widget(self.decryptbutton)
+        self.r.add_widget(self.decryptdisplay)
+        self.r.add_widget(self.instructions)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def encryptpressed(self, *args):
+        f.write('encrypt button pressed\n')
+
+    def decryptpressed(self, *args):
+        f.write('decrypt button pressed\n')
+
+    def link1(self, *args):
+        f.write('opening http://aesencryption.net/ ...\n')
+        webbrowser.open("http://aesencryption.net/")
+
+    def link2(self, *args):
+        f.write('opening http://www.codekoala.com/posts/aes-encryption-python-using-pycrypto/ ...\n')
+        webbrowser.open("http://www.codekoala.com/posts/aes-encryption-python-using-pycrypto/")
+################################################################################
+#End Blowfish Page
 ################################################################################
 
 ################################################################################
@@ -1527,7 +2005,6 @@ class GenMonoPage(ButtonBehavior):
                 enciphered += " "
 
         return enciphered
-
 ################################################################################
 #End General Monoalphabetic Page
 ################################################################################
@@ -1569,7 +2046,6 @@ class HowFreqPage(ButtonBehavior):
         self.r.add_widget(self.text)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Frequency Analysis How Page
 ################################################################################
@@ -1736,16 +2212,12 @@ class DigraphPage(ButtonBehavior):
             self.table = self.table + '\n'
 
         self.tablelabel.text = self.table
-
 ################################################################################
 #End Digraph Cipher Page
 ################################################################################
 
 ################################################################################
 #Begin Playfair Cipher Page
-"""TO DO:
-- make keyword customizable
-"""
 ################################################################################
 class PlayfairPage(ButtonBehavior):
     def __init__(self):
@@ -1754,7 +2226,7 @@ class PlayfairPage(ButtonBehavior):
     def create(self):
         f.write('playfair page entered\n')
         MyApp.current = self
-        self.keyword = 'kevin'
+        self.keyword = 'charles'
         self.comb = []
         #setup layouts
         self.r = RelativeLayout()
@@ -1805,10 +2277,11 @@ class PlayfairPage(ButtonBehavior):
                                     size_hint = (.15,.05),
                                     on_release = self.encipherPressed,
                                     disabled = True)
-        self.keyworddisplay = TextInput(text = self.keyword,
+        self.keyworddisplay = maxinput(text = self.keyword,
                                         pos_hint = {'x':.075, 'top':.49},
-                                        size_hint = (.1,.05),
-                                        disabled = True)
+                                        size_hint = (.1,.05))
+        self.keyworddisplay.bind(text=self.textchange)
+        self.keyworddisplay.max_chars = 8
         self.keywordlabel = Label(text = 'Keyword',
                                     pos_hint = {'x':.075, 'top':.555},
                                     size_hint = (.1,.1),
@@ -1847,6 +2320,16 @@ class PlayfairPage(ButtonBehavior):
         enciphered = self.encrypt()
         self.ciphertextdisplay.text = enciphered
 
+    def textchange(self, *args):
+        kw = self.keyworddisplay.text
+        templist = []
+        for c in kw:
+            if c not in templist:
+                templist.append(c)
+        self.keyworddisplay.text = ''.join(templist)
+        self.creategrid()
+        self.digraphbutton.disabled = False
+
     def encrypt(self, *args):
         final = ''
         templist = []
@@ -1863,12 +2346,12 @@ class PlayfairPage(ButtonBehavior):
                 templist = []
             else:
                 templist.append(self.comb[i])
-        f.write(str(newlist) + '\n')
+        #f.write(str(newlist) + '\n')
 
         for i in dilist:
             if i == '':
                 dilist.remove(i)
-        f.write(str(dilist) + '\n')
+        #f.write(str(dilist) + '\n')
 
         for di in dilist:
             #if both letter in the di are in the same row
@@ -1939,6 +2422,7 @@ class PlayfairPage(ButtonBehavior):
 
     def form(self, *args):
         self.encipherbutton.disabled = False
+        self.digraphbutton.disabled = True
         text = self.plaintextinput.text
         text = text.replace(" ", "")
         text = text.strip()
@@ -1954,7 +2438,7 @@ class PlayfairPage(ButtonBehavior):
                 count = 0
             else:
                 try:
-                    f.write('match ' + text[letter+1] + '\n')
+                    #f.write('match ' + text[letter+1] + '\n')
                     yes = 1
                 except Exception as e:
                     yes = 0
@@ -1984,16 +2468,16 @@ class PlayfairPage(ButtonBehavior):
                 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
         newalpha = []
-        for letter in self.keyword:
+        for letter in self.keyworddisplay.text:
             for i in self.alpha:
                 #f.write(self.alpha[letter] + '==' + self.keyword[i] + '\n')
                 if letter == i:
                     self.alpha.remove(i)
 
-        keylist = list(self.keyword)
+        keylist = list(self.keyworddisplay.text)
         shuffle(self.alpha)
         self.comb = keylist + self.alpha
-        f.write('combined list: ' + str(self.comb) + '\n')
+        #f.write('combined list: ' + str(self.comb) + '\n')
 
         count = 0
         tempstr = ''
@@ -2011,11 +2495,6 @@ class PlayfairPage(ButtonBehavior):
 
 ################################################################################
 #Begin Homophonic Page
-"""TO DO:
-- finish page?
-- encipher error when pressed
-- missing elements
-"""
 ################################################################################
 class HomophonicPage(ButtonBehavior):
     def __init__(self):
@@ -2027,10 +2506,13 @@ class HomophonicPage(ButtonBehavior):
         self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
+        self.big = []
+        self.bigdict = {}
 
-        self.stralpha = '|'.join(self.alpha)
+        self.stralpha = '  '.join(self.alpha)
         #setup layouts
         self.r = RelativeLayout()
+        self.verticalnums = RelativeLayout()
 
         #create the topbar navigation
         self.topbar = TopBar()
@@ -2038,29 +2520,30 @@ class HomophonicPage(ButtonBehavior):
         self.tb = self.topbar.create("Homophonic Cipher")
 
         #elements of the page
-        self.randomize = Button(text = 'Randomize Cipher\nAlphabet',
-                            pos_hint = {'x':.015, 'top':.1},
-                            size_hint = (.175,.075),
-                            on_release = self.genrandomPressed)
-
-        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.2},
+        self.plaintextinput = TextInput(pos_hint = {'x':.2, 'top':.15},
                                     size_hint = (.35, .15))
         self.plaintextlabel = Label(text = 'Plaintext',
-                                    pos_hint = {'x':.25, 'top':.275},
+                                    pos_hint = {'x':.25, 'top':.225},
                                     size_hint = (.27,.1))
 
         self.ciphertextdisplay = TextInput(text = '',
-                                            pos_hint = {'x':.6, 'top':.2},
+                                            pos_hint = {'x':.6, 'top':.15},
                                             size_hint = (.35, .15),
                                             disabled = True)
         self.ciphertextlabel = Label(text = 'Ciphertext',
-                                    pos_hint = {'x':.65, 'top':.275},
+                                    pos_hint = {'x':.65, 'top':.225},
                                     size_hint = (.27,.1))
 
         self.encipherbutton = Button(text = "Encipher Text",
-                                        pos_hint = {'x':.015, 'top':.2},
+                                        pos_hint = {'x':.015, 'top':.15},
                                         size_hint = (.175,.075),
                                         on_release = self.encipherPressed)
+        self.alphadisplay = Label(text = self.stralpha,
+                                        pos_hint = {'x':.4, 'top':.615},
+                                        size_hint = (.2,.2),
+                                        font_name = 'font/RobotoMono-Regular',
+                                        font_size = 16)
+        self.createlists()
 
         with open('texts/homophonic.txt', 'r') as myfile:
             data = myfile.read()
@@ -2069,13 +2552,13 @@ class HomophonicPage(ButtonBehavior):
                             size_hint = (.5,.5))
 
 
-        self.r.add_widget(self.randomize)
+        self.r.add_widget(self.alphadisplay)
         self.r.add_widget(self.plaintextinput)
         self.r.add_widget(self.plaintextlabel)
         self.r.add_widget(self.ciphertextdisplay)
         self.r.add_widget(self.ciphertextlabel)
         self.r.add_widget(self.encipherbutton)
-
+        self.r.add_widget(self.verticalnums)
         self.r.add_widget(self.text)
 
         self.r.add_widget(self.tb)
@@ -2083,27 +2566,55 @@ class HomophonicPage(ButtonBehavior):
 
     def encipherPressed(self, *args):
         f.write('encipher button pressed\n')
-        enciphered = self.monoencrypt(self.plaintextinput.text, self.spacebox.active)
+        enciphered = self.encrypt()
         self.ciphertextdisplay.text = enciphered
 
-    def genrandomPressed(self, *args):
-        f.write('generate random cipher pressed\n')
-        shuffle(self.newalpha)
-        self.cipheralphabet.text = "  ".join(self.newalpha)
+    def encrypt(self, *args):
+        f.write("encrypting homophonic...\n")
+        text = self.plaintextinput.text
+        encrypted = ""
+        for letter in text:
+            temp = self.bigdict.get(letter)
+            encrypted += str(choice(temp)) + ' '
 
-    def monoencrypt(self, word, spaces, *args):
-        enciphered = ""
+        return encrypted
 
-        #iterate through the string of text
-        for letter in word:
-            #iterate through the alphabet list
-            for i in range(len(self.alpha)):
-                if self.alpha[i] == letter:
-                    enciphered += self.newalpha[i]
-            if (letter == " ") and spaces:
-                enciphered += " "
+    def createlists(self, *args):
+        numlist = [8, 2, 3, 4, 12, 2, 2, 6, 6, 1, 1, 4, 2, 6, 7,
+                    2, 1, 6, 6, 9, 3, 1, 2, 1, 2, 1]
+        listrange = range(0, 100)
 
-        return enciphered
+        for i in numlist:
+            smol = []
+            for k in range(i):
+                num = choice(listrange)
+                listrange.remove(num)
+                smol.append(num)
+            self.big.append(smol)
+        f.write("big: " + str(self.big) + '\n')
+
+        tempx = -.4725
+        temptop = .825
+        for smol in self.big:
+            temp = Label(text = '',
+                                pos_hint = {'x':tempx, 'top':temptop},
+                                size_hint = (1,1),
+                                font_size = 12,
+                                valign = 'top',
+                                halign = 'center',
+                                font_name = 'font/RobotoMono-Regular')
+            temp.text_size = (temp.width*2, temp.height*2)
+
+
+            for i in smol:
+                temp.text += str(i) + '\n'
+            tempx += .03775
+            self.verticalnums.add_widget(temp)
+
+
+
+        for i in range(len(self.alpha)):
+            self.bigdict[self.alpha[i]] = self.big[i]
 ################################################################################
 #End Homophonic Page
 ################################################################################
@@ -2209,7 +2720,6 @@ class MorsePage(ButtonBehavior):
                     encrypted = encrypted + self.morsealpha[i] + ' '
 
         return encrypted
-
 ################################################################################
 #End Morse Code Page
 ################################################################################
@@ -2331,7 +2841,6 @@ class DancingMenPage(ButtonBehavior):
                         self.r2.add_widget(tempimage)
 
         self.r.add_widget(self.r2)
-
 ################################################################################
 #End Dancing Men Cipher Page
 ################################################################################
@@ -2377,7 +2886,6 @@ class MeetEnigmaPage(ButtonBehavior):
         self.r.add_widget(self.text2)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Meet Enigma Page
 ################################################################################
@@ -2430,7 +2938,6 @@ class CodetalkersPage(ButtonBehavior):
         self.r.add_widget(self.text3)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Codetalkers Page
 ################################################################################
@@ -2563,7 +3070,6 @@ class MC(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(FOC().create())
-
 ################################################################################
 #End Main Contents Page
 ################################################################################
@@ -2662,7 +3168,6 @@ class BOFC(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(TragedyPage().create())
-
 ################################################################################
 #End Birth of Cryptography Page
 ################################################################################
@@ -2736,7 +3241,6 @@ class Transposition(ButtonBehavior):
         #MyApp.trail.append(self)
         #root.clear_widgets()
         #root.add_widget(RailfencePage().create())
-
 ################################################################################
 #End Transposition Page
 ################################################################################
@@ -2850,7 +3354,6 @@ class Substitution(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(GenMonoPage().create())
-
 ################################################################################
 #End Substitution Page
 ################################################################################
@@ -3027,16 +3530,12 @@ class KamasutraPage(ButtonBehavior):
                 enciphered += " "
 
         return enciphered
-
 ################################################################################
 #End Kamasutra Page
 ################################################################################
 
 ################################################################################
 #Begin Affine Page
-"""TO DO:
-- missing affine cipher tool page
-"""
 ################################################################################
 class AffinePage(ButtonBehavior):
     def __init__(self):
@@ -3065,20 +3564,10 @@ class AffinePage(ButtonBehavior):
                             size_hint = (.5,.5),
                             font_size = 16)
 
-        self.button = Button(text = 'Affine Cipher Tool',
-                            pos_hint = {'x':.4, 'top':.1},
-                            size_hint = (.2,.05),
-                            on_release = self.buttonpressed)
-
-        self.r.add_widget(self.button)
         self.r.add_widget(self.text1)
         self.r.add_widget(self.text2)
         self.r.add_widget(self.tb)
         return self.r
-
-    def buttonpressed(self, *args):
-        f.write('affine cipher tool pressed\n')
-
 ################################################################################
 #End Affine Page
 ################################################################################
@@ -3166,7 +3655,6 @@ class CrackingSubstitutionPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(StatisticsPage().create())
-
 ################################################################################
 #End Cracking Substitution Page
 ################################################################################
@@ -3211,7 +3699,6 @@ class InventionInBaghdadPage(ButtonBehavior):
         self.r.add_widget(self.text2)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End InventionInBaghdad Page
 ################################################################################
@@ -3242,7 +3729,6 @@ class FinerPointsPage(ButtonBehavior):
         self.r.add_widget(self.text1)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Finer Points Page
 ################################################################################
@@ -3279,7 +3765,6 @@ class StatisticsPage(ButtonBehavior):
         self.r.add_widget(self.image)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Statistics Page
 ################################################################################
@@ -3352,7 +3837,6 @@ class KeySecretsPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(KerckhoffsPage().create())
-
 ################################################################################
 #End Key Secrets Page
 ################################################################################
@@ -3387,7 +3871,6 @@ class VariousCiphersPage(ButtonBehavior):
         self.r.add_widget(self.text1)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Various Ciphers Page
 ################################################################################
@@ -3434,7 +3917,6 @@ class KerckhoffsPage(ButtonBehavior):
         self.r.add_widget(self.text3)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Kerckhoffs Page
 ################################################################################
@@ -3651,7 +4133,6 @@ class MaryExPage(ButtonBehavior):
         self.r.add_widget(self.text2)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Mary Execution Page
 ################################################################################
@@ -3738,7 +4219,6 @@ class UncrackableCode(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(CrackingVigenerePage().create())
-
 ################################################################################
 #End Uncrackable Code Page
 ################################################################################
@@ -3822,7 +4302,6 @@ class VigenerePage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(StrongVigenerePage().create())
-
 ################################################################################
 #End Vigenere Page
 ################################################################################
@@ -3987,7 +4466,6 @@ class SwappingPage(ButtonBehavior):
                 enciphered += " "
 
         return [enciphered, enciphered2]
-
 ################################################################################
 #End Swapping Cipher Page
 ################################################################################
@@ -4061,7 +4539,6 @@ class VigenereSquarePage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(VigenereSquarePage2().create())
-
 ################################################################################
 #End Vigenere Square Page
 ################################################################################
@@ -4256,7 +4733,6 @@ class VigenereSquarePage2(ButtonBehavior):
                     enciphered += self.templist[index][self.alpha.index(text[j])]
 
         return enciphered
-
 ################################################################################
 #End Vigenere Square 2 Page
 ################################################################################
@@ -4294,7 +4770,6 @@ class HowVigenerePage(ButtonBehavior):
         self.r.add_widget(self.text1)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End How Vigenere Works Page
 ################################################################################
@@ -4302,8 +4777,7 @@ class HowVigenerePage(ButtonBehavior):
 ################################################################################
 #Begin Why so strong Vigenere Page
 """TO DO:
-- fix text enciphered
-- finish page
+- make own graphs
 """
 ################################################################################
 class StrongVigenerePage(ButtonBehavior):
@@ -4319,6 +4793,8 @@ class StrongVigenerePage(ButtonBehavior):
         self.monoalpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
+        self.letterdict = {}
+        self.firstkeyword = ''
 
         shuffle(self.monoalpha)
         self.r = RelativeLayout()
@@ -4333,7 +4809,7 @@ class StrongVigenerePage(ButtonBehavior):
                             size_hint = (.15,.15),
                             font_size = 16)
 
-        self.plaintext = TextInput(text = 'Aged twenty six, Vigenere was sent to Rome on a diplomatic' +
+        self.plaintext = TextInput(text = 'aged twenty six, Vigenere was sent to Rome on a diplomatic' +
         'mission. It was here that he became acquainted with the writings of Alberti, Trithemius and Porta, ' +
         'and his interest in cryptography was ignited. For many years, cryptography was nothing more than a ' +
         'tool that helped him in his diplomatic work, but, at the age of thirty nine, Vigenere decided ' +
@@ -4343,6 +4819,7 @@ class StrongVigenerePage(ButtonBehavior):
                             size_hint = (.6,.2),
                             font_size = 11,
                             disabled = True)
+        self.getfreq(self.plaintext.text)
 
         self.plainscrollview = ScrollView(size_hint=(1, None), size=(self.plaintext.width, self.plaintext.height))
 
@@ -4382,14 +4859,34 @@ class StrongVigenerePage(ButtonBehavior):
                                     pos_hint = {'x':.575, 'top':.6},
                                     size_hint = (.5,.5))
 
+
         self.enciphervig = Button(text = 'Encipher Vigenere',
-                            pos_hint = {'x':.25, 'top':.535},
+                            pos_hint = {'x':.25, 'top':.235},
                             size_hint = (.2,.05),
                             on_release = self.vigen)
 
-        self.r.add_widget(self.plainscrollview)
+        self.vig = TextInput(text = '',
+                            pos_hint = {'x':.05, 'top':.225},
+                            size_hint = (.6,.2),
+                            multiline = True,
+                            font_size = 11,
+                            disabled = True)
 
+        """self.plaingraph = Graph(xlabel = 'Letter', ylabel = 'Frequency', x_ticks_minor=5,
+                                x_ticks_major=25, y_ticks_major=1,
+                                y_grid_label=True, x_grid_label=True, padding=5,
+                                x_grid=True, y_grid=True, xmin=-0, xmax=100, ymin=-1, ymax=1,
+                                pos_hint = {'x':.5, 'top':.5},
+                                size_hint = (.4,.4))"""
+        #plot = MeshLinePlot(color = [1,0,0,1])
 
+        #plot.points = [(x, sin(x / 10.)) for x in range(0, 101)]
+        #plot.points = [(for i in self.letterdict.values())]
+        #self.plaingraph.add_plot(plot)
+
+        #self.r.add_widget(self.plainscrollview)
+
+        #self.r.add_widget(self.plaingraph)
         self.r.add_widget(self.plaintextfreq)
         self.r.add_widget(self.plaintext)
         self.r.add_widget(self.enciphermono)
@@ -4398,7 +4895,12 @@ class StrongVigenerePage(ButtonBehavior):
         return self.r
 
     def vigen(self, *args):
-        pass
+        enciphered = self.vigencrypt()
+        self.vig.text = enciphered
+        self.r.remove_widget(self.enciphervig)
+        self.r.add_widget(self.vig)
+
+
 
     def monoen(self, *args):
         enciphered = self.monoencrypt(self.plaintext.text, True)
@@ -4409,6 +4911,7 @@ class StrongVigenerePage(ButtonBehavior):
         self.r.add_widget(self.alphal)
         self.r.add_widget(self.monol)
         self.r.add_widget(self.monofreq)
+        self.r.add_widget(self.enciphervig)
 
     def monoencrypt(self, word, spaces, *args):
         enciphered = ""
@@ -4424,6 +4927,70 @@ class StrongVigenerePage(ButtonBehavior):
 
         return enciphered
 
+    def getfreq(self, text, *args):
+        f.write('getting frequencies...\n')
+        text = text.lower()
+        text = text.replace(' ', '')
+        text = text.replace('.', '')
+        text = text.replace(',', '')
+
+        for i in self.alpha:
+            self.letterdict[str(i)] = 0
+        for letter in text:
+            self.letterdict[str(letter)] = self.letterdict[str(letter)] + 1
+
+        f.write(str(self.letterdict) + '\n')
+
+    def vigencrypt(self, *args):
+        enciphered = ''
+        keyword = 'charlesv'
+        text = self.plaintext.text
+        text = text.lower()
+        #text = text.replace(' ', '')
+        text = text.replace('.', '')
+        text = text.replace(',', '')
+        tempkeyword = ''
+        times = len(text) / len(keyword)
+
+        for i in range(times):
+            tempkeyword += keyword
+
+        leftover = len(text) - len(tempkeyword)
+        tempkeyword += keyword[:leftover]
+
+        fullkeyword = tempkeyword
+        indexes = []
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+
+        self.templist = []
+        for i in range(len(self.alpha)):
+            tempalpha = deque(self.alpha)
+            tempalpha.rotate(len(self.alpha) - (i+1))
+            self.templist.append(list(tempalpha))
+
+        for letter in keyword:
+            for i in range(len(self.templist)):
+                alph = self.templist[i]
+                if alph[0] == letter:
+                    #f.write('index: ' + str(i) + '\n')
+                    #f.write(alph[0] + ' | ' + letter + '\n')
+                    if i not in indexes:
+                        indexes.append(i)
+        indexes = sorted(indexes, key=int)
+        #f.write(str(indexes) + '\n')
+
+        for j in range(len(text)):
+            #f.write(str(text[j]) + '\n')
+            for index in indexes:
+                if self.templist[index][0] == fullkeyword[j]:
+                    try:
+                        enciphered += self.templist[index][self.alpha.index(str(text[j]))]
+                    except Exception as e:
+                        enciphered += ' '
+
+        return enciphered
 ################################################################################
 #End Why so strong Vigenere Page
 ################################################################################
@@ -4525,7 +5092,12 @@ class BookCiphersPage(ButtonBehavior):
     def create(self):
         f.write('book ciphers page entered\n')
         MyApp.current = self
-
+        self.keytexts = ["On either side of the river lie long fields of barley " +
+                            "and of rye, that clothes the world and meets the " +
+                            "the sky; and through the field the road runs by to many " +
+                            "towered Camelot, and up and down the people go, gazing " +
+                            "where the lillies blwo round an island there below, the " +
+                            "island of Shalott."]
         self.r = RelativeLayout()
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
@@ -4543,7 +5115,7 @@ class BookCiphersPage(ButtonBehavior):
                             size_hint = (.15,.05),
                             on_release = self.beale)
 
-        self.keytext = TextInput(text = '',
+        self.keytext = TextInput(text = self.keytexts[0],
                             pos_hint = {'x':.3, 'top':.4},
                             size_hint = (.695,.2),
                             disabled = True)
@@ -4552,7 +5124,7 @@ class BookCiphersPage(ButtonBehavior):
                             size_hint = (.15,.15),
                             font_size = 12)
 
-        self.plaintext = TextInput(text = '',
+        self.plaintext = TextInput(text = 'mary had a little lamb',
                             pos_hint = {'x':.3, 'top':.15},
                             size_hint = (.32,.15),
                             disabled = True)
@@ -4572,7 +5144,8 @@ class BookCiphersPage(ButtonBehavior):
 
         self.encipherbutton = Button(text = 'Encipher',
                             pos_hint = {'x':.1, 'top':.2},
-                            size_hint = (.15,.05))
+                            size_hint = (.15,.05),
+                            on_release = self.encipherpressed)
 
 
 
@@ -4593,6 +5166,43 @@ class BookCiphersPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(TheBealeCiphersPage().create())
+
+    def encipherpressed(self, *args):
+        f.write('encipher button pressed\n')
+        ciphertext.text = self.encrypt()
+
+
+    def encrypt(self, *args):
+        keytext = self.keytext.text
+        keytext = keytext.lower()
+        keytext = keytext.replace(' ', '')
+        keytext = keytext.replace(',', '')
+        keytext = keytext.replace('.', '')
+        enciphered = ''
+        plaintext = self.plaintext.text
+
+
+        temptext = plaintext.replace(' ', '')
+        textlist = list(temptext)
+        enclist = enciphered.split(' ')
+        f.write(str(textlist) + '\n')
+        f.write(str(enclist) + '\n')
+        while len(textlist) != len(enclist):
+            temptext = plaintext.replace(' ', '')
+            textlist = list(temptext)
+            enclist = enciphered.split(' ')
+            f.write(str(textlist) + '\n')
+            f.write(str(enclist) + '\n')
+            for letter in plaintext:
+                for i in range(len(keytext)):
+                    if letter == keytext[i]:
+                        poss = randint(1, keytext.count(letter))
+                        if poss == 1:
+                            enciphered += str(i) + ' '
+                        else:
+                            pass
+
+        return enciphered
 
 ################################################################################
 #End Book Ciphers Page
@@ -4695,7 +5305,6 @@ class BealePage1(ButtonBehavior):
         self.r.add_widget(self.image)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Beale Page 1
 ################################################################################
@@ -4753,7 +5362,6 @@ class BealePage2(ButtonBehavior):
         self.r.remove_widget(self.image2)
         self.r.add_widget(self.button)
         self.r.add_widget(self.image)
-
 ################################################################################
 #End Beale Page 2
 ################################################################################
@@ -4782,7 +5390,6 @@ class BealePage3(ButtonBehavior):
         self.r.add_widget(self.image)
         self.r.add_widget(self.tb)
         return self.r
-
 ################################################################################
 #End Beale Page 3
 ################################################################################
@@ -4866,7 +5473,6 @@ class EncryptionForMassesPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(PinprickPage().create())
-
 ################################################################################
 #End Encryption for the Masses Page
 ################################################################################
@@ -6099,7 +6705,6 @@ class ADFGVXPage(ButtonBehavior):
         self.ciphertextdisplay.text = final
         self.finalstagebutton.disabled = True
         self.stage1button.disabled = False
-
 ################################################################################
 #End ADFGVX Cipher Page
 ################################################################################
@@ -6499,7 +7104,6 @@ class UsingEnigmaPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(ReflectorPage().create())
-
 ################################################################################
 #End Using Enigma Page
 ################################################################################
