@@ -19,6 +19,7 @@ import binascii
 import math
 import base64
 import hashlib
+import chilkat
 
 from kivy.uix.label import Label
 from kivy.uix.button import Button
@@ -91,13 +92,13 @@ class MyApp(App):
         mainpage = MainPage()
 
         #testing
-        test = AESPage()
+        test = BlowfishPage()
 
         #production
-        #root.add_widget(mainpage.create())
+        root.add_widget(mainpage.create())
 
         #testing
-        root.add_widget(test.create())
+        #root.add_widget(test.create())
 
         return root
 ################################################################################
@@ -233,35 +234,52 @@ class MainPage(ButtonBehavior):
         webbrowser.open("http://simonsingh.net/")
 
     def pressed_kev(self, *args):
-        f.write('kev pressed\n')
+        f.write('Current Cryptography pressed\n')
         MyApp.trail.append(self)
         root.clear_widgets()
-        root.add_widget(KevPage().create())
+        root.add_widget(CurrentCryptographyPage().create())
 
 ################################################################################
 #End Home Page
 ################################################################################
 
 ################################################################################
-#Begin Kev Page
+#Begin Current Cryptography Page
+#-Symmetric
+#   -AES - block
+#   -Blowfish - block
+#   -Twofish - block
+#   -IDEAalg - block
+#   -RC4 - stream
+#-Asymmetric
+#   -SSH - protocol
+#   -SSL - Protocol
+#   -Bitcoin - Protocol
+#   -DSS
+#-Hash
+#   -MD5
+#   -SHA0
+#   -SHA1
+#   -SHA256
+#   -BLAKE2
 ################################################################################
-class KevPage(ButtonBehavior):
+class CurrentCryptographyPage(ButtonBehavior):
     def __init__(self):
         pass
 
     def create(self):
-        f.write('kevs page entered\n')
+        f.write('Current Cryptography page entered\n')
         MyApp.current = self
         #root layout of the instance
         self.r = RelativeLayout()
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
         #create the topbar and add the title to it
-        self.tb = self.topbar.create('Modern Times')
+        self.tb = self.topbar.create('Current Cryptography')
         self.x = .75
         self.btnsize = (.2,.1)
 
-        with open('texts/kevstuff.txt', 'r') as myfile:
+        with open('texts/currentcryptography.txt', 'r') as myfile:
             data = myfile.read()
         self.text = Label(text = data,
                             pos_hint = {'x':.425, 'top':.9},
@@ -304,7 +322,7 @@ class KevPage(ButtonBehavior):
         #md5, sha1, sha256 interactive
         #md5 and sha0 are vulnerable
 ################################################################################
-#End Kev Page
+#End Current Cryptography Page
 ################################################################################
 
 
@@ -380,6 +398,9 @@ class SymmetricPage(ButtonBehavior):
 
     def twofishpressed(self, *args):
         f.write('twofish button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(TwofishPage().create())
 
     def ideapressed(self, *args):
         f.write('idea button pressed\n')
@@ -579,6 +600,214 @@ class BlowfishPage(ButtonBehavior):
     def create(self):
         f.write('Blowfish page entered\n')
         MyApp.current = self
+        self.crypt = chilkat.CkCrypt2()
+        self.secret = ''
+        self.encrypted = ''
+
+        #root layout of the instance
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        #create the topbar and add the title to it
+        self.tb = self.topbar.create('Blowfish')
+        self.x = .75
+        self.btnsize = (.2,.1)
+        self.txtinsz = (.475,.2)
+
+        with open('texts/blowfish.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.4, 'top':.9},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.link1 = Label(text = 'Information from: [color=ffff00][ref=aes]https://www.schneier.com/academic/blowfish/[/ref][/color]',
+                            pos_hint = {'x':.4, 'top':.15},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.link1)
+        self.link2 = Label(text = 'Algorithm from: [color=ffff00][ref=link2]https://www.example-code.com/python/crypt2_blowfish.asp[/ref][/color]',
+                            pos_hint = {'x':.4, 'top':.125},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.link2)
+
+        self.plaintextlabel = Label(text = "Plaintext",
+                            pos_hint = {'x':.4375, 'top':.825},
+                            size_hint = (.2,.2),
+                            font_size = 13)
+        self.plaintextinput = maxinput(text = '',
+                            pos_hint = {'x':.5, 'top':.7},
+                            size_hint = self.txtinsz)
+        self.plaintextinput.max_chars = 24
+
+        self.ciphertextlabel = Label(text = "Ciphertext",
+                            pos_hint = {'x':.4375, 'top':.525},
+                            size_hint = (.2,.2),
+                            font_size = 13)
+        self.ciphertextdisplay = Label(text = '',
+                            pos_hint = {'x':0, 'top':.7},
+                            size_hint = (1,1),
+                            markup = True,
+                            font_size = 24)
+
+        self.encryptbutton = Button(text = 'Encrypt',
+                            pos_hint = {'x':.5, 'top':.495},
+                            size_hint = (.475,.05),
+                            on_release = self.encryptpressed)
+
+        self.decryptbutton = Button(text = 'Decrypt',
+                            pos_hint = {'x':.5, 'top':.425},
+                            size_hint = (.475,.05),
+                            on_release = self.decryptpressed,
+                            disabled = True)
+
+        self.decryptdisplay = Label(text = '',
+                            pos_hint = {'x':0, 'top':.65},
+                            size_hint = (1,1),
+                            markup = True,
+                            font_size = 24)
+
+        self.instructions = Label(text = 'Type your message into the plaintext box\n' +
+                                        'and press the encrypt button. The AES encrypted\n' +
+                                        'message will display at the bottom of the page.\n' +
+                                        'Pressing the decrypt button will decrypt the AES\n' +
+                                        'encrypted message and display it at the bottom of\n' +
+                                        'the screen.',
+                            pos_hint = {'x':.135, 'top':.685},
+                            size_hint = (.2,.2))
+
+        #add widgets to the main layout
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.link1)
+        self.r.add_widget(self.link2)
+        self.r.add_widget(self.plaintextlabel)
+        self.r.add_widget(self.plaintextinput)
+        self.r.add_widget(self.ciphertextdisplay)
+        self.r.add_widget(self.encryptbutton)
+        self.r.add_widget(self.decryptbutton)
+        self.r.add_widget(self.decryptdisplay)
+        #self.r.add_widget(self.instructions)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def encryptpressed(self, *args):
+        f.write('encrypt button pressed\n')
+        self.decryptbutton.disabled = False
+        self.encryptbutton.disabled = True
+        self.ciphertextdisplay.text = ''
+        self.decryptdisplay.text = ''
+        self.encrypted = self.encrypt()
+        self.ciphertextdisplay.text = '[color=ff0000][b]' + self.encrypted + '[/color][/b]'
+
+    #trial chilkat
+    #https://www.example-code.com/python/crypt2_blowfish.asp
+    #def encrypt(self, *args):
+        f.write('encrypting...\n')
+
+        success = self.crypt.UnlockComponent("Anything for 30-day trial")
+        if (success != True):
+            f.write(self.crypt.lastErrorText() + '\n')
+            sys.exit()
+
+        #  Attention: use "blowfish2" for the algorithm name:
+        self.crypt.put_CryptAlgorithm("blowfish2")
+
+        #  CipherMode may be "ecb", "cbc", or "cfb"
+        self.crypt.put_CipherMode("cbc")
+
+        #  KeyLength (in bits) may be a number between 32 and 448.
+        #  128-bits is usually sufficient.  The KeyLength must be a
+        #  multiple of 8.
+        self.crypt.put_KeyLength(128)
+
+        #  The padding scheme determines the contents of the bytes
+        #  that are added to pad the result to a multiple of the
+        #  encryption algorithm's block size.  Blowfish has a block
+        #  size of 8 bytes, so encrypted output is always
+        #  a multiple of 8.
+        self.crypt.put_PaddingScheme(0)
+
+        #  EncodingMode specifies the encoding of the output for
+        #  encryption, and the input for decryption.
+        #  It may be "hex", "url", "base64", or "quoted-printable".
+        self.crypt.put_EncodingMode("hex")
+
+        #  An initialization vector is required if using CBC or CFB modes.
+        #  ECB mode does not use an IV.
+        #  The length of the IV is equal to the algorithm's block size.
+        #  It is NOT equal to the length of the key.
+        ivHex = "0001020304050607"
+        self.crypt.SetEncodedIV(ivHex,"hex")
+
+        #  The secret key must equal the size of the key.  For
+        #  256-bit encryption, the binary secret key is 32 bytes.
+        #  For 128-bit encryption, the binary secret key is 16 bytes.
+        keyHex = "000102030405060708090A0B0C0D0E0F"
+        self.crypt.SetEncodedKey(keyHex,"hex")
+
+        #  Encrypt a string...
+        #  The input string is 44 ANSI characters (i.e. 44 bytes), so
+        #  the output should be 48 bytes (a multiple of 8).
+        #  Because the output is a hex string, it should
+        #  be 96 characters long (2 chars per byte).
+        encStr = self.crypt.encryptStringENC(str(self.plaintextinput.text))
+        f.write(encStr + '\n')
+        return encStr
+
+    def encrypt(self, *args):
+        f.write('encrypting...\n')
+
+        crypt_obj = Blowfish.new('abcdefghijklmnop', Blowfish.MODE_ECB)
+        ciphertext = crypt_obj.encrypt(pad_string(self.plaintextinput.ext))
+
+        f.write("Blowfish Cyphertext: " + ciphertext)
+        print "Back to Plaintext: " + crypt_obj.decrypt(ciphertext)
+
+    def padding(self, *args):
+        f.write('padding..\n')
+        INPUT_SIZE = 8
+        new_str = str
+    	pad_chars = INPUT_SIZE - (len(str) % INPUT_SIZE)
+
+    	if pad_chars != 0:
+    		for x in range(pad_chars):
+    			new_str += " "
+
+
+    	return new_str
+
+    def decryptpressed(self, *args):
+        f.write('decrypt button pressed\n')
+        self.encryptbutton.disabled = False
+        self.decryptbutton.disabled = True
+        #decrypt:
+        decStr = self.crypt.decryptStringENC(self.encrypted)
+        f.write(decStr + '\n')
+        self.decryptdisplay.text = '[color=ff0000][b]' + decStr + '[/color][/b]'
+
+    def link1(self, *args):
+        f.write('opening https://www.schneier.com/academic/blowfish/ ...\n')
+        webbrowser.open("https://www.schneier.com/academic/blowfish/")
+
+    def link2(self, *args):
+        f.write('opening https://www.example-code.com/python/crypt2_blowfish.asp ...\n')
+        webbrowser.open("https://www.example-code.com/python/crypt2_blowfish.asp")
+################################################################################
+#End Blowfish Page
+################################################################################
+
+
+################################################################################
+#Begin Twofish Page
+################################################################################
+class TwofishPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Twofish page entered\n')
+        MyApp.current = self
         self.cipher = ''
         self.secret = ''
         self.encoded = ''
@@ -588,7 +817,7 @@ class BlowfishPage(ButtonBehavior):
         self.topbar = TopBar()
         MyApp.topbar = self.topbar
         #create the topbar and add the title to it
-        self.tb = self.topbar.create('Blowfish')
+        self.tb = self.topbar.create('Twofish')
         self.x = .75
         self.btnsize = (.2,.1)
         self.txtinsz = (.475,.2)
@@ -685,8 +914,10 @@ class BlowfishPage(ButtonBehavior):
         f.write('opening http://www.codekoala.com/posts/aes-encryption-python-using-pycrypto/ ...\n')
         webbrowser.open("http://www.codekoala.com/posts/aes-encryption-python-using-pycrypto/")
 ################################################################################
-#End Blowfish Page
+#End Twofish Page
 ################################################################################
+
+
 
 ################################################################################
 #Begin Highlights Page
