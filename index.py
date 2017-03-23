@@ -2449,6 +2449,7 @@ class DigraphPage(ButtonBehavior):
 
 ################################################################################
 #Begin Playfair Cipher Page
+"""ERROR fix bug """
 ################################################################################
 class PlayfairPage(ButtonBehavior):
     def __init__(self):
