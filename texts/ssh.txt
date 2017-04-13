@@ -1,0 +1,8 @@
+Secure Shell (SSH) is primarily used for remote access to computer systems by users. SSH 
+provides a secure channel over an unsecured network in a client-server architecture, 
+connecting an SSH client application with an SSH server. It is an alternative to some other 
+protocols such as telnet, rlogin, and FTP. The connection is first established by the SSH 
+client connecting to the SSH server. The SSH client drives the connection setup process 
+and uses public key cryptography to verify the identity of the SSH server. Once setup, the 
+SSH protocol uses symmetric encryption and hashing algorithms to ensure privacy of the 
+transferred information.

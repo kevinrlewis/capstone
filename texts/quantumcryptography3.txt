@@ -17,11 +17,6 @@ an encrypted text also made up of 1s and 0s; the
 only unusual adding rule is that 1 + 1 = 0.
 Finally, Alice sends the encrypted text to Bob.
 
-
-
-
-
-
 This type of code is impossible to crack because
 each element of Alice's key is random. Even if
 Eve were to use computational brute force to try

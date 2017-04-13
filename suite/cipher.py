@@ -1,12 +1,20 @@
 import sys
 import os
+import itertools
 from collections import deque
 from random import shuffle
 from random import randint
 from random import choice
 from fractions import gcd
 
-#arg1 = cipher type (r,c,a,gm,di,p,h,ks,s,v,adfgvx,aes)
+
+#key file
+try:
+    os.remove('key')
+except OSError:
+    print 'file does not exist'
+k = open('key', 'w+')
+#arg1 = cipher type (r,c,a,gm,di,p,h,ks,s,v,adfgvx)
 #arg2 = encrypt or decrypt
 #arg3 = file or text (file or text)
 #
@@ -20,14 +28,52 @@ def main():
     kama = KamaSutra()
     swap = Swapping()
     vig = Vigenere()
-    #print "ciphertext: " + railfence.encrypt('hello', 2)
+    dig = DigraphSub()
+    play = Playfair()
+    adf = ADFGVX()
+
+    #railfence
+    #print "ciphertext: " + railfence.encrypt('kevin', 2)
+    #print "deciphered: " + railfence.decrypt('kvnei', 2)
+
+    """caesar done"""
+    #caesar
     #print "ciphertext: " + caesar.encrypt('hello my name is kevin', 2, True)
-    #print "ciphertext: " + atbash.encrypt('hello my name is kevin', True)
+    #print "deciphered: " + caesar.decrypt(2, "jgnnq oa pcog ku mgxkp")
+    #caesar.iterdecrypt('pmttw ug vium qa smdqv')
+
+    """atbash done"""
+    #atbash
+    #print "ciphertext: " + atbash.encrypt('hello my name is kevin')
+    #print "plaintext deciphered: " + atbash.decrypt('svool nb mznv rh pverm')
+
+    """genmono done"""
+    #general monoalphabetic
     #print "ciphertext: " + genmono.encrypt('hello my name is kevin')
+    print 'deciphered: ' + genmono.decrypt('emvvg zi kazm wf rmqwk', 'anjumxoewcrvzkgtlsfpyqbhid')
+
+    #homophonic
     #print "ciphertext: " + homophonic.encrypt('hello my name is kevin')
+
+    #kama-sutra
     #print "ciphertext: " + kama.encrypt('hello my name is kevin')
+
+    #swapping cipher
     #print "ciphertext: " + swap.encrypt('hello my name is kevin')
-    print "ciphertext: " + vig.encrypt('white', 'divert troops to east ridge')
+
+    #vigenere cipher
+    #print "ciphertext: " + vig.encrypt('white', 'divert troops to east ridge')
+
+    #digraph substitution
+    #print "ciphertext: " + dig.encrypt('hello my name is kevin')
+
+    #playfair cipher
+    #print "ciphertext: " + play.encrypt('charles', 'meet me at hammersmith bridge tonight')
+
+    #ADFGVX
+    #print "ciphertext: " + adf.encrypt('mark', 'attack at 10pm')
+
+#transposition cipher
 class Railfence():
     def __init__(self):
         pass
@@ -43,7 +89,7 @@ class Railfence():
             textlist.append(str(c))
         count = n
         newstr = ''
-
+        print "textlist: " + str(textlist)
         for i in range(count):
             newlist = []
             for k in range(len(textlist)):
@@ -55,6 +101,8 @@ class Railfence():
                         pass
             self.big.append(newlist)
 
+        print "big: " + str(self.big)
+
         newstr = ''
         #iterate through the lists in big
         for l in self.big:
@@ -62,8 +110,22 @@ class Railfence():
         return newstr
 
     def decrypt(self, text, shiftnum, *args):
-        pass
+        text = text.replace(' ', '')
+        textlist = []
+        for c in text:
+            textlist.append(str(c))
+        print textlist
 
+        count = 0
+        big = []
+        for j in range(len(textlist)):
+            templist = []
+            for i in range(shiftnum):
+                if j%(i+1):
+                    pass
+
+        return ''
+        
 #given text and shift amount
 #the alphabet is shifted and enciphered text
 #is created through mirrored indexes
@@ -73,7 +135,7 @@ class Caesar():
 
     #encrypts text by a given shift amount
     def encrypt(self, text, shift, spaces, *args):
-        print "plaintext: " + text + " shift: " + str(shiftnum) + " spaces: " + str(spaces)
+        #print "plaintext: " + text + " shift: " + str(shiftnum) + " spaces: " + str(spaces)
         #create the two alphabets
         alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -95,10 +157,58 @@ class Caesar():
                     enciphered += newalpha[i]
             if (letter == " ") and spaces:
                 enciphered += " "
+        k.write(str(shift))
         return enciphered
 
-    def decrypt(self, know, shift, text, spaces, *args):
-        pass
+    def decrypt(self, shift, text, *args):
+        #create the two alphabets
+        alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        #using deque to allow shifting of the lists
+        newalpha = deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z'])
+
+        newalpha.rotate(-(int(shift)))
+        text = text.lower()
+        deciphered = ""
+
+        #iterate through the string of text
+        for letter in text:
+            #iterate through the alphabet list
+            for i in range(len(alpha)):
+                if newalpha[i] == letter:
+                    deciphered += alpha[i]
+            if (letter == " "):
+                deciphered += " "
+        return deciphered
+
+    #iterate through all possible shifted alphabets
+    #to decipher text
+    def iterdecrypt(self, text, *args):
+        alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        #using deque to allow shifting of the lists
+        newalpha = deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z'])
+
+        for i in range(26):
+            newalpha.rotate(-(int(1)))
+            text = text.lower()
+            deciphered = ""
+
+            #iterate through the string of text
+            for letter in text:
+                #iterate through the alphabet list
+                for i in range(len(alpha)):
+                    if newalpha[i] == letter:
+                        deciphered += alpha[i]
+                if (letter == " "):
+                    deciphered += " "
+            print deciphered
 
 #reversed alphabet
 #mirrored indexes
@@ -107,8 +217,8 @@ class Atbash():
         pass
 
     #encryption function for atbashen
-    def encrypt(self, text, spaces, *args):
-        print "plaintext: " + text + " spaces: " + str(spaces)
+    def encrypt(self, text, *args):
+        print "plaintext: " + text
         enciphered = ""
         text = text.lower()
         self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
@@ -124,12 +234,28 @@ class Atbash():
                 #append the reversed letter
                 if self.alpha[i] == letter:
                     enciphered += self.newalpha[i]
-            if (letter == " ") and spaces:
+            if (letter == " "):
                 enciphered += " "
         return enciphered
 
     def decrypt(self, text, *args):
-        pass
+        deciphered = ""
+        text = text.lower()
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        #reverse the list
+        self.newalpha = self.alpha[::-1]
+        #iterate throught the plaintext letters
+        for letter in text:
+            #iterate throught the original alphabet
+            for i in range(len(self.newalpha)):
+                #append the reversed letter
+                if self.newalpha[i] == letter:
+                    deciphered += self.alpha[i]
+            if (letter == " "):
+                deciphered += " "
+        return deciphered
 
 #shuffles english alphabet with shuffle from the random library
 class GenMono():
@@ -144,6 +270,7 @@ class GenMono():
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
         shuffle(self.newalpha)
+        k.write(''.join(self.newalpha))
         enciphered = ""
 
         #iterate through the string of text
@@ -157,16 +284,224 @@ class GenMono():
 
         return enciphered
 
-    def decrypt(self, text, *args):
-        pass
+    #able to decipher if shuffled alphabet is known
+    def decrypt(self, text, alphabet, *args):
+        alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        newalpha = list(alphabet)
+        deciphered = ''
+        #iterate through the string of text
+        for letter in text:
+            #iterate through the alphabet list
+            for i in range(len(alpha)):
+                if newalpha[i] == letter:
+                    deciphered += alpha[i]
+            if (letter == " "):
+                deciphered += " "
 
+        return deciphered
+
+#digraph is created from two shuffled alphabets
+#depending on every pairs of two letters in the plaintext
+#there is an enciphered pair
 class DigraphSub():
     def __init__(self):
         pass
 
+    def encrypt(self, text, *args):
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        self.alpha1 = deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z'])
+
+        self.alpha2 = deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z'])
+
+        self.random1 = randint(0, 26)
+        self.random2 = randint(0, 26)
+
+        self.alpha1.rotate(self.random1)
+        self.alpha2.rotate(self.random2)
+
+        self.listalpha1 = list(self.alpha1)
+        self.listalpha2 = list(self.alpha2)
+        self.dub = []
+
+        for letter in self.listalpha1:
+            templist = []
+            for letter2 in self.listalpha2:
+                templist.append((letter2, letter))
+            self.dub.append(templist)
+
+        text = text.replace(" ", "")
+        text = text.strip()
+        tempstr = ''
+
+        count = 0
+        for letter in text:
+            if count == 1:
+                tempstr = tempstr + letter + ' '
+                count = 0
+            else:
+                tempstr = tempstr + letter
+                count = count + 1
+
+        if (len(text) % 2) != 0:
+            tempstr = tempstr + 'x'
+        dig = tempstr
+        dig = dig.strip()
+        dig = dig.split(' ')
+        enciphered = ''
+        for di in dig:
+            index1 = self.alpha.index(di[0])
+            index2 = self.alpha.index(di[1])
+            enciphered = str(enciphered) + ''.join(self.dub[index2][index1]) + ' '
+        enciphered = enciphered.replace(' ', '')
+        return enciphered
+
+#given keyword and text
 class Playfair():
     def __init__(self):
         pass
+
+    def encrypt(self, keyword, text, *args):
+        #grid
+        self.comb = []
+        #alphabet without j
+        self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
+        newalpha = []
+        for letter in keyword:
+            for i in self.alpha:
+                if letter == i:
+                    self.alpha.remove(i)
+
+        keylist = list(keyword)
+        shuffle(self.alpha)
+        self.comb = keylist + self.alpha
+
+        #create di text
+        text = text.replace(" ", "")
+        text = text.strip()
+        tempstr = ''
+
+        count = 0
+        yes = 0
+        for letter in range(len(text)):
+            if count == 1:
+                tempstr = tempstr + text[letter] + ' '
+                count = 0
+            else:
+                try:
+                    #check for index error
+                    text[letter+1]
+                    yes = 1
+                except Exception as e:
+                    yes = 0
+                if yes and text[letter] == text[letter+1]:
+                    tempstr = tempstr + text[letter] + 'x '
+                    count = 0
+                else:
+                    tempstr = tempstr + text[letter]
+                    count += 1
+
+        check = tempstr.replace(' ', '')
+
+        if (len(check) % 2) != 0:
+            tempstr = tempstr + 'x'
+
+        final = ''
+        templist = []
+        newlist = []
+        ditext = tempstr
+        dilist = ditext.split(" ")
+        #set newlist up into a 2 dimensional list
+        #5 rows i.e. 5 lists within a list
+        #each index of the inner list corresponds to a column
+        for i in range(len(self.comb)):
+            if (i+1) % 5 == 0:
+                templist.append(self.comb[i])
+                newlist.append(templist)
+                templist = []
+            else:
+                templist.append(self.comb[i])
+
+        for i in dilist:
+            if i == '':
+                dilist.remove(i)
+
+        for di in dilist:
+            #if both letter in the di are in the same row
+            #then they are replaced by the letter to the right
+            #of them
+            pass1 = False
+            for inner in newlist:
+                if di[0] in inner and di[1] in inner:
+                    try:
+                        final += inner[inner.index(di[0]) + 1]
+                    except Exception as e:
+                        final += inner[0]
+                    try:
+                        final += inner[inner.index(di[1]) + 1] + ' '
+                    except Exception as e:
+                        final += inner[0] + ' '
+                    pass1 = True
+                    break
+            if pass1:
+                continue
+            #if both letters are in the same column
+            #then they are replaced by the letter beneath
+            #them
+            i1 = 0
+            i2 = 0
+            inner1 = 0
+            inner2 = 0
+            for inner in range(len(newlist)):
+                inn = newlist[inner]
+                for i in range(len(inn)):
+                    if inn[i] == di[0]:
+                        i1 = i
+                        inner1 = inner
+                    if inn[i] == di[1]:
+                        i2 = i
+                        inner2 = inner
+            if i1 == i2:
+                index = i1
+                try:
+                    final += newlist[inner1+1][index]
+                except Exception as e:
+                    final += newlist[0][index]
+                try:
+                    final += newlist[inner2+1][index] + ' '
+                except Exception as e:
+                    final += newlist[0][index] + ' '
+                continue
+
+            #if the letters are neither in the same column
+            #nor row then the letter is replaced by a letter of
+            #the same row of the first letter and of the same
+            #column of the second letter and vice versa
+            loc1 = []
+            loc2 = []
+            for inner in range(len(newlist)):
+                inn = newlist[inner]
+                for i in range(len(inn)):
+                    if di[0] == inn[i]:
+                        loc1.append(inner)
+                        loc1.append(i)
+                    if di[1] == inn[i]:
+                        loc2.append(inner)
+                        loc2.append(i)
+            final += newlist[loc1[0]][loc2[1]]
+            final += newlist[loc2[0]][loc1[1]] + ' '
+
+        final = final.replace(' ', '')
+        return final
 
 #enciphers text with numbers depending on the frequency
 #of the letter in the plaintext
@@ -365,13 +700,109 @@ class Vigenere():
 
         return enciphered
 
+#user gives a keyword and text
+#keyword is transposed
+#text is changed into two letter pairs
+#based on shuffled adfgvx grid the encipher ditext is created
+#then transposed based on keyword
 class ADFGVX():
     def __init__(self):
         pass
 
-class AES():
-    def __init__(self):
-        pass
+    def encrypt(self, keyword, text, *args):
+        self.alphanum = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6',
+                '7', '8', '9']
+        self.a = ['a', 'd', 'f', 'g', 'v', 'x']
+        #grid
+        self.dub = []
+        rand = randint(1, len(keyword))
+        newstrlist = deque(list(keyword))
+        newstrlist.rotate(rand)
+        keyword2 = ''.join(list(newstrlist))
+
+        #create the grid
+        for i in self.a:
+            templist = []
+            for a in self.a:
+                rand = randint(0, len(self.alphanum))
+                templist.append(self.alphanum[rand-1])
+                self.alphanum.remove(self.alphanum[rand-1])
+            self.dub.append(templist)
+
+        #grid created above
+
+        #create ditext
+        ditext = ''
+        for letter in text:
+            index = []
+            if letter == ' ':
+                pass
+            else:
+                for i in range(len(self.dub)):
+                    if letter in self.dub[i]:
+                        index = [i, self.dub[i].index(letter)]
+                ditext += self.a[index[0]] + self.a[index[1]] + ' '
+        #ditext created
+
+        #form keyword grid
+        ditext = ditext.replace(' ', '')
+        grid = ''
+        count = len(keyword)
+        for letter in ditext:
+            grid += letter
+            count = count - 1
+            if count == 0:
+                grid += '\n'
+                count = len(keyword)
+
+        templist = grid.split('\n')
+        if '' in templist:
+            templist.remove('')
+        length = len(templist[0])
+        for group in templist:
+            if len(group) != length:
+                n = length - len(group)
+                newgroup = group + n*'x'
+                templist.remove(group)
+                templist.append(newgroup)
+
+        #keyword1text.text
+        grid = '\n'.join(templist)
+        #formed keyword grid
+
+        #transpose keyword grid
+        listgrid = grid.split('\n')
+        indexes = []
+        newlistgrid = []
+        for i in range(len(keyword)):
+            for letter in range(len(keyword2)):
+                if keyword2[letter] == keyword[i]:
+                    indexes.append(letter)
+                    break
+        for j in listgrid:
+            if j == '':
+                pass
+            else:
+                tempnew = ''
+                for n in indexes:
+                    tempnew += j[n]
+                newlistgrid.append(tempnew)
+        newnewgrid = '\n'.join(newlistgrid)
+        #end transpose keyword grid
+
+        #final stage
+        temptext = newnewgrid.split('\n')
+        final = ''
+        length = len(keyword) - 1
+        count = length
+        for i in range(length):
+            for group in temptext:
+                final += group[length - count]
+            count = count - 1
+
+        return final
 
 if __name__ == '__main__':
     main()

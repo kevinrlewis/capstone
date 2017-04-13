@@ -1,0 +1,5 @@
+The MD5 hash algorithm was developed by Ronald Rivest, who is also known from RSA, and it produces a 128-bit 
+hash value. It was initially designed to be used as a cryptographic hash function but suffers from extensive 
+vulnerabilities. Now it is commonly used as a checksum to verify data integrity. The MD5 hash function is 
+vulnerable mostly due to the possibility of collision attack on the hash function. A collision attack on hash 
+tries to find two inputs producing the same hash value.

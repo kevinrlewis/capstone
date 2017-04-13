@@ -1,4 +1,4 @@
-Symmetric-key, or public-key, algorithms use the same key to encrypt and decrypt the text the user is trying 
+Symmetric-key, or private-key, algorithms use the same key to encrypt and decrypt the text the user is trying 
 to encrypt. They keys can be perceived as a shared secret between the sender and the recipient. There are two 
 main types of algorithms which are stream ciphers and block ciphers. Stream ciphers encrypt the bytes of the 
 message one at a time. While block ciphers take multiple bits and encrypt them as a single unit. Some popular 
