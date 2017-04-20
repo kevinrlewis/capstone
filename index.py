@@ -5503,9 +5503,6 @@ class AlternativeCiphersPage(ButtonBehavior):
 
 ################################################################################
 #Begin Book Ciphers Page
-"""TO DO:
-- finish page
-"""
 ################################################################################
 class BookCiphersPage(ButtonBehavior):
     def __init__(self):
@@ -5591,7 +5588,7 @@ class BookCiphersPage(ButtonBehavior):
 
     def encipherpressed(self, *args):
         f.write('encipher button pressed\n')
-        ciphertext.text = self.encrypt()
+        self.ciphertext.text = self.encrypt()
 
 
     def encrypt(self, *args):
@@ -5602,27 +5599,20 @@ class BookCiphersPage(ButtonBehavior):
         keytext = keytext.replace('.', '')
         enciphered = ''
         plaintext = self.plaintext.text
-
-
         temptext = plaintext.replace(' ', '')
-        textlist = list(temptext)
-        enclist = enciphered.split(' ')
-        f.write(str(textlist) + '\n')
-        f.write(str(enclist) + '\n')
-        while len(textlist) != len(enclist):
-            temptext = plaintext.replace(' ', '')
-            textlist = list(temptext)
-            enclist = enciphered.split(' ')
-            f.write(str(textlist) + '\n')
-            f.write(str(enclist) + '\n')
-            for letter in plaintext:
-                for i in range(len(keytext)):
-                    if letter == keytext[i]:
-                        poss = randint(1, keytext.count(letter))
-                        if poss == 1:
-                            enciphered += str(i) + ' '
-                        else:
-                            pass
+
+        letterdict = {}
+        #populate dictionary of the possible letters and their indexes
+        for i in range(len(keytext)):
+            letterdict[str(keytext[i])] = [i] + letterdict.get(str(keytext[i]), [])
+
+        f.write(str(letterdict))
+
+        #iterate through the plaintext and randomly choose indexes of the letters
+        #within the plaintext
+        for letter in temptext:
+            templist = letterdict.get(letter)
+            enciphered += str(choice(templist)) + ' '
 
         return enciphered
 
@@ -6051,26 +6041,8 @@ class CrackingVigenerePage(ButtonBehavior):
                                         on_release = self.onePressed,
                                         font_size = 14)
 
-        self.button2 = Button(text = "The Cracking\nPrinciple",
-                                        pos_hint = {'x':.8, 'top':.725},
-                                        size_hint = (.15,.1),
-                                        on_release = self.twoPressed,
-                                        font_size = 14)
-
-        self.button3 = Button(text = "A Cracking\nExample",
-                                        pos_hint = {'x':.8, 'top':.55},
-                                        size_hint = (.15,.1),
-                                        #on_release = self.threePressed,
-                                        font_size = 14)
-
-        self.button4 = Button(text = "Vigenere\nCracking Tool",
-                                        pos_hint = {'x':.8, 'top':.375},
-                                        size_hint = (.15,.1),
-                                        #on_release = self.fourPressed,
-                                        font_size = 14)
-
         self.button5 = Button(text = "Forgotten\nGenius",
-                                        pos_hint = {'x':.8, 'top':.55},
+                                        pos_hint = {'x':.8, 'top':.725},
                                         size_hint = (.15,.1),
                                         on_release = self.fivePressed,
                                         font_size = 14)
@@ -6087,9 +6059,6 @@ class CrackingVigenerePage(ButtonBehavior):
         self.r.add_widget(self.namelabel)
         self.r.add_widget(self.image)
         self.r.add_widget(self.button1)
-        self.r.add_widget(self.button2)
-        # self.r.add_widget(self.button3)
-        # self.r.add_widget(self.button4)
         self.r.add_widget(self.button5)
         self.r.add_widget(self.text)
         self.r.add_widget(self.tb)
@@ -6100,24 +6069,6 @@ class CrackingVigenerePage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(CharlesBabbagePage().create())
-
-    def twoPressed(self, *args):
-        f.write('the cracking principle pressed\n')
-        MyApp.trail.append(self)
-        root.clear_widgets()
-        root.add_widget(TheCrackingPrinciplePage().create())
-
-    # def threePressed(self, *args):
-    #     f.write('a cracking example pressed\n')
-    #     MyApp.trail.append(self)
-    #     root.clear_widgets()
-    #     root.add_widget(ACrackingExamplePage().create())
-    #
-    # def fourPressed(self, *args):
-    #     f.write('vigenere cracking tool pressed\n')
-    #     MyApp.trail.append(self)
-    #     root.clear_widgets()
-    #     root.add_widget(PinprickPage().create())
 
     def fivePressed(self, *args):
         f.write('forgotten genius pressed\n')
@@ -6206,9 +6157,6 @@ class CharlesBabbagePage(ButtonBehavior):
 
 ################################################################################
 #Begin Babbage's Computers Page
-"""TO DO:
-- missing image
-"""
 ################################################################################
 class BabbagesComputersPage(ButtonBehavior):
     def __init__(self):
@@ -6235,6 +6183,16 @@ class BabbagesComputersPage(ButtonBehavior):
                             pos_hint = {'x':.6, 'top':.325},
                             size_hint = (.2,.2))
 
+        self.image = Image(source = 'pics/babbagecomp.jpg',
+                            pos_hint = {'x':-.05, 'top':.525},
+                            size_hint = (.6,.6))
+        self.imagelabel = Label(text = 'Image from: http://www.computerhistory.org/babbage/',
+                            pos_hint = {'x':.125, 'top':.125},
+                            size_hint = (.2,.2),
+                            font_size = 12)
+
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.imagelabel)
         self.r.add_widget(self.text1)
         self.r.add_widget(self.text2)
         self.r.add_widget(self.tb)
@@ -6288,73 +6246,6 @@ class BabbageCodebreakerPage(ButtonBehavior):
 
 
 ################################################################################
-#Begin The Cracking Principle Page
-"""TO DO:
-- missing interactive part
-"""
-################################################################################
-class TheCrackingPrinciplePage(ButtonBehavior):
-    def __init__(self):
-        pass
-
-    def create(self):
-        f.write('the cracking principle page entered\n')
-        MyApp.current = self
-
-        self.r = RelativeLayout()
-        self.topbar = TopBar()
-        MyApp.topbar = self.topbar
-        self.tb = self.topbar.create("The Cracking Principle")
-
-        with open('texts/thecrackingprinciple.txt', 'r') as myfile:
-            data1 = myfile.read()
-        self.text1 = Label(text = data1,
-                            pos_hint = {'x':.165, 'top':.55},
-                            size_hint = (.2,.2),
-                            multiline = True,
-                            font_size = 14)
-
-        self.r.add_widget(self.text1)
-        self.r.add_widget(self.tb)
-        return self.r
-################################################################################
-#End The Cracking Principle Page
-################################################################################
-
-
-################################################################################
-#Begin A Cracking Example Page
-"""TO DO:
-- not in app?
-"""
-################################################################################
-class ACrackingExamplePage(ButtonBehavior):
-    def __init__(self):
-        pass
-
-    def create(self):
-        f.write('a cracking example page entered\n')
-        MyApp.current = self
-
-        self.r = RelativeLayout()
-        self.topbar = TopBar()
-        MyApp.topbar = self.topbar
-        self.tb = self.topbar.create("A Cracking Example")
-
-        with open('texts/acrackingexample.txt', 'r') as myfile:
-            data1 = myfile.read()
-        self.text1 = Label(text = data1,
-                            pos_hint = {'x':.4, 'top':.9},
-                            size_hint = (.2,.2))
-
-        self.r.add_widget(self.text1)
-        self.r.add_widget(self.tb)
-        return self.r
-################################################################################
-#End A Cracking Example Page
-################################################################################
-
-################################################################################
 #Begin Forgotten Genius Page
 ################################################################################
 class ForgottenGeniusPage(ButtonBehavior):
@@ -6403,9 +6294,6 @@ class ForgottenGeniusPage(ButtonBehavior):
 
 ################################################################################
 #Begin Mechanisation of Secrecy Page
-"""TO DO:
-- missing animation
-"""
 ################################################################################
 class MOFS(ButtonBehavior):
     def __init__(self):
@@ -6414,7 +6302,7 @@ class MOFS(ButtonBehavior):
     def create(self):
         f.write('Mechanisation of Secrecy page entered\n')
         MyApp.current = self
-
+        btnsz = (.15, .11)
         self.r = RelativeLayout()
 
         #create the topbar navigation
@@ -6425,42 +6313,42 @@ class MOFS(ButtonBehavior):
         with open('texts/mechanisationofsecrecy.txt', 'r') as myfile:
             data = myfile.read()
         self.text = Label(text = data,
-                            pos_hint = {'x':.3, 'top':.8},
+                            pos_hint = {'x':.3, 'top':.75},
                             size_hint = (.2,.2))
 
         self.button1 = Button(text = "World War I",
                                         pos_hint = {'x':.825, 'top':.9},
-                                        size_hint = (.15,.1),
+                                        size_hint = btnsz,
                                         on_release = self.onePressed,
                                         font_size = 14)
 
         self.button2 = Button(text = "Building\nEnigma",
-                                        pos_hint = {'x':.825, 'top':.725},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':.825, 'top':.75},
+                                        size_hint = btnsz,
                                         on_release = self.twoPressed,
                                         font_size = 14)
 
         self.button3 = Button(text = "Using the\nEnigma",
-                                        pos_hint = {'x':.825, 'top':.55},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':.825, 'top':.6},
+                                        size_hint = btnsz,
                                         on_release = self.threePressed,
                                         font_size = 14)
 
         self.button4 = Button(text = "Cracking the\nEnigma",
-                                        pos_hint = {'x':.825, 'top':.375},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':.825, 'top':.45},
+                                        size_hint = btnsz,
                                         on_release = self.fourPressed,
                                         font_size = 14)
 
         self.button5 = Button(text = "Enigma's\nImpact on\nWorld War\nII",
-                                        pos_hint = {'x':.825, 'top':.2},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':.825, 'top':.3},
+                                        size_hint = btnsz,
                                         on_release = self.fivePressed,
                                         font_size = 14)
 
         self.button6 = Button(text = "Other World\nWar II\nCiphers",
-                                        pos_hint = {'x':.825, 'top':.2},
-                                        size_hint = (.15,.1),
+                                        pos_hint = {'x':.825, 'top':.15},
+                                        size_hint = btnsz,
                                         on_release = self.sixPressed,
                                         font_size = 14)
 
@@ -6469,6 +6357,7 @@ class MOFS(ButtonBehavior):
         self.r.add_widget(self.button3)
         self.r.add_widget(self.button4)
         self.r.add_widget(self.button5)
+        self.r.add_widget(self.button6)
         self.r.add_widget(self.text)
         self.r.add_widget(self.tb)
         return self.r
@@ -7321,12 +7210,6 @@ class UsingEnigmaPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(AgreeingAKeyPage().create())
-
-    def fourPressed(self, *args):
-        f.write('enigma emulator pressed\n')
-        MyApp.trail.append(self)
-        root.clear_widgets()
-        root.add_widget(ReflectorPage().create())
 ################################################################################
 #End Using Enigma Page
 ################################################################################
@@ -7980,9 +7863,6 @@ class SecretSuccessPage(ButtonBehavior):
 
 ################################################################################
 #Begin Other WWII Ciphers Page
-"""TO DO:
-- button to this page is missing
-"""
 ################################################################################
 class OtherWWIICiphersPage(ButtonBehavior):
     def __init__(self):
@@ -9089,9 +8969,6 @@ class RivestShamirAdelmanPage(ButtonBehavior):
 
 ################################################################################
 #Begin Modular Arithmetic Page
-"""TO DO:
-- missing image file
-"""
 ################################################################################
 class ModularArithmeticPage(ButtonBehavior):
     def __init__(self):
@@ -9342,9 +9219,6 @@ class RSAAlgorithmPage(ButtonBehavior):
 
 ################################################################################
 #Begin RSA Algorithm 2 Page
-"""TO DO:
-- fix text tabbing
-"""
 ################################################################################
 class RSAAlgorithm2Page(ButtonBehavior):
     def __init__(self):
@@ -10110,9 +9984,6 @@ class NotJustSecretsPage(ButtonBehavior):
 
 ################################################################################
 #Begin The Secret History Page
-"""TO DO:
-- missing image or animation
-"""
 ################################################################################
 class TheSecretHistoryPage(ButtonBehavior):
     def __init__(self):
