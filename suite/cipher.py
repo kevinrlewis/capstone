@@ -14,46 +14,213 @@ try:
 except OSError:
     print 'file does not exist'
 k = open('key', 'w+')
-#arg1 = cipher type (r,c,a,gm,di,p,h,ks,s,v,adfgvx)
-#arg2 = encrypt or decrypt
-#arg3 = file or text (file or text)
+#arg[1] = cipher type (r,c,a,gm,di,p,ho,ks,s,v,adfgvx)
+#arg[2] = f or t (file or text)
+#arg[3] = path or text
+#arg[4] = encrypt or decrypt
 #
 def main():
     print sys.argv
-    railfence = Railfence()
-    caesar = Caesar()
-    atbash = Atbash()
-    genmono = GenMono()
-    homophonic = Homophonic()
-    kama = KamaSutra()
-    swap = Swapping()
-    vig = Vigenere()
-    dig = DigraphSub()
-    play = Playfair()
-    adf = ADFGVX()
+    arg = sys.argv
 
-    #railfence
-    #print "ciphertext: " + railfence.encrypt('kevin', 2)
-    #print "deciphered: " + railfence.decrypt('kvnei', 2)
+    print "railfence - r\ncaesar - c\natbash - a\ngeneral monoalphabetic - gm"
+    print "digraph - dm\nplayfair - p\nhomophonic - ho\nkama-sutra - ks\nswapping - s"
+    print "vigenere - v\nadfgvx - adfgvx\n\n"
+    ciph = raw_input("enter in cipher choice: ")
 
-    """caesar done"""
-    #caesar
-    #print "ciphertext: " + caesar.encrypt('hello my name is kevin', 2, True)
-    #print "deciphered: " + caesar.decrypt(2, "jgnnq oa pcog ku mgxkp")
-    #caesar.iterdecrypt('pmttw ug vium qa smdqv')
-
-    """atbash done"""
-    #atbash
-    #print "ciphertext: " + atbash.encrypt('hello my name is kevin')
-    #print "plaintext deciphered: " + atbash.decrypt('svool nb mznv rh pverm')
-
-    """genmono done"""
-    #general monoalphabetic
-    #print "ciphertext: " + genmono.encrypt('hello my name is kevin')
-    print 'deciphered: ' + genmono.decrypt('emvvg zi kazm wf rmqwk', 'anjumxoewcrvzkgtlsfpyqbhid')
-
-    #homophonic
-    #print "ciphertext: " + homophonic.encrypt('hello my name is kevin')
+    if ciph == 'r':
+        #introduce the cipher
+        print 'the railfence cipher is transposition cipher that uses a shift'
+        print 'amount to encrypt plaintext\n'
+        #initialize the class
+        railfence = Railfence()
+        print 'options for railfence\nencrypt - e'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        #determine if the user is using a file or text
+        choice2 = fileortext()
+        #if the user has a file
+        if choice2[0] == 'f':
+            #retrieve the file from the returned list
+            fil = choice2[1]
+            #read the lines and convert it into a string as plaintext
+            lines = fil.readlines()
+            plaintext = ''.join(lines)
+            #get the shift amount
+            shift = getshiftamount()
+            print railfence.encrypt(plaintext, shift)
+        #if the user has text
+        elif choice2[0] == 't':
+            plaintext = choice2[1]
+            shift = getshiftamount()
+            print railfence.encrypt(plaintext, shift)
+    elif ciph == 'c':
+        caesar = Caesar()
+        print 'the caesar cipher is substitution cipher that uses a shift'
+        print 'amount to encrypt plaintext by shifting the english alphabet\n'
+        print 'options for caesar\nencrypt - e\ndecrypt - d\niterative decryption - i'
+        choice1 = raw_input('enter choice: ')
+        if choice1 == 'e':
+            #encrypt
+            choice2 = fileortext()
+            if choice2[0] == 'f':
+                fil = choice2[1]
+                lines = fil.readlines()
+                plaintext = ''.join(lines)
+                shift = getshiftamount()
+                print caesar.encrypt(plaintext, shift)
+            elif choice2[0] == 't':
+                plaintext = choice2[1]
+                shift = getshiftamount()
+                print caesar.encrypt(plaintext, shift)
+        elif choice1 == 'd':
+            #decrypt
+            choice2 = fileortext()
+            if choice2[0] == 'f':
+                fil = choice2[1]
+                lines = fil.readlines()
+                plaintext = ''.join(lines)
+                shift = getshiftamount()
+                print caesar.decrypt(plaintext, shift)
+            elif choice2[0] == 't':
+                plaintext = choice2[1]
+                shift = getshiftamount()
+                print caesar.decrypt(plaintext, shift)
+        elif choice1 == 'i':
+            #iterative decryption
+            choice2 = fileortext()
+            if choice2[0] == 'f':
+                fil = choice2[1]
+                lines = fil.readlines()
+                plaintext = ''.join(lines)
+                print caesar.iterdecrypt(plaintext)
+            elif choice2[0] == 't':
+                plaintext = choice2[1]
+                print caesar.iterdecrypt(plaintext)
+    elif ciph == 'a':
+        atbash = Atbash()
+        #introduce the cipher
+        print 'the atbash cipher is substitution cipher that uses the backwards'
+        print 'alphabet to encrypt plaintext\n'
+        print 'options for atbash\nencrypt - e\ndecrypt - d'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        if choice1 == 'e':
+            #determine if the user is using a file or text
+            choice2 = fileortext()
+            #if the user has a file
+            if choice2[0] == 'f':
+                #retrieve the file from the returned list
+                fil = choice2[1]
+                #read the lines and convert it into a string as plaintext
+                lines = fil.readlines()
+                plaintext = ''.join(lines)
+                print atbash.encrypt(plaintext)
+            #if the user has text
+            elif choice2[0] == 't':
+                plaintext = choice2[1]
+                print atbash.encrypt(plaintext)
+        elif choice1 == 'd':
+            #determine if the user is using a file or text
+            choice2 = fileortext()
+            #if the user has a file
+            if choice2[0] == 'f':
+                #retrieve the file from the returned list
+                fil = choice2[1]
+                #read the lines and convert it into a string as plaintext
+                lines = fil.readlines()
+                plaintext = ''.join(lines)
+                print atbash.decrypt(plaintext)
+            #if the user has text
+            elif choice2[0] == 't':
+                plaintext = choice2[1]
+                print atbash.decrypt(plaintext)
+        else:
+            print 'invalid input - exiting...'
+            sys.exit()
+    elif ciph == 'gm':
+        genmono = GenMono()
+        #introduce the cipher
+        print 'the general monoalphabetic cipher is substitution cipher that'
+        print 'uses a shuffled alphabet to encrypt plaintext\n'
+        print 'options for general monoalphabetic\nencrypt - e\ndecrypt - d'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        if choice1 == 'e':
+            #determine if the user is using a file or text
+            choice2 = fileortext()
+            #if the user has a file
+            if choice2[0] == 'f':
+                #retrieve the file from the returned list
+                fil = choice2[1]
+                #read the lines and convert it into a string as plaintext
+                lines = fil.readlines()
+                plaintext = ''.join(lines)
+                print genmono.encrypt(plaintext)
+            #if the user has text
+            elif choice2[0] == 't':
+                plaintext = choice2[1]
+                print genmono.encrypt(plaintext)
+        elif choice1 == 'd':
+            #determine if the user is using a file or text
+            choice2 = fileortext()
+            #retrieve the shuffled alphabet key to decrypt the plaintext
+            shuffledalphabet = raw_input("please enter the shuffled alphabet to decrypt\n(no spaces just letters): ")
+            #if the user has a file
+            if choice2[0] == 'f':
+                #retrieve the file from the returned list
+                fil = choice2[1]
+                #read the lines and convert it into a string as plaintext
+                lines = fil.readlines()
+                plaintext = ''.join(lines)
+                print genmono.decrypt(plaintext, shuffledalphabet)
+            #if the user has text
+            elif choice2[0] == 't':
+                plaintext = choice2[1]
+                print genmono.decrypt(plaintext, shuffledalphabet)
+        else:
+            print 'invalid input - exiting...'
+            sys.exit()
+    elif ciph == 'di':
+        dig = DigraphSub()
+    elif ciph == 'p':
+        play = Playfair()
+    elif ciph == 'ho':
+        homophonic = Homophonic()
+        #introduce the cipher
+        print 'the homophonic cipher is substitution cipher that uses a'
+        print 'letter frequency and randomize numbers to encrypt plaintext,'
+        print 'the encryption can use any letters or numbers but in this '
+        print 'encryption we are using numbers\n'
+        print 'options for railfence\nencrypt - e'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        #determine if the user is using a file or text
+        choice2 = fileortext()
+        #if the user has a file
+        if choice2[0] == 'f':
+            #retrieve the file from the returned list
+            fil = choice2[1]
+            #read the lines and convert it into a string as plaintext
+            lines = fil.readlines()
+            plaintext = ''.join(lines)
+            #get the shift amount
+            print homophonic.encrypt(plaintext)
+        #if the user has text
+        elif choice2[0] == 't':
+            plaintext = choice2[1]
+            print homophonic.encrypt(plaintext)
+    elif ciph == 'ks':
+        kama = KamaSutra()
+    elif ciph == 's':
+        swap = Swapping()
+    elif ciph == 'v':
+        vig = Vigenere()
+    elif ciph == 'adfgvx':
+        adf = ADFGVX()
+    else:
+        print 'invalid command - exiting...'
+        sys.exit()
 
     #kama-sutra
     #print "ciphertext: " + kama.encrypt('hello my name is kevin')
@@ -73,23 +240,36 @@ def main():
     #ADFGVX
     #print "ciphertext: " + adf.encrypt('mark', 'attack at 10pm')
 
+def fileortext():
+    choice = raw_input("file or text (f or t): ")
+    if choice == 'f':
+        filname = raw_input("enter file path: ")
+        fil = open(filname, 'r')
+        return ['f', fil]
+    elif choice == 't':
+        text = raw_input("enter text: ")
+        return ['t', text]
+
+def getshiftamount():
+    shiftamount = raw_input("enter shift amount: ")
+    return shiftamount
+
+
 #transposition cipher
 class Railfence():
     def __init__(self):
         pass
 
     def encrypt(self, text, shiftnum, *args):
-        print "plaintext: " + text + " shift: " + str(shiftnum)
-
         self.big = []
         text = text.replace(' ', '')
+        text = text.replace('\n', '')
         n = int(shiftnum)
         textlist = []
         for c in text:
             textlist.append(str(c))
         count = n
         newstr = ''
-        print "textlist: " + str(textlist)
         for i in range(count):
             newlist = []
             for k in range(len(textlist)):
@@ -101,14 +281,13 @@ class Railfence():
                         pass
             self.big.append(newlist)
 
-        print "big: " + str(self.big)
-
         newstr = ''
         #iterate through the lists in big
         for l in self.big:
             newstr = newstr + ''.join(l)
         return newstr
 
+    #not finished
     def decrypt(self, text, shiftnum, *args):
         text = text.replace(' ', '')
         textlist = []
@@ -125,7 +304,7 @@ class Railfence():
                     pass
 
         return ''
-        
+
 #given text and shift amount
 #the alphabet is shifted and enciphered text
 #is created through mirrored indexes
@@ -134,7 +313,7 @@ class Caesar():
         pass
 
     #encrypts text by a given shift amount
-    def encrypt(self, text, shift, spaces, *args):
+    def encrypt(self, text, shift, *args):
         #print "plaintext: " + text + " shift: " + str(shiftnum) + " spaces: " + str(spaces)
         #create the two alphabets
         alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
@@ -147,6 +326,8 @@ class Caesar():
 
         newalpha.rotate(-(int(shift)))
         text = text.lower()
+        text = text.replace(' ', '')
+        text = text.replace('\n', '')
         enciphered = ""
 
         #iterate through the string of text
@@ -155,12 +336,9 @@ class Caesar():
             for i in range(len(alpha)):
                 if alpha[i] == letter:
                     enciphered += newalpha[i]
-            if (letter == " ") and spaces:
-                enciphered += " "
-        k.write(str(shift))
         return enciphered
 
-    def decrypt(self, shift, text, *args):
+    def decrypt(self, text, shift, *args):
         #create the two alphabets
         alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -172,6 +350,8 @@ class Caesar():
 
         newalpha.rotate(-(int(shift)))
         text = text.lower()
+        text = text.replace(' ', '')
+        text = text.replace('\n', '')
         deciphered = ""
 
         #iterate through the string of text
@@ -180,8 +360,6 @@ class Caesar():
             for i in range(len(alpha)):
                 if newalpha[i] == letter:
                     deciphered += alpha[i]
-            if (letter == " "):
-                deciphered += " "
         return deciphered
 
     #iterate through all possible shifted alphabets
@@ -198,17 +376,17 @@ class Caesar():
         for i in range(26):
             newalpha.rotate(-(int(1)))
             text = text.lower()
+            text = text.replace(' ', '')
+            text = text.replace('\n', '')
             deciphered = ""
 
             #iterate through the string of text
             for letter in text:
                 #iterate through the alphabet list
-                for i in range(len(alpha)):
-                    if newalpha[i] == letter:
-                        deciphered += alpha[i]
-                if (letter == " "):
-                    deciphered += " "
-            print deciphered
+                for j in range(len(alpha)):
+                    if newalpha[j] == letter:
+                        deciphered += alpha[j]
+            print str(i+1) + " " + deciphered
 
 #reversed alphabet
 #mirrored indexes
@@ -218,7 +396,6 @@ class Atbash():
 
     #encryption function for atbashen
     def encrypt(self, text, *args):
-        print "plaintext: " + text
         enciphered = ""
         text = text.lower()
         self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
@@ -234,8 +411,6 @@ class Atbash():
                 #append the reversed letter
                 if self.alpha[i] == letter:
                     enciphered += self.newalpha[i]
-            if (letter == " "):
-                enciphered += " "
         return enciphered
 
     def decrypt(self, text, *args):
@@ -253,8 +428,6 @@ class Atbash():
                 #append the reversed letter
                 if self.newalpha[i] == letter:
                     deciphered += self.alpha[i]
-            if (letter == " "):
-                deciphered += " "
         return deciphered
 
 #shuffles english alphabet with shuffle from the random library
@@ -270,7 +443,6 @@ class GenMono():
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
         shuffle(self.newalpha)
-        k.write(''.join(self.newalpha))
         enciphered = ""
 
         #iterate through the string of text
@@ -281,7 +453,7 @@ class GenMono():
                     enciphered += self.newalpha[i]
             if (letter == " "):
                 enciphered += " "
-
+        print 'shuffled alphabet: ' + ''.join(self.newalpha)
         return enciphered
 
     #able to decipher if shuffled alphabet is known
@@ -510,6 +682,10 @@ class Homophonic():
         pass
 
     def encrypt(self, text, *args):
+        temp = range(33, 65) + range(91, 97) + range(123, 127)
+        self.symbols = []
+        for i in temp:
+            self.symbols.append(chr(i))
         self.alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                 'v', 'w', 'x', 'y', 'z']
@@ -521,6 +697,7 @@ class Homophonic():
         #list from 0 to 99
         listrange = range(0, 100)
         text = text.lower()
+        text = text.replace(' ', '')
 
         for i in numlist:
             smol = []
@@ -533,11 +710,14 @@ class Homophonic():
             self.bigdict[self.alpha[i]] = self.big[i]
         encrypted = ""
         for letter in text:
-            if letter == " ":
+            if letter == " " or letter in self.symbols:
                 pass
             else:
                 temp = self.bigdict.get(letter)
-                encrypted += str(choice(temp)) + ' '
+                if temp == None:
+                    pass
+                else:
+                    encrypted += str(choice(temp)) + ' '
 
         return encrypted
 

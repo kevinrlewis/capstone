@@ -131,7 +131,7 @@ class MainPage(ButtonBehavior):
                                     on_release=self.pressed_highlights,
                                     markup = True)
 
-        self.extra = Button(text = "Extras",
+        self.extra = Button(text = "Current\nCryptography",
                                     size_hint = (.15,.1),
                                     pos_hint = {'x': .415, 'top':self.btrowtop},
                                     on_release = self.pressed_extra)
@@ -233,6 +233,7 @@ class MainPage(ButtonBehavior):
 #   -AES - block
 #-Asymmetric
 #   -SSH - protocol
+#   -Bitcoin - protocol
 #-Hash
 #   -MD5
 #   -SHA1
@@ -604,6 +605,11 @@ class AsymmetricPage(ButtonBehavior):
                             size_hint = self.btnsize,
                             on_release = self.sshpressed)
 
+        self.bitcoin = Button(text = 'Bitcoin',
+                            pos_hint = {'x':self.x, 'top':.45},
+                            size_hint = self.btnsize,
+                            on_release = self.bitcoinpressed)
+
         self.link = Label(text = 'Information from: [color=ffff00][ref=pk]https://en.wikipedia.org/wiki/Public-key_cryptography[/ref][/color]',
                             pos_hint = {'x':.4, 'top':.15},
                             size_hint = (.2,.2),
@@ -615,6 +621,7 @@ class AsymmetricPage(ButtonBehavior):
         self.r.add_widget(self.link)
         self.r.add_widget(self.image)
         self.r.add_widget(self.ssh)
+        self.r.add_widget(self.bitcoin)
         self.r.add_widget(self.tb)
         return self.r
 
@@ -623,6 +630,12 @@ class AsymmetricPage(ButtonBehavior):
         MyApp.trail.append(self)
         root.clear_widgets()
         root.add_widget(SSHPage().create())
+
+    def bitcoinpressed(self, *args):
+        f.write('bitcoin button pressed\n')
+        MyApp.trail.append(self)
+        root.clear_widgets()
+        root.add_widget(BitcoinPage().create())
 
     def link1(self, *args):
         f.write('opening https://en.wikipedia.org/wiki/Public-key_cryptography ...\n')
@@ -681,6 +694,58 @@ class SSHPage(ButtonBehavior):
 ################################################################################
 #End SSH Page
 ################################################################################
+
+################################################################################
+#Begin Bitcoin Page
+################################################################################
+class BitcoinPage(ButtonBehavior):
+    def __init__(self):
+        pass
+
+    def create(self):
+        f.write('Bitcoin page entered\n')
+        MyApp.current = self
+        #root layout of the instance
+        self.r = RelativeLayout()
+        self.topbar = TopBar()
+        MyApp.topbar = self.topbar
+        #create the topbar and add the title to it
+        self.tb = self.topbar.create('Bitcoin Protocol')
+        self.x = .75
+        self.btnsize = (.2,.1)
+
+        with open('texts/bitcoin.txt', 'r') as myfile:
+            data = myfile.read()
+        self.text = Label(text = data,
+                            pos_hint = {'x':.4, 'top':.875},
+                            size_hint = (.2,.2),
+                            markup = True)
+
+        self.image = Image(source = 'pics/bitcointransaction.png',
+                            pos_hint = {'x':.135, 'top':.75},
+                            size_hint = (.7,.7))
+
+
+        self.link = Label(text = 'Information and image from: [color=ffff00][ref=ssh]https://en.wikipedia.org/wiki/Bitcoin_network[/ref][/color]',
+                            pos_hint = {'x':.4, 'top':.15},
+                            size_hint = (.2,.2),
+                            markup = True,
+                            on_ref_press = self.link1)
+
+        #add widgets to the main layout
+        self.r.add_widget(self.text)
+        self.r.add_widget(self.link)
+        self.r.add_widget(self.image)
+        self.r.add_widget(self.tb)
+        return self.r
+
+    def link1(self, *args):
+        f.write('opening https://en.wikipedia.org/wiki/Bitcoin_network ...\n')
+        webbrowser.open("https://en.wikipedia.org/wiki/Bitcoin_network")
+################################################################################
+#End Bitcoin Page
+################################################################################
+
 
 ################################################################################
 #Begin Hashing Page - MD5 - SHA1 - SHA256 - BLAKE2

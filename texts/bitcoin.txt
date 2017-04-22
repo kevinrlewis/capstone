@@ -1,0 +1,7 @@
+Bitcoin is a peer-to-peer payment network that operates using an asymmetric cryptographic 
+protocol. Users send and receive bitcoins, which are units of currency, by broadcasting 
+digitally signed messages to the network using bitcoin wallet software. Bitcoin uses 
+blocks that are hashed twice using the SHA-256 hashing algorithm. Transactions are recorded 
+into a distribted, replicated public databse known as the blockchain, with consensus 
+achieved by a proof-of-work system called "mining". The Bitcoin protocol was designed in 
+2008 and released in 2009 as open source software.
