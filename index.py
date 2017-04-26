@@ -2904,6 +2904,11 @@ class PlayfairPage(ButtonBehavior):
             loc2 = []
             for inner in range(len(newlist)):
                 inn = newlist[inner]
+                #swaps j's for i's
+                if di[0] == 'j':
+                    di = 'i' + di[1]
+                elif di[1] == 'j':
+                    di = di[0] + 'i'
                 for i in range(len(inn)):
                     if di[0] == inn[i]:
                         loc1.append(inner)
@@ -7071,8 +7076,8 @@ class ADFGVXPage(ButtonBehavior):
         f.write('final stage button pressed\n')
         text = self.keyword2text.text.split('\n')
         final = ''
-        length = len(self.keywordinput.text) - 1
-        count = len(self.keywordinput.text) - 1
+        length = len(self.keywordinput.text)
+        count = len(self.keywordinput.text)
         f.write('count: ' + str(count) + '\n')
         for i in range(length):
             for group in text:

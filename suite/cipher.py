@@ -24,7 +24,7 @@ def main():
     arg = sys.argv
 
     print "railfence - r\ncaesar - c\natbash - a\ngeneral monoalphabetic - gm"
-    print "digraph - dm\nplayfair - p\nhomophonic - ho\nkama-sutra - ks\nswapping - s"
+    print "digraph - d\nplayfair - p\nhomophonic - ho\nkama-sutra - ks\nswapping - s"
     print "vigenere - v\nadfgvx - adfgvx\n\n"
     ciph = raw_input("enter in cipher choice: ")
 
@@ -181,10 +181,55 @@ def main():
         else:
             print 'invalid input - exiting...'
             sys.exit()
-    elif ciph == 'di':
+    elif ciph == 'd':
         dig = DigraphSub()
+        #introduce the cipher
+        print 'the digraph cipher is a substitution cipher that uses a'
+        print 'grid of digraphs(pairs of letters) to encrypt plaintext'
+        print 'that has been split into digraphs\n'
+        print 'options for digraph\nencrypt - e'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        #determine if the user is using a file or text
+        choice2 = fileortext()
+        #if the user has a file
+        if choice2[0] == 'f':
+            #retrieve the file from the returned list
+            fil = choice2[1]
+            #read the lines and convert it into a string as plaintext
+            lines = fil.readlines()
+            plaintext = ''.join(lines)
+            print dig.encrypt(plaintext)
+        #if the user has text
+        elif choice2[0] == 't':
+            plaintext = choice2[1]
+            print dig.encrypt(plaintext)
     elif ciph == 'p':
         play = Playfair()
+        #introduce the cipher
+        print 'the playfair cipher is substitution cipher that uses'
+        print 'digraphs(pairs of letters) and a keyword in the plaintext to encrypt'
+        print 'plaintext. A grid is created that contains the keyword and then'
+        print 'the rest of the alphabet randomized.\n'
+        print 'options for playfair\nencrypt - e'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        #determine if the user is using a file or text
+        choice2 = fileortext()
+        #if the user has a file
+        if choice2[0] == 'f':
+            #retrieve the file from the returned list
+            fil = choice2[1]
+            #read the lines and convert it into a string as plaintext
+            lines = fil.readlines()
+            plaintext = ''.join(lines)
+            keyword = getkeyword()
+            print play.encrypt(keyword, plaintext)
+        #if the user has text
+        elif choice2[0] == 't':
+            plaintext = choice2[1]
+            keyword = getkeyword()
+            print play.encrypt(keyword, plaintext)
     elif ciph == 'ho':
         homophonic = Homophonic()
         #introduce the cipher
@@ -204,7 +249,6 @@ def main():
             #read the lines and convert it into a string as plaintext
             lines = fil.readlines()
             plaintext = ''.join(lines)
-            #get the shift amount
             print homophonic.encrypt(plaintext)
         #if the user has text
         elif choice2[0] == 't':
@@ -254,6 +298,9 @@ def getshiftamount():
     shiftamount = raw_input("enter shift amount: ")
     return shiftamount
 
+def getkeyword():
+    keyword = raw_input("enter keyword: ")
+    return keyword
 
 #transposition cipher
 class Railfence():
@@ -586,6 +633,8 @@ class Playfair():
 
         if (len(check) % 2) != 0:
             tempstr = tempstr + 'x'
+        print tempstr
+        #end creating digraphed text
 
         final = ''
         templist = []
@@ -660,8 +709,13 @@ class Playfair():
             #column of the second letter and vice versa
             loc1 = []
             loc2 = []
+            #print 'newlist: ' + str(newlist)
             for inner in range(len(newlist)):
                 inn = newlist[inner]
+                if di[0] == 'j':
+                    di = 'i' + di[1]
+                elif di[1] == 'j':
+                    di = di[0] + 'i'
                 for i in range(len(inn)):
                     if di[0] == inn[i]:
                         loc1.append(inner)
@@ -975,7 +1029,7 @@ class ADFGVX():
         #final stage
         temptext = newnewgrid.split('\n')
         final = ''
-        length = len(keyword) - 1
+        length = len(keyword)
         count = length
         for i in range(length):
             for group in temptext:
