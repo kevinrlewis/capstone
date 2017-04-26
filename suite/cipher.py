@@ -18,23 +18,25 @@ k = open('key', 'w+')
 #arg[2] = f or t (file or text)
 #arg[3] = path or text
 #arg[4] = encrypt or decrypt
-#
 def main():
     print sys.argv
     arg = sys.argv
+    line = '-------------------------------------------------------------------'
 
     print "railfence - r\ncaesar - c\natbash - a\ngeneral monoalphabetic - gm"
     print "digraph - d\nplayfair - p\nhomophonic - ho\nkama-sutra - ks\nswapping - s"
-    print "vigenere - v\nadfgvx - adfgvx\n\n"
+    print "vigenere - v\nadfgvx - adf\n\n"
     ciph = raw_input("enter in cipher choice: ")
 
+    """command line tool options"""
     if ciph == 'r':
+        print line
         #introduce the cipher
         print 'the railfence cipher is transposition cipher that uses a shift'
         print 'amount to encrypt plaintext\n'
         #initialize the class
         railfence = Railfence()
-        print 'options for railfence\nencrypt - e'
+        print 'options for railfence\nencrypt - e (enter anything)'
         #get input from the user for their goal
         choice1 = raw_input('enter choice: ')
         #determine if the user is using a file or text
@@ -54,7 +56,9 @@ def main():
             plaintext = choice2[1]
             shift = getshiftamount()
             print railfence.encrypt(plaintext, shift)
+        print line
     elif ciph == 'c':
+        print line
         caesar = Caesar()
         print 'the caesar cipher is substitution cipher that uses a shift'
         print 'amount to encrypt plaintext by shifting the english alphabet\n'
@@ -97,7 +101,9 @@ def main():
             elif choice2[0] == 't':
                 plaintext = choice2[1]
                 print caesar.iterdecrypt(plaintext)
+        print line
     elif ciph == 'a':
+        print line
         atbash = Atbash()
         #introduce the cipher
         print 'the atbash cipher is substitution cipher that uses the backwards'
@@ -138,7 +144,9 @@ def main():
         else:
             print 'invalid input - exiting...'
             sys.exit()
+        print line
     elif ciph == 'gm':
+        print line
         genmono = GenMono()
         #introduce the cipher
         print 'the general monoalphabetic cipher is substitution cipher that'
@@ -181,13 +189,15 @@ def main():
         else:
             print 'invalid input - exiting...'
             sys.exit()
+        print line
     elif ciph == 'd':
+        print line
         dig = DigraphSub()
         #introduce the cipher
         print 'the digraph cipher is a substitution cipher that uses a'
         print 'grid of digraphs(pairs of letters) to encrypt plaintext'
         print 'that has been split into digraphs\n'
-        print 'options for digraph\nencrypt - e'
+        print 'options for digraph\nencrypt - e (enter anything)'
         #get input from the user for their goal
         choice1 = raw_input('enter choice: ')
         #determine if the user is using a file or text
@@ -204,14 +214,16 @@ def main():
         elif choice2[0] == 't':
             plaintext = choice2[1]
             print dig.encrypt(plaintext)
+        print line
     elif ciph == 'p':
+        print line
         play = Playfair()
         #introduce the cipher
         print 'the playfair cipher is substitution cipher that uses'
         print 'digraphs(pairs of letters) and a keyword in the plaintext to encrypt'
         print 'plaintext. A grid is created that contains the keyword and then'
         print 'the rest of the alphabet randomized.\n'
-        print 'options for playfair\nencrypt - e'
+        print 'options for playfair\nencrypt - e (enter anything)'
         #get input from the user for their goal
         choice1 = raw_input('enter choice: ')
         #determine if the user is using a file or text
@@ -230,14 +242,16 @@ def main():
             plaintext = choice2[1]
             keyword = getkeyword()
             print play.encrypt(keyword, plaintext)
+        print line
     elif ciph == 'ho':
+        print line
         homophonic = Homophonic()
         #introduce the cipher
         print 'the homophonic cipher is substitution cipher that uses a'
         print 'letter frequency and randomize numbers to encrypt plaintext,'
         print 'the encryption can use any letters or numbers but in this '
         print 'encryption we are using numbers\n'
-        print 'options for railfence\nencrypt - e'
+        print 'options for homophonic\nencrypt - e (enter anything)'
         #get input from the user for their goal
         choice1 = raw_input('enter choice: ')
         #determine if the user is using a file or text
@@ -254,36 +268,137 @@ def main():
         elif choice2[0] == 't':
             plaintext = choice2[1]
             print homophonic.encrypt(plaintext)
+        print line
     elif ciph == 'ks':
+        print line
         kama = KamaSutra()
+        #introduce the cipher
+        print 'the kama-sutra cipher is a substitution cipher that uses'
+        print 'pairs of letters to encrypt text\n'
+        print 'options for kama-sutra\nencrypt - e\ndecrypt - d'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        if choice1 == 'e':
+            #determine if the user is using a file or text
+            choice2 = fileortext()
+            #if the user has a file
+            if choice2[0] == 'f':
+                #retrieve the file from the returned list
+                fil = choice2[1]
+                #read the lines and convert it into a string as plaintext
+                lines = fil.readlines()
+                plaintext = ''.join(lines)
+                print kama.encrypt(plaintext)
+            #if the user has text
+            elif choice2[0] == 't':
+                plaintext = choice2[1]
+                print kama.encrypt(plaintext)
+        elif choice1 == 'd':
+            #determine if the user is using a file or text
+            choice2 = fileortext()
+            #retrieve the shuffled alphabet key to decrypt the plaintext
+            shuffledalphabet = raw_input("please enter the shuffled alphabet to decrypt\n(no spaces just letters): ")
+            #if the user has a file
+            if choice2[0] == 'f':
+                #retrieve the file from the returned list
+                fil = choice2[1]
+                #read the lines and convert it into a string as plaintext
+                lines = fil.readlines()
+                plaintext = ''.join(lines)
+                print kama.decrypt(plaintext, shuffledalphabet)
+            #if the user has text
+            elif choice2[0] == 't':
+                plaintext = choice2[1]
+                print kama.decrypt(plaintext, shuffledalphabet)
+        else:
+            print 'invalid input - exiting...'
+            sys.exit()
+        print line
     elif ciph == 's':
+        print line
         swap = Swapping()
+        #introduce the cipher
+        print 'the swapping cipher is substitution cipher that uses a'
+        print '2 shuffled alphabets to encrypt plaintext by alternating'
+        print 'between those two alphabets\n'
+        print 'options for swapping\nencrypt - e (enter anything)'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        #determine if the user is using a file or text
+        choice2 = fileortext()
+        #if the user has a file
+        if choice2[0] == 'f':
+            #retrieve the file from the returned list
+            fil = choice2[1]
+            #read the lines and convert it into a string as plaintext
+            lines = fil.readlines()
+            plaintext = ''.join(lines)
+            print swap.encrypt(plaintext)
+        #if the user has text
+        elif choice2[0] == 't':
+            plaintext = choice2[1]
+            print swap.encrypt(plaintext)
+        print line
     elif ciph == 'v':
+        print line
         vig = Vigenere()
-    elif ciph == 'adfgvx':
+        #introduce the cipher
+        print 'the vigenere cipher is a substitution cipher that uses'
+        print 'a grid of shuffled alphabets and a keyword to encrypt text\n'
+        print 'options for vigenere\nencrypt - e (enter anything)'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        #determine if the user is using a file or text
+        choice2 = fileortext()
+        #if the user has a file
+        if choice2[0] == 'f':
+            #retrieve the file from the returned list
+            fil = choice2[1]
+            #read the lines and convert it into a string as plaintext
+            lines = fil.readlines()
+            plaintext = ''.join(lines)
+            keyword = getkeyword()
+            print vig.encrypt(keyword, plaintext)
+        #if the user has text
+        elif choice2[0] == 't':
+            plaintext = choice2[1]
+            keyword = getkeyword()
+            print vig.encrypt(keyword, plaintext)
+        print line
+    elif ciph == 'adf':
+        print line
         adf = ADFGVX()
+        #introduce the cipher
+        print 'the adfgvx cipher is cipher that uses both substitution'
+        print 'and transposition, a 6x6 grid is created with the alphabet'
+        print 'and 10 digits randomized in it\n'
+        print 'options for adfgvx\nencrypt - e (enter anything)'
+        #get input from the user for their goal
+        choice1 = raw_input('enter choice: ')
+        #determine if the user is using a file or text
+        choice2 = fileortext()
+        #if the user has a file
+        if choice2[0] == 'f':
+            #retrieve the file from the returned list
+            fil = choice2[1]
+            #read the lines and convert it into a string as plaintext
+            lines = fil.readlines()
+            plaintext = ''.join(lines)
+            keyword = getkeyword()
+            print adf.encrypt(keyword, plaintext)
+        #if the user has text
+        elif choice2[0] == 't':
+            plaintext = choice2[1]
+            keyword = getkeyword()
+            print adf.encrypt(keyword, plaintext)
+        print line
     else:
         print 'invalid command - exiting...'
         sys.exit()
+    """command line tool options"""
 
-    #kama-sutra
-    #print "ciphertext: " + kama.encrypt('hello my name is kevin')
-
-    #swapping cipher
-    #print "ciphertext: " + swap.encrypt('hello my name is kevin')
-
-    #vigenere cipher
-    #print "ciphertext: " + vig.encrypt('white', 'divert troops to east ridge')
-
-    #digraph substitution
-    #print "ciphertext: " + dig.encrypt('hello my name is kevin')
-
-    #playfair cipher
-    #print "ciphertext: " + play.encrypt('charles', 'meet me at hammersmith bridge tonight')
-
-    #ADFGVX
-    #print "ciphertext: " + adf.encrypt('mark', 'attack at 10pm')
-
+#function that asks the user whether they want to encrypt/decrypt
+#a file of text or text entered into the console
 def fileortext():
     choice = raw_input("file or text (f or t): ")
     if choice == 'f':
@@ -293,11 +408,22 @@ def fileortext():
     elif choice == 't':
         text = raw_input("enter text: ")
         return ['t', text]
+    else:
+        print 'invalid input - exiting...'
+        sys.exit()
 
+#function that asks the user what the shift amount is for
+#a different ciphers
 def getshiftamount():
     shiftamount = raw_input("enter shift amount: ")
+    try:
+        int(shiftamount)
+    except Exception as e:
+        print 'invalid input - exiting...'
+        sys.exit()
     return shiftamount
 
+#function that asks the user to enter a keyword
 def getkeyword():
     keyword = raw_input("enter keyword: ")
     return keyword
@@ -791,6 +917,7 @@ class KamaSutra():
         self.cipheralpha = []
         #set up pairs
         shuffle(self.newalpha)
+        print "shuffled alphabet: " + str(''.join(self.newalpha))
         j = 0
         temp = []
         count = 0
@@ -805,8 +932,6 @@ class KamaSutra():
                 temp = []
             count += 1
 
-        print self.cipheralpha
-
         enciphered = ""
         for i in text:
             for k in self.cipheralpha:
@@ -816,13 +941,35 @@ class KamaSutra():
                     else:
                         enciphered += k[0]
 
-            if (i == " "):
-                enciphered += " "
-
         return enciphered
 
-    def decrypt(self, *args):
-        pass
+    def decrypt(self, text, alphabet, *args):
+        alpha = list(alphabet)
+        cipheralpha = []
+        j = 0
+        temp = []
+        count = 0
+        for i in alpha:
+            if j < 1:
+                temp.append(i)
+                j += 1
+            else:
+                temp.append(i)
+                cipheralpha.append(temp)
+                j = 0
+                temp = []
+            count += 1
+
+        deciphered = ""
+        for i in text:
+            for k in cipheralpha:
+                if i in k:
+                    if k[0] == i:
+                        deciphered += k[1]
+                    else:
+                        deciphered += k[0]
+
+        return deciphered
 
 #two shuffled alphabets
 class Swapping():
@@ -844,9 +991,9 @@ class Swapping():
 
         shuffle(self.newalpha1)
         shuffle(self.newalpha2)
-        print self.alpha
-        print self.newalpha1
-        print self.newalpha2
+        print "alphabet: " + str(''.join(self.alpha))
+        print "shuffled alphabet1: " + str(''.join(self.newalpha1))
+        print "shuffled alphabet2: " + str(''.join(self.newalpha2))
 
         enciphered = ""
         count = 0
@@ -859,13 +1006,8 @@ class Swapping():
                     else:
                         enciphered += self.newalpha2[i]
                         count = 0
-            if (letter == " "):
-                enciphered += " "
 
         return enciphered
-
-    def decrypt(self, *args):
-        pass
 
 #given a keyword and text an encrypted form of the text is created
 #a grid is created of all possible shifted english alphabets
@@ -1037,6 +1179,7 @@ class ADFGVX():
             count = count - 1
 
         return final
+
 
 if __name__ == '__main__':
     main()
