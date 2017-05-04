@@ -111,7 +111,6 @@ class MainPage(ButtonBehavior):
 
         #setup layouts
         self.r = RelativeLayout()
-        self.title = RelativeLayout()
 
         #button to get to the junior codebreakers section
         self.jcb = Button(text = 'Junior Code Breakers',
@@ -155,10 +154,17 @@ class MainPage(ButtonBehavior):
                                     markup = True,
                                     on_ref_press = self.linkpress)
 
+        self.title = Label(text = "[b]THE NEW CRYPTO APPLICATION[/b]",
+                                    size_hint = (.4,.4),
+                                    pos_hint = {'x': .3, 'top': .35},
+                                    font_size = 48,
+                                    halign = 'center',
+                                    markup = True)
+
         #set the image title
         titlestr = 'THE CODE BOOK'
 
-        x = -.045
+        """x = -.045
         top = .2
         #loop through the letters to append images to the title layout
         for letter in titlestr:
@@ -170,7 +176,9 @@ class MainPage(ButtonBehavior):
                 tempimage.pos_hint = {'x': x, 'top': top}
                 tempimage.size_hint = (.2,.2)
                 x += .08
-                self.title.add_widget(tempimage)
+                self.title.add_widget(tempimage)"""
+
+
 
         #add widgets to the main layout
         self.r.add_widget(self.highlightsbutton)
@@ -2408,24 +2416,26 @@ class GenMonoPage(ButtonBehavior):
                             on_release = self.genrandomPressed)
 
         self.alabel = Label(text = 'Plaintext Alphabet',
-                            pos_hint = {'x':.5, 'top':.9},
+                            pos_hint = {'x':.515, 'top':.9},
                             size_hint = (.27,.1))
         self.alphabet = TextInput(text = self.stralpha,
                                     pos_hint = {'x':.475, 'top':.8},
-                                    size_hint = (.315,.1),
+                                    size_hint = (.34,.11),
                                     disabled = True,
-                                    font_name = 'font/RobotoMono-Regular')
+                                    font_name = 'font/RobotoMono-Regular',
+                                    font_size = 16)
 
         self.clabel = Label(text = 'Ciphertext Alphabet',
-                            pos_hint = {'x':.5, 'top':.7},
+                            pos_hint = {'x':.515, 'top':.7},
                             size_hint = (.27,.1))
 
         self.strnewalpha = "".join(self.newalpha)
         self.cipheralphabet = TextInput(text = self.strnewalpha,
                                     pos_hint = {'x':.475, 'top':.6},
-                                    size_hint = (.315,.1),
+                                    size_hint = (.34,.11),
                                     disabled = True,
-                                    font_name = 'font/RobotoMono-Regular')
+                                    font_name = 'font/RobotoMono-Regular',
+                                    font_size = 16)
 
         self.plaintextinput = maxinput(pos_hint = {'x':.2, 'top':.4},
                                     size_hint = (.35, .35))
