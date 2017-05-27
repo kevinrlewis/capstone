@@ -1,6 +1,7 @@
 # capstone
 -----------------------------------------------------------
 Author: Kevin Lewis
+
 Contact me for full project: kevin.lewis_22@hotmail.com
 -----------------------------------------------------------
 ##brief
