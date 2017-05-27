@@ -1,9 +1,0 @@
-Having heard about the ideas of asymmetric ciphers and the associated public and
-private keys, mathematicians and cryptographers around the world tried to find the
-appropriate mathematical function, but all attempts ended in failure until 1977,
-when a trio of mathematicians at the Massachusetts Institute for Technology took
-up the challenge.
-
-They may not have realised it, but Ron Rivest, Adi Shamir and Len Adleman would
-invent the most important cipher of the twentieth century. The cipher, known by
-their initials RSA, is explained in the following sections.

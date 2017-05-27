@@ -1,4 +1,0 @@
-So far, the only known way to crack RSA is to factor N, the public key. This would give you 
-p and q, the private key required for decryption. The bigger the value of N, the harder it is to factor.
-Typically, for secure communication, one might use a value of N equal to 1024 bits (or over 300
-decimal digits) or even 2048 bits.

@@ -1,4 +1,0 @@
-The Enigma machine represents a major step forward in the history of 
-encryption. An electro-mechanical device, it modernised cryptography in an age 
-when radio had stimulated a telecommunications revolution and when the 
-Second World War instigated an even greater need for security.

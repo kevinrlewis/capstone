@@ -1,3 +1,0 @@
-When attempting to crack a coded message (ciphertext), it helps if you can somehow guess some 
-part of the original message (plaintext). This is known as a crib. Finding a crib will help you to 
-deduce the key, which in turn will help you to decipher the rest of the message.

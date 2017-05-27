@@ -1,6 +1,0 @@
-Babbage defined a series of steps to crack the Vigenere cipher. Let us try to decipher ciphertext 
-below. We know that it was enciphered using the Vigenere cipher, but we know nothing about the 
-original message or the keyword. The first step is to search for sequences of letters that appear 
-more than once in the ciphertext. The most likely reason for such repetitions is that the sync 
-sequence of letters in the plaintext has been enciphered using the sync part of the key. You can 
-print the ciphertext and search for repetitions by hand or dick 'Find Repeated Sequences'. 

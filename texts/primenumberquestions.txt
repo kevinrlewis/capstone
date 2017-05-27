@@ -1,8 +1,0 @@
-Prime numbers are at the heart of the RSA algorithm. In fact, primes are
-central to much of mathematics because all numbers are primes or multiples
-of primes (e.g. you can create 133 by multiplying 19 and 7). You can think of
-primes as the building blocks of mathematics.
-
-There are so many interesting things relating to prime numbers that it could
-easily fill an entire CD-ROM, but we can only devote this page to the subject,
-providing you with links to some interesting websites.

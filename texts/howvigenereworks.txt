@@ -1,3 +1,0 @@
-If you are still not quite sure how the Vigenere cipher works, then take a 
-look at this video clip. It contains Professor Fred Piper, a cryptographer 
-at Royal Holloway College, showing me how the Vigenere cipher works.

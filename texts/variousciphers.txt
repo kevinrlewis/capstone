@@ -1,3 +1,0 @@
-A factor in determining a cipher's strength is the number of possible keys. In general, the more 
-keys that a cipher has, the stronger it is. The following table outlines four ciphers and their 
-number of keys.

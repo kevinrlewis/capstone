@@ -1,2 +1,0 @@
-What you have seen so far is a simplified version of the Enigma, but it contains all the elements of 
-the real Enigma. The encryption of a letter depends on:

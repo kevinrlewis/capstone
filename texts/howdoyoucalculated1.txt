@@ -1,6 +1,0 @@
-Calculating d involves Euclid’s algorithm,
-which was invented 2,000 years ago to find the
-greatest common divisor of any two natural
-numbers. The following explanation may not
-be sufficient, but you can find out more about
-Euclid’s algorithm at the following sites:

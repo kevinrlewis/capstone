@@ -1,8 +1,0 @@
-RSA is a mathematical algorithm for
-encryption. It is pure mathematics, but it
-has to live in the real world, so
-implementing RSA or any other form of
-public key cryptography requires a great
-deal of extra thinking. The websites on this
-page discuss some of the points that need to
-be considered if you are implementing RSA.

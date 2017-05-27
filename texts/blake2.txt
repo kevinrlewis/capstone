@@ -1,3 +1,0 @@
-BLAKE2 is a cryptographic hash function faster than MD5, SHA-1, SHA-2, and SHA-3, and as 
-secure as the latest standard SHA-3. BLAKE2 has been optimized in two ways, one for 64-bit 
-platforms and another for 8- to 32-bit platforms.

@@ -1,3 +1,0 @@
-"Kerckhoffs' Principle: The security of a cryptosystem 
-must not depend on keeping secret the crypto algorithm. 
-The security depends only on keeping secret the key."

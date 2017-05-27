@@ -1,6 +1,0 @@
-At the other end, the receiver receives the encrypted rotor setting, and is able 
-to decrypt it because this merely requires the daily key. The receiver adjusts 
-the rotors to the new setting and is then able to decrypt the actual message. In 
-short, the daily key is only used to encode and transmit the keys specific to each 
-particular message. 
-

@@ -1,7 +1,0 @@
-Asymmetric-key, or public-key, algorithms use pairs of keys. Public keys which can vary 
-drastically, and private keys which only the owner knows. This allows authentication to 
-happen where the public key is used to verify that a holder of the paired private key 
-sent the message. It also allows encryption to happen, where the holder of the private 
-key is the only one able to decrypt the message when encrypted by the public key. Some 
-example algorithms/protocols include: RSA, SSH, Bitcoin, Secure Socket Layer, and 
-Diffie-Hellman key exchange.

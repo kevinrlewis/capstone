@@ -1,4 +1,0 @@
-The Blowfish encryption algorithm is a symmetric-key block cipher that was designed 
-by Bruce Schneier. Blowfish provides a good encryption rate in software and there has 
-yet to be any cryptanalysis found. Although, AES is more popular when it comes to 
-symmetric-key block ciphers.

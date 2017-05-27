@@ -1,8 +1,0 @@
-In the early 1970s, Whitfield Diffie, Martin Hellman and Ralph Merkle teamed up at
-Stanford University, California, to crack the key distribution problem. Their
-motivation was to give privacy to everyone.
-
-To have private communication you need to encrypt, to encrypt you need to
-distribute keys, and the only people who had the money to do this were
-governments, the military, banks and big business. The ordinary citizen had no hope
-of private communication unless the key distribution problem could be solved.

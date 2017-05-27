@@ -1,4 +1,0 @@
-The Pig Pen Cipher was used by Freemasons in the 18th Century to keep their records private. The cipher does not 
-substitute one letter for another, rather it substitutes each letter for a symbol. The alphabet is written in the grids 
-shown, and then each letter is enciphered by replacing it with a symbol that corresponds to the portion of the pigpen 
-grid that contains the letter.

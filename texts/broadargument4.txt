@@ -1,6 +1,0 @@
-2) However, Alice needs to decrypt these 
-messages being sent to her. Hence, Alice must 
-have a privatekey, some special piece of
-information, which allows her to reverse the
-effect of the public-key.
-

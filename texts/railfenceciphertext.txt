@@ -1,2 +1,0 @@
-We can improve the security of our cipher by using more than two lines. The number of lines is 
-determined on this page by choosing a number between 2 and 9 in the box below.

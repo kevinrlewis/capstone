@@ -1,9 +1,0 @@
-In addition to the use of the codes, the First World War saw the development of some new ciphers. The German ADFGVX 
-cipher features both substitution and transposition, so it has a 2-part key. Encryption begins with a 6x6 grid randomly 
-filled with the 26 letters and the 10 diets. Each row and column of the grid is identified by one of the six letters A, 
-D, F, G, V or X. The arrangement of the elements in the grid acts as the substitution part of the key, so the receiver 
-needs to know the details of the grid in order to he able to decipher messages. The first stage of encryption involves 
-taking each letter of the message, locating its position in the grid and substituting it with the letters that label 
-its row and column. For example, in the grid provided, 'p' would be replaced by AD. Click the 'Stage 1' button to begin 
-the encipherment of the short message below (or generate your own grid by clicking 'Randomise Grid Key' or create your 
-own message before clicking 'Stage 1').

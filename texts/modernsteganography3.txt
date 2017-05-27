@@ -1,9 +1,0 @@
-Turn the message, OK, 
-into ASCII: 1000001 
-1001011. Hide this in 
-the picture by 
-changing the first 14 
-pixel numbers by +-1,
-so odd means 1 and 
-even means 0. These 14 
-pixels now spell OK.

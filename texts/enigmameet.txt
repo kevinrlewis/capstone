@@ -1,7 +1,0 @@
-The Enigma cipher machine looks like a typewriter, but when you type 
-your message into the keyboard, a series of letter are illuminated on the 
-neighbouring lampboard. In other words, the plaintext letter is typed in, 
-and the corresponding ciphertext or encrypted letter is illuminated. The 
-encrypted message is sent by radio and at the other end it is typed into 
-another Enigma machine and the original plain message is illuminated. Its 
-strength relies on two facts:

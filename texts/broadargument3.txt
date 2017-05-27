@@ -1,3 +1,0 @@
-So, Alice could choose her prime numbers to be, p = 17,159 and q = 10,247. Multiplying
-these two numbers together would mean that N = 17,159 x 10,247 = 175,828,273. Alice's
-choice of N effectively becomes her public encryption key, and she publicises it.

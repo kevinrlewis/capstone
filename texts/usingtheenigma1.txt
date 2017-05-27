@@ -1,7 +1,0 @@
-Now that we have seen how Enigma works, we can see how it was used.
-
-Be aware that there were several types of Enigma machine, and they were used in 
-many different ways. For example, the earliest versions of the Enigma did not have a 
-plugboard. The naval machine was different from the army machine, and eventually 
-the naval Enigma narrowed the reflector, leaving room for a fourth rotor, which was 
-adjustable but which did not move during encryption.

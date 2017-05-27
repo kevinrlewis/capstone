@@ -1,5 +1,0 @@
-N is important, because it is a flexible component of the
-1-way function, which means that each person can choose
-a different value of N, and personalise the 1-way function.
-In order to choose her value of N, Alice picks two prime
-numbers, labeled p and q, and multiplies them together.

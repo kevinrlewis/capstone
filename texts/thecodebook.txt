@@ -1,8 +1,0 @@
-The Code Book consists of five main chapters. Click on any chapter to 
-explore its contents.
-
-In many cases, a page will explain how a type of cipher works or describe 
-how it can be broken. The next page often displays a tool that you can use 
-to encrypt or decrypt messages. Once you have encrypted messages and try to 
-crack them, or the page may offer you encrypted message for you to try and 
-break.

@@ -1,9 +1,0 @@
-To make Diffie's idea work in the virtual world of computer networks, it was necessary to transfer 
-the idea from a metal padlock and iron box to a mathematical padlock and a virtual box. 
-
-The mathematical padlock had to behave just like a real padlock. A real padlock is easy to lock but 
-very hard to unlock. This is similar to a mathematical one-way function, which is easy to perform in 
-one direction but hard to reverse. However, a padlock is special, because it can be unlocked with a 
-key, so cryptographers had to find a mathematical one-way function which could be reversed with a 
-piece of special information (the private-key). The crypto-gurus who eventually discovered the 
-mathematical padlock were Ron Rivest, Adi Shamir and Len Adleman.

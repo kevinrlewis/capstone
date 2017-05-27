@@ -1,4 +1,0 @@
-The resulting encrypted message is a single string of 35 binary digits, which can be transmitted to
-the receiver, who uses the same key to reverse the substitution, thus recreating the original string of
-binary digits. Finally, the receiver reinterprets the binary digits via ASCII, to regenerate the message
-HELLO.
