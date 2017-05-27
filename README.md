@@ -2,7 +2,9 @@
 -----------------------------------------------------------
 Author: Kevin Lewis
 
-Contact me for full project: kevin.lewis_22@hotmail.com
+-----------------------------------------------------------
+##contact
+contact me for full project: kevin.lewis_22@hotmail.com
 -----------------------------------------------------------
 ##brief
 This capstone project will use Python and the Kivy GUI
